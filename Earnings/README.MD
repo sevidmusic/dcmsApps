@@ -1,0 +1,1 @@
+The Earnings app provides tools for managing earnings. This app can be used to create and manage invoices, and can summarize collections of indexes and provided anayliss of the collective earnings based on all registered invoices. 
