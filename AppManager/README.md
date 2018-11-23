@@ -1,0 +1,1 @@
+The App Manager provides a user interface for administering installed Darling Cms Apps. Using this app an administrator will be able to turn apps on or off, generate the boilerplate for new apps, delete/un-install apps, and get information about installed apps.

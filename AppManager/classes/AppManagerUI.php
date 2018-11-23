@@ -8,7 +8,6 @@
 
 namespace Apps\AppManager\classes;
 
-
 use DarlingCms\interfaces\userInterface\IUserInterface;
 
 class AppManagerUI implements IUserInterface
@@ -25,7 +24,7 @@ class AppManagerUI implements IUserInterface
     public function __construct(AppInfo $appInfo)
     {
         $this->appInfo = $appInfo;
-        $this->displayAdvancedInfo = filter_input(INPUT_GET, 'advancedInfo');
+        $this->displayAdvancedInfo = (filter_input(INPUT_GET, 'advancedInfo') === '' ? true : false);
         $selectedView = filter_input(INPUT_GET, 'appManagerView');
         $this->view = isset($selectedView) ? $selectedView : 'view1';
     }
@@ -50,7 +49,8 @@ class AppManagerUI implements IUserInterface
      */
     public function getAppOnOffSelect(string $appName): string
     {
-        $html = "<select onchange=\"amUpdateAppState(this.value, '{$appName}')\" name=\"am_appEnabled_{$appName}\" class=\"dcms-simple-select dcms-hover am-app-enabled-select\">";
+        $selectState = ($appName === 'AppManager' ? 'disabled' : '');
+        $html = "<select {$selectState} onchange=\"amUpdateAppState(this.value, '{$appName}')\" name=\"am_appEnabled_{$appName}\" class=\"dcms-simple-select dcms-hover am-app-enabled-select\">";
         switch ($this->appInfo->isEnabled($appName)) {
             case true:
                 $html .= '<option selected>On</option><option>Off</option>';
@@ -103,15 +103,21 @@ class AppManagerUI implements IUserInterface
 
     public function displayAdvancedInfo(): bool
     {
-        return isset($this->displayAdvancedInfo);
+        return $this->displayAdvancedInfo;
     }
 
     public function getViewLinks(): string
     {
+        $links = array();
+        foreach (scandir(str_replace('classes', 'views', __DIR__)) as $view) {
+            if ($view !== '.' && $view !== '..') {
+                $viewName = str_replace('.php', '', $view);
+                array_push($links, '<a href="index.php?appManagerView=' . $viewName . ($this->displayAdvancedInfo() === true ? '&amp;advancedInfo' : '') . '">' . $viewName . '</a>');
+            }
+        }
         return '
         <div class="am-view-links-container">
-            <a href="index.php?appManagerView=view1' . ($this->displayAdvancedInfo() === true ? '&amp;advancedInfo' : '') . '">View 1</a>
-            <a href="index.php?appManagerView=view2' . ($this->displayAdvancedInfo() === true ? '&amp;advancedInfo' : '') . '">View 2</a>
+            ' . implode(PHP_EOL, $links) . '
         </div>
         ';
     }
@@ -142,7 +148,7 @@ class AppManagerUI implements IUserInterface
                 <div class="dcms-sub-container dcms-float-left dcms-container-border-right dcms-quarter-width dcms-short-container">
                     <h4>About</h4>
                     <div class="am-app-readme-container">
-                        ' . $this->appInfo->getReadme() . '
+                        ' . $this->appInfo->getReadme($appName) . '
                     </div>
                 </div>';
                 break;
@@ -151,7 +157,7 @@ class AppManagerUI implements IUserInterface
                     <div class="dcms-sub-container dcms-float-left dcms-container-border-center dcms-full-width">
                     <h4>About</h4>
                     <div class="am-app-readme-container">
-                        ' . $this->appInfo->getReadme() . '
+                        ' . $this->appInfo->getReadme($appName) . '
                     </div>
                 </div>';
                 break;

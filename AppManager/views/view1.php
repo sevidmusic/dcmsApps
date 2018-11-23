@@ -1,5 +1,5 @@
 <?php
-$appInfo = new \Apps\AppManager\classes\AppInfo(\Apps\AppManager\classes\AppInfo::STARTUP_DEFAULT, 'AppManager');
+$appInfo = new \Apps\AppManager\classes\AppInfo();
 $userInterface = new \Apps\AppManager\classes\AppManagerUI($appInfo);
 foreach ($appInfo->getAppConfigObjects() as $appConfigObject) {
     $appName = $appConfigObject->getName();
@@ -15,7 +15,7 @@ foreach ($appInfo->getAppConfigObjects() as $appConfigObject) {
         <div class="dcms-sub-container dcms-float-left dcms-container-border-center dcms-full-width">
             <h4>About</h4>
             <div class="am-app-readme-container">
-                <?php echo $appInfo->getReadme(); ?>
+                <?php echo $appInfo->getReadme($appName); ?>
             </div>
         </div>
         <?php

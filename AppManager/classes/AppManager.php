@@ -9,15 +9,35 @@
 namespace Apps\AppManager\classes;
 
 
+use DarlingCms\classes\FileSystem\ZipCrud;
+
 class AppManager
 {
+    private $zipCrud;
+
+    /**
+     * AppManager constructor.
+     * @param ZipCrud $zipCrud Instance of a ZipCrud implementation.
+     */
+    public function __construct(ZipCrud $zipCrud)
+    {
+        $this->zipCrud = $zipCrud;
+
+    }
+
     public function enableApp(string $appName): bool
     {
-        return true;
+        if ($this->zipCrud->unzip($this->getAppDirPath($appName) . '.zip') === true) {
+            return true;
+        }
+        return false;
     }
 
     public function disableApp(string $appName): bool
     {
+        if ($this->zipCrud->zip($this->getAppDirPath($appName)) === true) {
+            return true;
+        }
         return false;
     }
 
@@ -99,7 +119,7 @@ class AppManager
      */
     public function getAppDirPath(string $appName = ''): string
     {
-        if ($appName === '') {
+        if (empty($appName) === false) {
             return str_replace('AppManager/classes', $appName, __DIR__);
         }
         return str_replace('AppManager/classes', '', __DIR__);
