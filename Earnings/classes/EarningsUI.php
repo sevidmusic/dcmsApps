@@ -13,7 +13,11 @@ use DarlingCms\interfaces\userInterface\IUserInterface;
 
 class EarningsUI implements IUserInterface
 {
+    public const EARNINGS_VIEW_VAR_NAME = 'earningsView';
+
     private $timeCard;
+
+    private $timeCardCalculator;
 
     private $view = 'Today';
 
@@ -23,7 +27,14 @@ class EarningsUI implements IUserInterface
     public function __construct(TimeCard $timeCard)
     {
         $this->timeCard = $timeCard;
-        $this->view = empty(filter_input(INPUT_GET, 'earningsView')) === false ? filter_input(INPUT_GET, 'earningsView') : $this->view;
+        /**
+         * DEV NOTE:
+         * The TimeCardCalculator instance in instantiated within __construct() instead of injected via parameter on
+         * purpose. This insures any time card calculations that are done on behalf of the UI are accurate to the
+         * TimeCard instance that was injected into this object on instantiation.
+         */
+        $this->timeCardCalculator = new TimeCardCalculator($this->timeCard); // @ TODO Consider making the EarningsUI and extension of the TimeCardCalculator class since it does perform calculations.
+        $this->view = empty(filter_input(INPUT_GET, self::EARNINGS_VIEW_VAR_NAME)) === false ? filter_input(INPUT_GET, self::EARNINGS_VIEW_VAR_NAME) : $this->view;
     }
 
     /**
@@ -45,25 +56,26 @@ class EarningsUI implements IUserInterface
     private function getViewUrl(string $viewName): string
     {
         if (empty($viewName) === false) {
-            return 'http://localhost:8888/DarlingCms/?earningsView=' . $viewName;
+            return 'http://localhost:8888/DarlingCms/?' . self::EARNINGS_VIEW_VAR_NAME . '=' . $viewName;
         }
-        return 'http://localhost:8888/DarlingCms/?earningsView=' . $this->view;
+        return 'http://localhost:8888/DarlingCms/?' . self::EARNINGS_VIEW_VAR_NAME . '=' . $this->view;
     }
 
     public function getDragHandle()
     {
-        return '<div draggable="true" id="punchDisplayheader" class="dragHandle">Click here to move</div>';
+        return '<div draggable="true" id="punchDisplayHandle" class="dragHandle">Click here to move</div>';
     }
 
     public function getMainMenu(): string
     {
-        return '<div id="mainMenu" class="sticky sticky-menu">
-                <a class="sticky-menu-link" href="' . $this->getViewUrl('Today') . '">Today</a>
-                <a class="sticky-menu-link" href="' . $this->getViewUrl('Earnings') . '">Earnings</a>
-                <a class="sticky-menu-link" href="' . $this->getViewUrl('Punches') . '">Punches</a>
-                <a class="sticky-menu-link" href="' . $this->getViewUrl('TimeWorked') . '">Time Worked</a>
-                <a class="sticky-menu-link" href="' . $this->getViewUrl('Dev') . '">Dev</a>
-        </div>';
+        return "<div id=\"mainMenu\" class=\"sticky sticky-menu\">
+                <a onclick=\"return AjaxRouterRequest('Earnings','Today','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Today&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('Today')}\">Today</a>
+                <a onclick=\"return AjaxRouterRequest('Earnings','Earnings','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Earnings&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('Earnings')}\">Earnings</a>
+                <a onclick=\"return AjaxRouterRequest('Earnings','Punches','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Punches&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('Punches')}\">Punches</a>
+                <a onclick=\"return AjaxRouterRequest('Earnings','TimeWorked','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=TimeWorked&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('TimeWorked')}\">Time Worked</a>
+                <a onclick=\"return AjaxRouterRequest('Earnings','Invoice','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Invoice&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('Invoice')}\">Invoice</a>
+                <a onclick=\"return AjaxRouterRequest('Earnings','Dev','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Dev&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('Dev')}\">Dev</a>
+        </div>";
     }
 
     public function getEarningsClock()
@@ -80,18 +92,24 @@ class EarningsUI implements IUserInterface
     {
         ob_start();
         include pathinfo(__DIR__, PATHINFO_DIRNAME) . '/views/' . $this->view . '.php';
-        return ob_get_clean();
+        return '<div id="EarningsAjaxOutput">' . ob_get_clean() . '</div>';
 
     }
 
-    public function getMainContainerStart()
+    public function getCurrentViewName(): string
     {
-        return '<div id="punchDisplay" class="earnings-punch-display">';
+        return $this->view;
+
+    }
+
+    public function getMainContainerStart(): string
+    {
+        return '<div id="punchDisplay" class="earnings-punch-display makeDraggable dcms-admin-panel">';
     }
 
     public function getMainContainerEnd()
     {
-        return '</div>';
+        return '</div>'; // close #punchDisplay.
     }
 
     public static function formatTimeForDisplay(string $hours, string $minutes): string
@@ -108,4 +126,79 @@ class EarningsUI implements IUserInterface
         $displaySeconds = bcadd($leftOverSeconds, 0, 0);
         return "{$displayHours} hour" . (bcadd(0, $hours) === '1' ? '' : 's') . " {$displayMinutes} minutes {$displaySeconds} seconds";
     }
+
+    public function getTimeCardRangeSelector()
+    {
+        include realpath('../views/tools/TimeCardRangeSelector.php');
+    }
+
+    /**
+     * Returns an array of time card names via the TimeCard::getTimeCardNames() method.
+     * Note: If the $_GET['startingTimeCardName'] and $_GET['endingTimeCardName'] vars are set this method will
+     * set the range of time card names returned based on those values, otherwise it will base the range of
+     * time card names returned based on the oldest and newest time card names, i.e. it will return all
+     * time card names.
+     * This method is essentially an alias for TimeCard::getTimeCardNames(array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$startingTimeCardName, $endingTimeCardName])
+     * @return array Array of time card names.
+     * @see TimeCard::getTimeCardNames()
+     */
+    public function getTimeCardNames()
+    {
+        switch ($this->getStartingTimeCardName() < $this->getEndingTimeCardName()) {
+            case true:
+                return $this->timeCard->getTimeCardNames(array(TimeCard::OPTION_RANGE => [$this->getStartingTimeCardName(), $this->getEndingTimeCardName()]));
+            case false:
+                return array_reverse($this->timeCard->getTimeCardNames(array(TimeCard::OPTION_RANGE => [$this->getEndingTimeCardName(), $this->getStartingTimeCardName()])));
+        }
+        return $this->timeCard->getTimeCardNames();
+    }
+
+    /**
+     * Get the name of the starting time card based on either the $_GET['startingTimeCardName'] var or the
+     * name of the oldest time card.
+     * @return string The name of the starting time card.
+     */
+    public function getStartingTimeCardName(): string
+    {
+        return (!empty(filter_input(INPUT_GET, 'startingTimeCardName')) ? filter_input(INPUT_GET, 'startingTimeCardName') : '11262018'); // @TODO FIX SO DEFAULT IS OLDEST TIME CARD NAME
+    }
+
+    /**
+     * Get the name of the ending time card based on either the $_GET['endingTimeCardName'] var or the
+     * name of the newest time card.
+     * @return string The name of the starting time card.
+     */
+    public function getEndingTimeCardName()
+    {
+        return (!empty(filter_input(INPUT_GET, 'endingTimeCardName')) ? filter_input(INPUT_GET, 'endingTimeCardName') : '12022018'); // @TODO FIX SO DEFAULT IS NEWEST TIME CARD NAME
+    }
+
+    public function formatTimeCardName(string $timeCardName)
+    {
+        return "{$timeCardName[0]}{$timeCardName[1]}/{$timeCardName[2]}{$timeCardName[3]}/{$timeCardName[4]}{$timeCardName[5]}{$timeCardName[6]}{$timeCardName[7]}";
+    }
+
+    /**
+     * Calculates time worked for the currently selected range of Time Cards as determined by the
+     * getStartingTimeCardName() and getEndingTimeCardName() methods.
+     * @param string $format The format to return it in. Options are as follows:
+     *                       \Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS
+     *                       \Apps\Earnings\classes\TimeCardCalculator::FORMAT_MINUTES
+     *                       \Apps\Earnings\classes\TimeCardCalculator::FORMAT_SECONDS
+     * @return string The time worked between the currently selected range of Time Cards in the specified format.
+     * @see TimeCardCalculator::calculateTimeWorked()
+     * @see TimeCardCalculator::FORMAT_HOURS
+     * @see TimeCardCalculator::FORMAT_MINUTES
+     * @see TimeCardCalculator::FORMAT_SECONDS
+     */
+    public function geTimeWorkedFromSelected(string $format = \Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS)
+    {
+        switch ($this->getStartingTimeCardName() < $this->getEndingTimeCardName()) {
+            case true:
+                return $this->timeCardCalculator->calculateTimeWorked($format, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$this->getStartingTimeCardName(), $this->getEndingTimeCardName()]]);
+            default:
+                return $this->timeCardCalculator->calculateTimeWorked($format, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$this->getEndingTimeCardName(), $this->getStartingTimeCardName()]]);
+        }
+    }
+
 }

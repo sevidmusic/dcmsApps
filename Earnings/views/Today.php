@@ -1,4 +1,8 @@
 <?php
+if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
+    require '../../../vendor/autoload.php';
+    require '../functions.php';
+}
 $timeCard = new \Apps\Earnings\classes\TimeCard('now', new DateTimeZone('America/New_York'));
 $timeCardCalculator = new \Apps\Earnings\classes\TimeCardCalculator($timeCard);
 $hoursWorked = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_SELECTED => array($timeCard->getCurrentTimeCardName())));
@@ -6,15 +10,12 @@ $minutesWorked = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes
 $secondsWorked = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_SECONDS, array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_SELECTED => array($timeCard->getCurrentTimeCardName())));
 ?>
     <h1>Today</h1>
-    <p>Time worked
-        today: <?php echo \Apps\Earnings\classes\EarningsUI::formatTimeForDisplay($hoursWorked, $minutesWorked); ?></p>
-    <p style="font-size: .8em;">Total Hours worked today: <?php echo $hoursWorked; ?></p>
-    <p style="font-size: .8em;">Total Minutes worked today: <?php echo $minutesWorked; ?></p>
-    <p style="font-size: .8em;">Total Seconds worked today: <?php echo $secondsWorked; ?></p>
-    <p>Money earned today: <span style="color: #61ffb0;">$<?php echo calculateEarnings($hoursWorked, '10.00'); ?></span>
-    </p>
-    <p>Money earned toward debt today: <span
-                style="color: #61ffb0;">$<?php echo calculateEarnings($hoursWorked, '2.25'); ?></span></p>
+    <p><span class="earnings-key-text">Time worked today:</span> <span class="earnings-value-text"><?php echo \Apps\Earnings\classes\EarningsUI::formatTimeForDisplay($hoursWorked, $minutesWorked); ?></span></p>
+    <p class="earnings-small-text"><span class="earnings-key-text">Total Hours worked today:</span> <span class="earnings-value-text"><?php echo $hoursWorked; ?></span></p>
+    <p class="earnings-small-text"><span class="earnings-key-text">Total Minutes worked today:</span> <span class="earnings-value-text"><?php echo $minutesWorked; ?></span></p>
+    <p class="earnings-small-text"><span class="earnings-key-text">Total Seconds worked today:</span> <span class="earnings-value-text"><?php echo $secondsWorked; ?></span></p>
+    <p><span class="earnings-key-text">Money earned today:</span> <span class="earnings-monetary-value">$<?php echo calculateEarnings($hoursWorked, '10.00'); ?></span></p>
+    <p>Money earned toward debt today: <span class="earnings-monetary-value">$<?php echo calculateEarnings($hoursWorked, '2.25'); ?></span></p>
     <h3>Today's Punches</h3>
 <?php
 $inOut = '';

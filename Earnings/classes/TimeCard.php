@@ -13,7 +13,8 @@ use DateTimeZone;
 
 class TimeCard extends \DateTime
 {
-
+    public const OPTION_RANGE = 'range';
+    public const OPTION_SELECTED = 'selected';
     private $jsonDirPath;
 
     /**
@@ -132,11 +133,30 @@ class TimeCard extends \DateTime
         }
     }
 
-    public function getTimeCardNames(): array
+    public function getTimeCardNames($options = array()): array
     {
         $timeCardNames = array();
         foreach ($this->getTimeCardPaths() as $timeCardPath) {
             array_push($timeCardNames, str_replace(array($this->jsonDirPath . '/', '.json'), '', $timeCardPath));
+        }
+        if (empty($options === false)) {
+            $specifiedTimeCardNames = array();
+            foreach ($timeCardNames as $timeCardName) {
+                // If range is set, make sure to exclude any time cards names that come before or after the specified ranges.
+                if (isset($options[self::OPTION_RANGE]) === true && is_array($options[self::OPTION_RANGE]) === true && count($options[self::OPTION_RANGE]) === 2) {
+                    if ($timeCardName < $options[self::OPTION_RANGE][0] || $timeCardName > $options[self::OPTION_RANGE][1]) {
+                        continue;
+                    }
+                }
+                // If selected is set, make sure to exclude any time card names that do not match one of the selected time card names.
+                if (isset($options[self::OPTION_SELECTED]) && is_array($options[self::OPTION_SELECTED])) {
+                    if (in_array($timeCardName, $options[self::OPTION_SELECTED], true) === false) {
+                        continue;
+                    }
+                }
+                array_push($specifiedTimeCardNames, $timeCardName);
+            }
+            return $specifiedTimeCardNames;
         }
         return $timeCardNames;
     }

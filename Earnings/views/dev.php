@@ -1,4 +1,1 @@
-<?php
-echo '<h4>Earnings dev code display.</h4>';
-
-
+<h1>Dev</h1>
