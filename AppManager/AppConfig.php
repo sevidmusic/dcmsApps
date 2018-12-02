@@ -35,7 +35,7 @@ class AppConfig implements IAppConfig
      */
     public function getThemeNames(): array
     {
-        return array('DCMS Dark Theme', 'AppManagerDark');
+        return array('DCMSDarkTheme', 'AppManagerDark');
     }
 
     /**
@@ -44,6 +44,6 @@ class AppConfig implements IAppConfig
      */
     public function getJsLibraryNames(): array
     {
-        return array('AppManager');
+        return array('makeDraggable', 'AjaxRouter', 'AppManager', 'XDebugUI');
     }
 }

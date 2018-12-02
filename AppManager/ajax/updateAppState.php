@@ -1,6 +1,7 @@
 <?php
-require_once '../classes/AppManager.php';
-require_once '../../../core/classes/FileSystem/ZipCrud.php';
+if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
+    require '../../../vendor/autoload.php';
+}
 $appManager = new \Apps\AppManager\classes\AppManager(new \DarlingCms\classes\FileSystem\ZipCrud());
 if (filter_input(INPUT_GET, 'updateAppState') === 'On' && $appManager->enableApp(filter_input(INPUT_GET, 'appName')) === true) {
     $status = true;
