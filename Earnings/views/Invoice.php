@@ -16,7 +16,7 @@ $totalHoursWorked = $userInterface->geTimeWorkedFromSelected();
 <?php echo $userInterface->getTimeCardRangeSelector(); ?>
 <p>Total Hours Worked: <?php echo $totalHoursWorked; ?></p>
 <p>Total Money Earned (Due): $<?php echo calculateEarnings($totalHoursWorked, '10'); ?></p>
-<p>Total Money Earned Toward Debt: $<?php echo calculateEarnings($totalHoursWorked, '2.25'); ?></p>
+<p>Total Money Earned Toward Debt: $<?php echo calculateEarnings($totalHoursWorked, '2.50'); ?></p>
 <table class="timeCard-invoice-table">
     <tr class="timeCard-invoice-table-tr">
         <th class="timeCard-invoice-table-th">Date</th>
@@ -41,17 +41,18 @@ $totalHoursWorked = $userInterface->geTimeWorkedFromSelected();
                 </ul>
             </td>
             <td class="timeCard-invoice-table-td timeCard-invoice-table-timeWorked-col">
-                <ul>
+                <?php echo ' ' . $timeCardCalculator->calculateTimeCard($timeCardName, 'hours'); ?>
+                <!-- <ul>
                     <li>Hours: <?php echo ' ' . $timeCardCalculator->calculateTimeCard($timeCardName, 'hours'); ?></li>
                     <li>Total
                         Time: <?php echo \Apps\Earnings\classes\EarningsUI::formatTimeForDisplay($timeCardCalculator->calculateTimeCard($timeCardName, 'hours'), $timeCardCalculator->calculateTimeCard($timeCardName, 'minutes')); ?></li>
-                </ul>
+                </ul> -->
             </td>
             <td class="timeCard-invoice-table-td timeCard-invoice-table-moneyEarned-col">
                 <?php echo '$' . calculateEarnings($timeCardCalculator->calculateTimeCard($timeCardName, 'hours'), '10'); ?>
             </td>
             <td class="timeCard-invoice-table-td timeCard-invoice-table-moneyEarnedTowardDebt-col">
-                <?php echo '$' . calculateEarnings($timeCardCalculator->calculateTimeCard($timeCardName, 'hours'), '2.25'); ?>
+                <?php echo '$' . calculateEarnings($timeCardCalculator->calculateTimeCard($timeCardName, 'hours'), '2.50'); ?>
             </td>
         </tr>
     <?php } ?>

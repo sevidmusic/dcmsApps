@@ -3,36 +3,43 @@ if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
     require '../../../vendor/autoload.php';
     require '../functions.php';
 }
+// init
 $timeCard = new \Apps\Earnings\classes\TimeCard('now', new DateTimeZone('America/New_York'));
 $timeCardCalculator = new \Apps\Earnings\classes\TimeCardCalculator($timeCard);
 $userInterface = new \Apps\Earnings\classes\EarningsUI($timeCard);
-$unRecordedHoursWorked = '93.25'; // 500 paid for 9/25/2018 through 11/14/2018 (see google drive for invoice), then 432.50 paid for 11/14/2018 - 11/25/2018 (see archived time cards)
-$hoursToDate = bcadd($unRecordedHoursWorked, $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS), 2);
-$unPaidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS);
-// money earned/owed
-$moneyEarnedToDate = calculateEarnings($hoursToDate, '10');
-$moneyPaidToDate = calculateEarnings($unRecordedHoursWorked, '10.00');
+
+/**
+ * Calculations
+ */
+// time worked
+$hoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$userInterface->getOldestTimeCardName(), $userInterface->getNewestTimeCardName()]]);
+$paidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$userInterface->getOldestTimeCardName(), '11262018a']]); // @todo: Implement marking time cards as paid or unpiad so hardcoded ending time card name value not necessary
+$unPaidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => ['11262018b', $userInterface->getEndingTimeCardName()]]); // @todo: Implement marking time cards as paid or unpiad so hardcoded starting time card name value not necessary
+// money earned/paid/owed/debt
+$moneyEarnedToDate = bcadd(calculateEarnings($hoursToDate, '10'), 500, 2); // accommodate 500 untracked
+$moneyEarnedTowardDebt = bcadd(calculateEarnings($hoursToDate, '2.50'), 112.50, 2); // accommodate 112.50 untracked
+$moneyPaidToDate = bcadd(calculateEarnings($paidHoursToDate, '10.00'), 500, 2); // adjust for unlogged time | i.e. time worked before Earnings app existed.
 $moneyOwedToDate = calculateEarnings($unPaidHoursToDate, '10');
-$moneyEarnedTowardDebt = calculateEarnings($hoursToDate, '2.25');
+$remainingDebt = bcsub('2000', $moneyEarnedTowardDebt, 2);
+// specified calculations | based on selected time card range as set by the TimeCardRangeSelector.
+$specifiedEarnings = calculateEarnings($userInterface->geTimeWorkedFromSelected(), '10.00');
+$specifiedEarnedTowardDebt = calculateEarnings($userInterface->geTimeWorkedFromSelected(), '2.50');
 ?>
     <h1>Earnings</h1>
     <p><span class="earnings-key-text">Money Earned To Date: </span><span
-            class="earnings-value-text earnings-monetary-value">$<?php echo $moneyEarnedToDate; ?></span></p>
+                class="earnings-value-text earnings-monetary-value">$<?php echo $moneyEarnedToDate; ?></span></p>
     <p><span class="earnings-key-text">Money Paid To Date: </span><span
-            class="earnings-value-text earnings-monetary-value">$<?php echo $moneyPaidToDate; ?></span></p>
+                class="earnings-value-text earnings-monetary-value">$<?php echo $moneyPaidToDate; ?></span></p>
     <p class="earnings-emphasized-text"><span class="earnings-key-text">Money Owed To Date: </span><span
-            class="earnings-value-text earnings-monetary-value">$<?php echo $moneyOwedToDate; ?></span></p>
+                class="earnings-value-text earnings-monetary-value">$<?php echo $moneyOwedToDate; ?></span></p>
     <p><span class="earnings-key-text">Money Earned Toward Debt To Date: </span><span
-            class="earnings-value-text earnings-monetary-value">$<?php echo $moneyEarnedTowardDebt; ?></span></p>
+                class="earnings-value-text earnings-monetary-value">$<?php echo $moneyEarnedTowardDebt; ?></span></p>
     <p><span class="earnings-key-text">Remaining Debt: </span><span
-            class="earnings-value-text earnings-monetary-value earnings-negative-value">$<?php echo bcsub('2000', $moneyEarnedTowardDebt, 2); ?></span>
+                class="earnings-value-text earnings-monetary-value earnings-negative-value">$<?php echo $remainingDebt; ?></span>
     </p>
     <h2>Calculate earnings from selected dates:</h2>
 <?php
 echo $userInterface->getTimeCardRangeSelector();
-$specifiedEarnings = calculateEarnings($userInterface->geTimeWorkedFromSelected(), '10.00');
-$specifiedEarnedTowardDebt = calculateEarnings($userInterface->geTimeWorkedFromSelected(), '2.25');
-
 echo "<p><span class=\"earnings-key-text\">Hours worked from {$userInterface->formatTimeCardName($userInterface->getStartingTimeCardName())} to {$userInterface->formatTimeCardName($userInterface->getEndingTimeCardName())}: </span><span class=\"earnings-value-text\">" . $userInterface->geTimeWorkedFromSelected() . "</span></p>";
 echo "<p><span class=\"earnings-key-text\">Money earned from {$userInterface->formatTimeCardName($userInterface->getStartingTimeCardName())} to {$userInterface->formatTimeCardName($userInterface->getEndingTimeCardName())}: </span><span class=\"earnings-value-text earnings-monetary-value\">\${$specifiedEarnings}</span></p>";
 echo "<p><span class=\"earnings-key-text\">Money earned toward debt from {$userInterface->formatTimeCardName($userInterface->getStartingTimeCardName())} to {$userInterface->formatTimeCardName($userInterface->getEndingTimeCardName())}: </span><span class=\"earnings-value-text earnings-monetary-value\">\${$specifiedEarnedTowardDebt}</span></p>";

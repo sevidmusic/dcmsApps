@@ -160,7 +160,27 @@ class EarningsUI implements IUserInterface
      */
     public function getStartingTimeCardName(): string
     {
-        return (!empty(filter_input(INPUT_GET, 'startingTimeCardName')) ? filter_input(INPUT_GET, 'startingTimeCardName') : '11262018'); // @TODO FIX SO DEFAULT IS OLDEST TIME CARD NAME
+        return (!empty(filter_input(INPUT_GET, 'startingTimeCardName')) ? filter_input(INPUT_GET, 'startingTimeCardName') : $this->getOldestTimeCardName());
+    }
+
+    /**
+     * Returns the name of the newest time card.
+     * @return string The name of the newest time card.
+     */
+    public function getNewestTimeCardName(): string
+    {
+        $timeCards = $this->timeCard->getTimeCardNames();
+        return array_pop($timeCards);
+    }
+
+    /**
+     * Returns the name of the oldest time card.
+     * @return string The name of the oldest time card.
+     */
+    public function getOldestTimeCardName(): string
+    {
+        $timeCards = $this->timeCard->getTimeCardNames();
+        return array_shift($timeCards);
     }
 
     /**
@@ -170,7 +190,7 @@ class EarningsUI implements IUserInterface
      */
     public function getEndingTimeCardName()
     {
-        return (!empty(filter_input(INPUT_GET, 'endingTimeCardName')) ? filter_input(INPUT_GET, 'endingTimeCardName') : '12022018'); // @TODO FIX SO DEFAULT IS NEWEST TIME CARD NAME
+        return (!empty(filter_input(INPUT_GET, 'endingTimeCardName')) ? filter_input(INPUT_GET, 'endingTimeCardName') : $this->getNewestTimeCardName());
     }
 
     public function formatTimeCardName(string $timeCardName)

@@ -5,9 +5,9 @@ if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
 }
 $timeCard = new \Apps\Earnings\classes\TimeCard('now', new DateTimeZone('America/New_York'));
 $timeCardCalculator = new \Apps\Earnings\classes\TimeCardCalculator($timeCard);
-$hoursToDate = bcadd(50, $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS), 2);
+$hoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS);
 $minutesToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_MINUTES);
-$unPaidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS);
+$unPaidHoursToDate = bcsub($hoursToDate, '43.55',2);
 $todayHours = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_SELECTED => array($timeCard->getCurrentTimeCardName())));
 
 $hoursWorkedToday = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_SELECTED => array($timeCard->getCurrentTimeCardName())));

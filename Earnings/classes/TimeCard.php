@@ -133,6 +133,13 @@ class TimeCard extends \DateTime
         }
     }
 
+    /**
+     * Get stored time card names. If no options are set, the names of all stored time
+     * cards will be returned.
+     * @param array $options If set, this method will return either a range of time cards, or a set
+     * of specified time cards depending on what options are set.
+     * @return array Array of time card names.
+     */
     public function getTimeCardNames($options = array()): array
     {
         $timeCardNames = array();
