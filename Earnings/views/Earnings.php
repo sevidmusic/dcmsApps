@@ -13,14 +13,14 @@ $userInterface = new \Apps\Earnings\classes\EarningsUI($timeCard);
  */
 // time worked
 $hoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$userInterface->getOldestTimeCardName(), $userInterface->getNewestTimeCardName()]]);
-$paidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$userInterface->getOldestTimeCardName(), '11262018a']]); // @todo: Implement marking time cards as paid or unpiad so hardcoded ending time card name value not necessary
-$unPaidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => ['11262018b', $userInterface->getEndingTimeCardName()]]); // @todo: Implement marking time cards as paid or unpiad so hardcoded starting time card name value not necessary
+$paidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$userInterface->getOldestTimeCardName(), '12032018']]); // @todo: Implement marking time cards as paid or unpiad so hardcoded ending time card name value not necessary
+$unPaidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => ['12042018', $userInterface->getEndingTimeCardName()]]); // @todo: Implement marking time cards as paid or unpiad so hardcoded starting time card name value not necessary
 // money earned/paid/owed/debt
-$moneyEarnedToDate = bcadd(calculateEarnings($hoursToDate, '10'), 500, 2); // accommodate 500 untracked
-$moneyEarnedTowardDebt = bcadd(calculateEarnings($hoursToDate, '2.50'), 112.50, 2); // accommodate 112.50 untracked
-$moneyPaidToDate = bcadd(calculateEarnings($paidHoursToDate, '10.00'), 500, 2); // adjust for unlogged time | i.e. time worked before Earnings app existed.
-$moneyOwedToDate = calculateEarnings($unPaidHoursToDate, '10');
-$remainingDebt = bcsub('2000', $moneyEarnedTowardDebt, 2);
+$moneyEarnedToDate = calculateEarnings($hoursToDate, '10.00');
+$moneyEarnedTowardDebt = calculateEarnings($hoursToDate, '2.50');
+$moneyPaidToDate = calculateEarnings($paidHoursToDate, '10.00');
+$moneyOwedToDate = calculateEarnings($unPaidHoursToDate, '10.00');
+$remainingDebt = bcsub('2000.00', $moneyEarnedTowardDebt, 2);
 // specified calculations | based on selected time card range as set by the TimeCardRangeSelector.
 $specifiedEarnings = calculateEarnings($userInterface->geTimeWorkedFromSelected(), '10.00');
 $specifiedEarnedTowardDebt = calculateEarnings($userInterface->geTimeWorkedFromSelected(), '2.50');
