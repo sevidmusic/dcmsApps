@@ -116,7 +116,8 @@ function getTodos(string $sourceFilePath): array
                 $important = (substr($todoTxt, 0, 1) === '!' ? true : false);
                 $active = stringHasString('*ACTIVE*', $todoTxt);
                 $todoString = '<div class="' . ($active === true ? 'todo-active' : 'todo-inactive') . '"><span class="todo-from-file-txt' . ($important === true ? ' todo-important-from-file-txt' : '') . '">From <span class="todo-source-file-path">' . $sourceFilePath . '</span><span class="todo-line-text">(line ' . bcadd($lineNumber, '1', 0) . ')</span>: </span><br><span class="todo-txt' . ($important === true ? ' todo-important-txt' : '') . '">' . ($important === true ? substr($todoTxt, 1) : $todoTxt) . '</span></div>';
-                $todos[(
+                // NOTE: Before indexes where set at top level, i.e. $todo[(check for existing...)], even though a check was made to prevent overwriting existing items, some items still seemed to be left out, to further insure all items are included items are now indexed at the child level, $todo[][(...)]. The check for existing items is still performed, but now at the child level.
+                $todos[][(
                 $active === true && $important === true
                     ? '*ACTIVE*IMPORTANT*' . $todoTypeIncrementer
                     : (

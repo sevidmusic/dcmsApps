@@ -7,7 +7,7 @@ $timeCard = new \Apps\Earnings\classes\TimeCard('now', new DateTimeZone('America
 $timeCardCalculator = new \Apps\Earnings\classes\TimeCardCalculator($timeCard);
 $hoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS);
 $minutesToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_MINUTES);
-$unPaidHoursToDate = bcsub($hoursToDate, '43.55',2);
+$unPaidHoursToDate = bcsub($hoursToDate, '174.87', 2); // 09/25/2018 to 12/09/2018 | USE INVOICE PANEL TO MANUALLY CALCULATE RIGHT OPERAND USING THE OLDEST DATE TO THE LAST DAY OF THE LAST PAY PERIOD
 $todayHours = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_SELECTED => array($timeCard->getCurrentTimeCardName())));
 
 $hoursWorkedToday = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_SELECTED => array($timeCard->getCurrentTimeCardName())));
@@ -26,6 +26,10 @@ $secondsWorkedToday = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\cl
 </p>
 <p><span class="earnings-key-text">Hours Worked To Date: </span><span
             class="earnings-value-text"><?php echo $hoursToDate; ?></span></p>
+<!-- @todo ! Refactor Unpaid hours calculations to be accurate to real time.*EOL*Also, their should probably be a methods added to either the TimeCardCalculator class for the most used getTime*() logic,*EOL*i.e.,*EOL*getTimeTotal(string $format = 'hours')*EOL*getTimeUnpaid(string $format = 'hours')*EOL*getTimePaid(string $format = 'hours')*EOL*
+ -->
+<!-- @todo ! UNPAID HOURS IS NOT ACCURATE AT THE MOMENT UNLESS SET MANUALLY! THIS NEEDS TO BE FIXED!
+-->
 <p class="earnings-emphasized-text"><span class="earnings-key-text">Unpaid Hours Worked To Date: </span><span
             class="earnings-value-text"><?php echo $unPaidHoursToDate; ?></span></p>
 <p class="earnings-emphasized-text"><span class="earnings-key-text">Hours Worked Today: </span><span
