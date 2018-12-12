@@ -1,59 +1,23 @@
-<div id="PDOPlayground" class="pdo-playground-container">
-    <div id="PDOPlaygroundAjaxOutput" class="pdo-playground-ajax-container">
-        <h1>PDO Playground</h1>
-        <?php
-        /**
-         * Create a new Data Base the PDO way.
-         * Source for boilerplate @see https://stackoverflow.com/questions/2583707/can-i-create-a-database-using-pdo-in-php
-         * WARNING: THE FOLLOWING CODE IS FOR LOCAL DEV ONLY! DO NOT USE IN ANY PRODUCTION SITE!!!
-         */
-        $host = "localhost";
-        $root = "root";
-        $root_password = "root";
-        $user = 'sevidmusic';
-        $pass = 'iLoveDorianEternally';
-        $db = "PDOPlaygroundDev1";
-        $charset = 'utf8mb4';
-        // CREATE DB IF NOT EXISTS
-        try {
-            $dbh = new PDO("mysql:host=$host", $root, $root_password);
-            $dbh->exec("CREATE DATABASE IF NOT EXISTS `$db`;
-                CREATE USER '$user'@'localhost' IDENTIFIED BY '$pass';
-                GRANT ALL ON `$db`.* TO '$user'@'localhost';
-                FLUSH PRIVILEGES;")
-            or die(print_r($dbh->errorInfo(), true));
-        } catch (PDOException $e) {
-            die("DB ERROR: " . $e->getMessage());
-        }
-        // TEST CONNECTION
-        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-        $options = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ];
-        try {
-            $pdo = new PDO($dsn, $user, $pass, $options);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e->getMessage(), (int)$e->getCode());
-        }
-        ?>
-        <p>Output:</p>
-        <?php
-        // Test Query using Prepared Statment | Read all user ids from users | NOTE users TABLE MUST EXIST
-        $stmt = $pdo->prepare('SELECT * FROM users WHERE userName = ? OR  userName = ?');
-        $stmt->execute(['sevidmusic', 'dorianDarling']);
-
-        while ($row = $stmt->fetch()) {
-            echo '<p>User Name: ' . $row['userName'] . "</p>";
-            echo '<p>User Id: ' . $row['userId'] . "</p>";
-            // Test sub Query using Prepared Statment | Read all user ids from users | NOTE users TABLE MUST EXIST
-            $Sstmt = $pdo->prepare('SELECT * FROM passwords WHERE userId = ?');
-            $Sstmt->execute([$row['userId']]);
-            while ($Srow = $Sstmt->fetch()) {
-                echo '<p>Password: ' . $Srow['password'] . "</p>";
-            }
-        }
-        ?>
-    </div>
-</div>
+<?php
+// @todo Create methods in a DCMS Utility class for require, include, etc. Should be able to do DCMS::include($filename, DCMS::PATH_CONSTANT).*EOL*This would help alliviate the tedious task of figuring out coreect paths manually, and would allow files to be moved around and still be able to rely on the include methods knowing the correct path to the requested file.
+require 'functions.php';
+require 'devDBConfig.php';
+// attempt to connect
+try {
+    $dbCrud = new devPdoCrud($dsn, $user, $pass, $options);
+} catch (\PDOException $e) {
+    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+}
+/** // Getting single row
+ * //$userId1 = $dbCrud->runQuery("SELECT userId FROM users WHERE userName=?", ['sevidmusic'])->fetch();
+ * // Getting single column from the single row
+ * //$userId2 = $dbCrud->runQuery("SELECT userId FROM users WHERE userName=?", ['dorianDarling'])->fetchColumn();
+ * // Getting array of rows and populating an instance of a specified class with the returned data.
+ */
+$userClasses = $dbCrud->runQuery("SELECT * FROM users LIMIT ?", ['14'])->fetchAll(PDO::FETCH_CLASS, 'devUser');
+// Display each user's information.
+foreach ($userClasses as $user) {
+    echo "<p>User Name: {$user->getUserName()}</p>";
+    echo "<p>User Id: {$user->getUserId()}</p>";
+    echo "<p>User Password: " . password_hash($dbCrud->runQuery("SELECT password FROM passwords WHERE userId=?", [$user->getUserId()])->fetch()['password'], PASSWORD_DEFAULT) . "</p>";
+}
