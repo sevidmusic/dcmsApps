@@ -15,7 +15,7 @@ class AppConfig implements IAppConfig
      */
     public function validateAccess(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -33,7 +33,7 @@ class AppConfig implements IAppConfig
      */
     public function getThemeNames(): array
     {
-        return array();
+        return array('ActionManager');
     }
 
     /**
@@ -42,6 +42,6 @@ class AppConfig implements IAppConfig
      */
     public function getJsLibraryNames(): array
     {
-        return array();
+        return array('AjaxRouter');
     }
 }

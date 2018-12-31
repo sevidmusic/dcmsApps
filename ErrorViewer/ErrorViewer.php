@@ -6,7 +6,7 @@ if (file_exists(ini_get('error_log'))) {
         <div id="ErrorViewer" class="dcms-admin-panel dcms-make-draggable">
             <div draggable="true" id="ErrorViewerHandle" class="dcms-drag-handle">Click here to move</div>
             <a class="ev-link" href="index.php?ErrorViewerAction=ClearErrors&ErrorLog=default">Clear Errors</a>
-            <div style="clear: both;"></div>
+            <div class="dcms-clear-float"></div>
             <h3>The following errors occurred:</h3>
             <?php
             foreach ($errorLog as $item) {
@@ -19,10 +19,10 @@ if (file_exists(ini_get('error_log'))) {
                 $status = file_put_contents(ini_get('error_log'), '', LOCK_EX);
                 switch (empty($status)) {
                     case false:
-                        echo '<p style="position:absolute;top: 0;" class="dcms-negative-text">Failed to clear error log.</p>';
+                        echo '<p class="dcms-negative-text ev-message">Failed to clear error log.</p>';
                         break;
                     default:
-                        echo '<p style="position:absolute;top: 0;" class="dcms-positive-text">Cleared error log.</p>';
+                        echo '<p class="dcms-positive-text ev-message">Cleared error log.</p>';
                         break;
                 }
             }
