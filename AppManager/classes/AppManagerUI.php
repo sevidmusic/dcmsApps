@@ -51,7 +51,7 @@ class AppManagerUI implements IUserInterface
     public function getAppOnOffSelect(string $appName): string
     {
         $selectState = ($appName === 'AppManager' ? 'disabled' : '');
-        $html = "<select {$selectState} onchange=\"return AjaxRouterRequest('AppManager','updateAppState','amMsg','GET',undefined,'updateAppState='+this.value+'&appName={$appName}', 'ajax','AMShowMessages')\" name=\"am_appEnabled_{$appName}\" class=\"dcms-simple-select dcms-hover am-app-enabled-select\">";
+        $html = "<select {$selectState} onchange=\"return AjaxRouterRequest('AppManager','updateAppState','am-message','GET',undefined,'updateAppState='+this.value+'&appName={$appName}', 'ajax','AMShowMessages')\" name=\"am_appEnabled_{$appName}\" class=\"am-app-enabled-select\">";
         switch ($this->appInfo->isEnabled($appName)) {
             case true:
                 $html .= '<option selected>On</option><option>Off</option>';
@@ -88,10 +88,10 @@ class AppManagerUI implements IUserInterface
     {
         $html = '<div class="am-sa-link-container">';
         if ($this->displayAdvancedInfo() === false) {
-            $html .= '<a class="dcms-extra-large-link am-advanced-link" href="?advancedInfo&amp;appManagerView=' . $this->view . '">Advanced...</a>';
+            $html .= '<a class="am-advanced-link" href="?advancedInfo&amp;appManagerView=' . $this->view . '">Advanced...</a>';
         }
         if ($this->displayAdvancedInfo() === true) {
-            $html .= '<a class="dcms-extra-large-link am-simple-link" href="?simpleInfo&amp;appManagerView=' . $this->view . '">Simple...</a>';
+            $html .= '<a class="am-simple-link" href="?simpleInfo&amp;appManagerView=' . $this->view . '">Simple...</a>';
         }
         $html .= '</div>';
         return $html;
@@ -113,7 +113,7 @@ class AppManagerUI implements IUserInterface
         foreach (scandir(str_replace('classes', 'views', __DIR__)) as $view) {
             if ($view !== '.' && $view !== '..') {
                 $viewName = str_replace('.php', '', $view);
-                array_push($links, '<a onclick="return AjaxRouterRequest(\'AppManager\',\'' . trim($viewName) . '\',\'AppManagerCurrentView\',\'GET\',undefined,\'appManagerView=' . trim($viewName) . '&ajaxRequest=true\',\'views\')" href="index.php?appManagerView=' . trim($viewName) . ($this->displayAdvancedInfo() === true ? '&amp;advancedInfo' : '') . '">' . $this->convertFromCamelCase(trim($viewName)) . ' | </a>');
+                array_push($links, '<a onclick="return AjaxRouterRequest(\'AppManager\',\'' . trim($viewName) . '\',\'AppManagerCurrentView\',\'GET\',undefined,\'appManagerView=' . trim($viewName) . '&ajaxRequest=true\',\'views\')" href="index.php?appManagerView=' . trim($viewName) . ($this->displayAdvancedInfo() === true ? '&amp;advancedInfo' : '') . '">' . $this->convertFromCamelCase(trim($viewName)) . '</a>');
             }
         }
         return '
@@ -132,8 +132,8 @@ class AppManagerUI implements IUserInterface
     {
         $html = '
              <div class="am-toolbar-container">
-                <div id="amMsgContainer" style="" class="am-msg-container">
-                    <p>App Manager Message: <span id="amMsg"></span></p>
+                <div id="am-message-container" style="" class="am-msg-container">
+                    <p>App Manager Message: <span id="am-message"></span></p>
                 </div>
                 ' . $this->getSimpleAdvancedLinks() .
             '</div>';
@@ -146,7 +146,7 @@ class AppManagerUI implements IUserInterface
             case true:
                 return '
                 <div class="dcms-clear-float"></div>
-                <div class="dcms-sub-container dcms-float-left dcms-container-border-right dcms-quarter-width dcms-short-container">
+                <div class="am-appInfo-sub-container dcms-float-left dcms-container-border-right dcms-quarter-width dcms-short-container">
                     <h4>About</h4>
                     <div class="am-app-readme-container">
                         ' . $this->appInfo->getReadme($appName) . '
@@ -155,7 +155,7 @@ class AppManagerUI implements IUserInterface
                 break;
             default:
                 return '
-                    <div class="dcms-sub-container dcms-float-left dcms-container-border-center dcms-full-width">
+                    <div class="am-appInfo-sub-container dcms-float-left dcms-full-width">
                     <h4>About</h4>
                     <div class="am-app-readme-container">
                         ' . $this->appInfo->getReadme($appName) . '

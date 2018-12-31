@@ -3,11 +3,9 @@ if (file_exists(ini_get('error_log'))) {
     $errorLog = explode(PHP_EOL, file_get_contents(ini_get('error_log')));
     if (((count($errorLog) <= 1 && count($errorLog) > 0) && $errorLog[0] === '') === false) {
         ?>
-        <div id="ErrorViewer" class="ev-container makeDraggable dcms-admin-panel">
-            <div draggable="true" id="ErrorViewerHandle" class="dragHandle">Click here to move</div>
-            <a style="background:#000000;padding:10px;border-radius:20px;border:3px solid #ffffff;float: right;margin-top: 50px;"
-               class="dcms-small-link"
-               href="index.php?ErrorViewerAction=ClearErrors&ErrorLog=default">Clear Errors</a>
+        <div id="ErrorViewer" class="dcms-admin-panel dcms-make-draggable">
+            <div draggable="true" id="ErrorViewerHandle" class="dcms-drag-handle">Click here to move</div>
+            <a class="ev-link" href="index.php?ErrorViewerAction=ClearErrors&ErrorLog=default">Clear Errors</a>
             <div style="clear: both;"></div>
             <h3>The following errors occurred:</h3>
             <?php

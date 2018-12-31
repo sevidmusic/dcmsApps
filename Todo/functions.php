@@ -95,7 +95,7 @@ function getIteratedItemKeys(RecursiveIteratorIterator $iterator)
         }
         $keys[] = $key;
     }
-    var_dump($keys);
+    //var_dump($keys);
 }
 
 /**
@@ -112,7 +112,7 @@ function getTodos(string $sourceFilePath): array
         $extractedValues = explode('@', $line);
         foreach ($extractedValues as $extractedValue) {
             if (substr($extractedValue, 0, 4) === 'todo') {
-                $todoTxt = substr($extractedValue, 5);
+                $todoTxt = substr($extractedValue, 5) . "<textarea class='todo-editable-todo-text'>" . str_replace(array('<br>', '<br/>', '*EOL*'), array(PHP_EOL, PHP_EOL, '&#10;'), substr($extractedValue, 5)) . "</textarea>";
                 $important = (substr($todoTxt, 0, 1) === '!' ? true : false);
                 $active = stringHasString('*ACTIVE*', $todoTxt);
                 $todoString = '<div class="' . ($active === true ? 'todo-active' : 'todo-inactive') . '"><span class="todo-from-file-txt' . ($important === true ? ' todo-important-from-file-txt' : '') . '">From <span class="todo-source-file-path">' . $sourceFilePath . '</span><span class="todo-line-text">(line ' . bcadd($lineNumber, '1', 0) . ')</span>: </span><br><span class="todo-txt' . ($important === true ? ' todo-important-txt' : '') . '">' . ($important === true ? substr($todoTxt, 1) : $todoTxt) . '</span></div>';

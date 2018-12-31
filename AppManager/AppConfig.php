@@ -35,7 +35,7 @@ class AppConfig implements IAppConfig
      */
     public function getThemeNames(): array
     {
-        return array('DCMSDarkTheme', 'AppManagerDark');
+        return array('DCMSBase', 'AppManagerDark');
     }
 
     /**

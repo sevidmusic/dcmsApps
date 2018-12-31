@@ -10,7 +10,7 @@ foreach ($appInfoObjects as $appInfo) {
     foreach ($appInfo->getAppConfigObjects() as $appConfigObject) {
         $appName = $appConfigObject->getName();
         ?>
-        <div class="dcms-admin-container dcms-full-width">
+        <div class="am-appInfo-container">
             <div class="am-app-logo-container dcms-float-right">
                 <?php echo $userInterface->getAppLogoImg($appName); ?>
             </div>
@@ -18,7 +18,7 @@ foreach ($appInfoObjects as $appInfo) {
                 <?php echo $appName; ?>
             </h1>
             <?php echo $userInterface->getAppOnOffSelect($appName); ?>
-            <div class="dcms-sub-container dcms-float-left dcms-container-border-center dcms-full-width">
+            <div class="am-appInfo-sub-container dcms-float-left">
                 <h4>About</h4>
                 <div class="am-app-readme-container">
                     <?php echo $appInfo->getReadme($appName); ?>
@@ -27,7 +27,7 @@ foreach ($appInfoObjects as $appInfo) {
             <?php
             if ($userInterface->displayAdvancedInfo() === true) {
                 ?>
-                <div class="dcms-sub-container dcms-float-left dcms-container-border-right dcms-third-width dcms-short-container am-advanced-info-container">
+                <div class="am-appInfo-sub-container dcms-float-left dcms-container-border-right dcms-third-width dcms-short-container am-advanced-info-container">
                     <h4>Dev Info</h4>
                     <p class="dcms-descriptive-text">Namespace: <span
                                 class="dcms-descriptive-text-highlight">
@@ -40,11 +40,11 @@ foreach ($appInfoObjects as $appInfo) {
                     </span>
                     </p>
                 </div>
-                <div class="dcms-sub-container dcms-float-left dcms-container-border-middle dcms-third-width dcms-short-container">
+                <div class="am-appInfo-sub-container dcms-float-left dcms-container-border-middle dcms-third-width dcms-short-container">
                     <h4>Themes</h4>
                     <?php echo $userInterface->getThemeList($appName); ?>
                 </div>
-                <div class="dcms-sub-container dcms-float-left dcms-container-border-left dcms-third-width dcms-short-container">
+                <div class="am-appInfo-sub-container dcms-float-left dcms-container-border-left dcms-third-width dcms-short-container">
                     <h4>Javascript Libraries</h4>
                     <?php echo $userInterface->getJsLibraryList($appName); ?>
                 </div>

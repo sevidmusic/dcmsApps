@@ -63,18 +63,18 @@ class EarningsUI implements IUserInterface
 
     public function getDragHandle()
     {
-        return '<div draggable="true" id="punchDisplayHandle" class="dragHandle">Click here to move</div>';
+        return '<div draggable="true" id="EarningsHandle" class="dcms-drag-handle">Click here to move</div>';
     }
 
     public function getMainMenu(): string
     {
-        return "<div id=\"mainMenu\" class=\"sticky sticky-menu\">
-                <a onclick=\"return AjaxRouterRequest('Earnings','Today','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Today&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('Today')}\">Today</a>
-                <a onclick=\"return AjaxRouterRequest('Earnings','Earnings','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Earnings&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('Earnings')}\">Earnings</a>
-                <a onclick=\"return AjaxRouterRequest('Earnings','Punches','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Punches&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('Punches')}\">Punches</a>
-                <a onclick=\"return AjaxRouterRequest('Earnings','TimeWorked','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=TimeWorked&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('TimeWorked')}\">Time Worked</a>
-                <a onclick=\"return AjaxRouterRequest('Earnings','Invoice','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Invoice&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('Invoice')}\">Invoice</a>
-                <a onclick=\"return AjaxRouterRequest('Earnings','Dev','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Dev&ajaxRequest=true','views')\" class=\"sticky-menu-link\" href=\"{$this->getViewUrl('Dev')}\">Dev</a>
+        return "<div id=\"mainMenu\" class=\"earnings-sticky earnings-sticky-menu\">
+                <a onclick=\"return AjaxRouterRequest('Earnings','Today','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Today&ajaxRequest=true','views')\" class=\"earnings-sticky-menu-link\" href=\"{$this->getViewUrl('Today')}\">Today</a>
+                <a onclick=\"return AjaxRouterRequest('Earnings','Earnings','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Earnings&ajaxRequest=true','views')\" class=\"earnings-sticky-menu-link\" href=\"{$this->getViewUrl('Earnings')}\">Earnings</a>
+                <a onclick=\"return AjaxRouterRequest('Earnings','Punches','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Punches&ajaxRequest=true','views')\" class=\"earnings-sticky-menu-link\" href=\"{$this->getViewUrl('Punches')}\">Punches</a>
+                <a onclick=\"return AjaxRouterRequest('Earnings','TimeWorked','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=TimeWorked&ajaxRequest=true','views')\" class=\"earnings-sticky-menu-link\" href=\"{$this->getViewUrl('TimeWorked')}\">Time Worked</a>
+                <a onclick=\"return AjaxRouterRequest('Earnings','Invoice','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Invoice&ajaxRequest=true','views')\" class=\"earnings-sticky-menu-link\" href=\"{$this->getViewUrl('Invoice')}\">Invoice</a>
+                <a onclick=\"return AjaxRouterRequest('Earnings','Dev','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Dev&ajaxRequest=true','views')\" class=\"earnings-sticky-menu-link\" href=\"{$this->getViewUrl('Dev')}\">Dev</a>
         </div>";
     }
 
@@ -104,12 +104,12 @@ class EarningsUI implements IUserInterface
 
     public function getMainContainerStart(): string
     {
-        return '<div id="punchDisplay" class="earnings-punch-display makeDraggable dcms-admin-panel">';
+        return '<div id="Earnings" class="dcms-admin-panel dcms-admin-panel-pos3 dcms-make-draggable">'; // @todo Rename "Earnings" to "Earnings"
     }
 
     public function getMainContainerEnd()
     {
-        return '</div>'; // close #punchDisplay.
+        return '</div>'; // close #Earnings.
     }
 
     public static function formatTimeForDisplay(string $hours, string $minutes): string

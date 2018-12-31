@@ -1,13 +1,4 @@
 <?php
-class devPdoCrud extends PDO
-{
-    public function runQuery($sql, $params = NULL)
-    {
-        $stmt = $this->prepare($sql);
-        $stmt->execute($params);
-        return $stmt;
-    }
-}
 
 class devUser
 {
