@@ -33,8 +33,9 @@ class ActionManagerUi extends AjaxUi
      */
     public function getUserInterface(): string
     {
-        $output = '<div id="ActionManager">';
-        $output .= '<div id="ActionManagerViewsMenu">'.implode('', $this->getViewLinks()).'</div>';
+        $output = '<div id="ActionManager" class="dcms-admin-panel dcms-admin-panel-pos4 dcms-make-draggable">';
+        $output .= '<div id="ActionManagerHandle" class="dcms-drag-handle">Click here to move...</div>';
+        $output .= '<div id="ActionManagerViewsMenu">' . implode('', $this->getViewLinks()) . '</div>';
         $output .= '<div id="ActionManagerView">' . $this->getCurrentViewHtml() . '</div>';
         $output .= '</div>';
         return $output;

@@ -5,16 +5,28 @@ if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
 ?>
     <h1>Create a new action</h1>
 <?php
-$createActioForm = new \DarlingCms\classes\html\form\Form(
+$createActionForm = new \DarlingCms\classes\html\form\Form(
     'post',
     [
         'id' => 'createActionForm',
-        'class' => 'action-manager-form'
+        'class' => 'action-manager-form',
+        'onsubmit' => 'return ' . \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                'issuingApp' => 'ActionManager',
+                'handlerName' => 'createActionHandler',
+                'outputElementId' => 'ActionManagerView',
+                'requestType' => 'POST',
+                'contentType' => '',
+                'additionalParams' => 'actionName=\'+this.children[1].value+\'&'. 'actionDescription=\'+this.children[3].value+\'',
+                'ajaxDirName' => 'handlers',
+                'callFunction' => '',
+                'callContext' => '',
+                'callArgs' => ''
+            ])
     ]
 );
-$createActioForm->addHtml(new \DarlingCms\classes\html\HtmlTag('label', ['for' => 'actionName'], 'Action Name'));
-$createActioForm->addFormElement(new \DarlingCms\classes\html\form\Text('actionName', '', ['id' => 'actionNameFormElement', 'class' => 'dcms-input-text action-manager-input-text']));
-$createActioForm->addHtml(new \DarlingCms\classes\html\HtmlTag('label', ['for' => 'actionDescription'], 'Action Description'));
-$createActioForm->addFormElement(new \DarlingCms\classes\html\form\TextArea('actionDescription', ['id' => 'actionDescriptionFormElement', 'class' => 'dcms-input-textarea action-manager-input-textarea']));
-$createActioForm->addFormElement(new \DarlingCms\classes\html\form\Submit('saveNewAction', 'Save New Action', ['id' => 'saveNewActionFormElement', 'class' => 'dcms-input-submit action-manager-input-submit']));
-echo $createActioForm->getHtml();
+$createActionForm->addHtml(new \DarlingCms\classes\html\HtmlTag('label', ['for' => 'actionName'], 'Action Name'));
+$createActionForm->addFormElement(new \DarlingCms\classes\html\form\Text('actionName', '', ['id' => 'actionNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover action-manager-input-text']));
+$createActionForm->addHtml(new \DarlingCms\classes\html\HtmlTag('label', ['for' => 'actionDescription'], 'Action Description'));
+$createActionForm->addFormElement(new \DarlingCms\classes\html\form\TextArea('actionDescription', ['id' => 'actionDescriptionFormElement', 'class' => 'dcms-input-textarea dcms-focus dcms-hover action-manager-input-textarea']));
+$createActionForm->addFormElement(new \DarlingCms\classes\html\form\Submit('saveNewAction', 'Save New Action', ['id' => 'saveNewActionFormElement', 'class' => 'dcms-input-submit dcms-focus dcms-hover action-manager-input-submit']));
+echo $createActionForm->getHtml();
