@@ -99,7 +99,7 @@ class AppManagerUI implements IUserInterface
 
     public function getAppLogoImg(string $appName): string
     {
-        return "<img class='am-app-logo-img' src='{$this->appInfo->getDemoImgPath($appName)}' alt='App Logo'>";
+        return "<img class='am-app-logo-img dcms-float-left' src='{$this->appInfo->getDemoImgPath($appName)}' alt='App Logo'>";
     }
 
     public function displayAdvancedInfo(): bool
@@ -142,27 +142,14 @@ class AppManagerUI implements IUserInterface
 
     public function getAbout(string $appName): string
     {
-        switch ($this->displayAdvancedInfo()) {
-            case true:
-                return '
-                <div class="dcms-clear-float"></div>
-                <div class="am-appInfo-sub-container dcms-float-left dcms-container-border-right dcms-quarter-width dcms-short-container">
-                    <h4>About</h4>
-                    <div class="am-app-readme-container">
-                        ' . $this->appInfo->getReadme($appName) . '
-                    </div>
-                </div>';
-                break;
-            default:
-                return '
-                    <div class="am-appInfo-sub-container dcms-float-left dcms-full-width">
-                    <h4>About</h4>
-                    <div class="am-app-readme-container">
-                        ' . $this->appInfo->getReadme($appName) . '
-                    </div>
-                </div>';
-                break;
-        }
+        return '
+                <div class="am-about-container">
+                    <p class="am-readme dcms-clearfix">
+                        ' . $this->getAppLogoImg($appName) . $this->appInfo->getReadme($appName) . '
+                    </p>
+                    <div class="dcms-clear-float"></div>
+                </div>
+                ';
     }
 
     public function convertFromCamelCase(string $string): string
