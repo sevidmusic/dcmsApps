@@ -13,6 +13,7 @@ use DarlingCms\abstractions\userInterface\AjaxUi;
 
 class ActionManagerUi extends AjaxUi
 {
+    protected $defaultView = 'createAction';
     /**
      * AjaxUi constructor.
      * @param string $appName Name of the app the user interface belongs to.

@@ -51,7 +51,7 @@ class AppManagerUI implements IUserInterface
     public function getAppOnOffSelect(string $appName): string
     {
         $selectState = ($appName === 'AppManager' ? 'disabled' : '');
-        $html = "<select {$selectState} onchange=\"return AjaxRouterRequest('AppManager','updateAppState','am-message','GET',undefined,'updateAppState='+this.value+'&appName={$appName}', 'ajax','AMShowMessages')\" name=\"am_appEnabled_{$appName}\" class=\"am-app-enabled-select\">";
+        $html = "<select {$selectState} onchange=\"return AjaxRouterRequest('AppManager','updateAppState','am-message','GET',undefined,'updateAppState='+this.value+'&appName={$appName}', 'ajax','AMShowMessages')\" name=\"am_appEnabled_{$appName}\" class=\"dcms-button am-app-enabled-select\">";
         switch ($this->appInfo->isEnabled($appName)) {
             case true:
                 $html .= '<option selected>On</option><option>Off</option>';
@@ -88,10 +88,10 @@ class AppManagerUI implements IUserInterface
     {
         $html = '<div class="am-sa-link-container">';
         if ($this->displayAdvancedInfo() === false) {
-            $html .= '<a class="am-advanced-link" href="?advancedInfo&amp;appManagerView=' . $this->view . '">Advanced...</a>';
+            $html .= '<a class="dcms-link am-advanced-link" href="?advancedInfo&amp;appManagerView=' . $this->view . '">Advanced...</a>';
         }
         if ($this->displayAdvancedInfo() === true) {
-            $html .= '<a class="am-simple-link" href="?simpleInfo&amp;appManagerView=' . $this->view . '">Simple...</a>';
+            $html .= '<a class="dcms-link am-simple-link" href="?simpleInfo&amp;appManagerView=' . $this->view . '">Simple...</a>';
         }
         $html .= '</div>';
         return $html;
@@ -99,7 +99,7 @@ class AppManagerUI implements IUserInterface
 
     public function getAppLogoImg(string $appName): string
     {
-        return "<img class='am-app-logo-img dcms-float-left' src='{$this->appInfo->getDemoImgPath($appName)}' alt='App Logo'>";
+        return "<img class='dcms-float-left am-app-logo-img' src='{$this->appInfo->getDemoImgPath($appName)}' alt='App Logo'>";
     }
 
     public function displayAdvancedInfo(): bool
@@ -113,7 +113,7 @@ class AppManagerUI implements IUserInterface
         foreach (scandir(str_replace('classes', 'views', __DIR__)) as $view) {
             if ($view !== '.' && $view !== '..') {
                 $viewName = str_replace('.php', '', $view);
-                array_push($links, '<a onclick="return AjaxRouterRequest(\'AppManager\',\'' . trim($viewName) . '\',\'AppManagerCurrentView\',\'GET\',undefined,\'appManagerView=' . trim($viewName) . '&ajaxRequest=true\',\'views\')" href="index.php?appManagerView=' . trim($viewName) . ($this->displayAdvancedInfo() === true ? '&amp;advancedInfo' : '') . '">' . $this->convertFromCamelCase(trim($viewName)) . '</a>');
+                array_push($links, '<a class="dcms-link" onclick="return AjaxRouterRequest(\'AppManager\',\'' . trim($viewName) . '\',\'AppManagerCurrentView\',\'GET\',undefined,\'appManagerView=' . trim($viewName) . '&ajaxRequest=true\',\'views\')" href="index.php?appManagerView=' . trim($viewName) . ($this->displayAdvancedInfo() === true ? '&amp;advancedInfo' : '') . '">' . $this->convertFromCamelCase(trim($viewName)) . '</a>');
             }
         }
         return '
