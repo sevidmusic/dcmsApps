@@ -13,11 +13,11 @@ $userInterface = new \Apps\Earnings\classes\EarningsUI($timeCard);
  */
 // time worked
 $hoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$userInterface->getOldestTimeCardName(), $userInterface->getNewestTimeCardName()]]);
-$paidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$userInterface->getOldestTimeCardName(), '12232018']]); // @todo ! Implement marking time cards as paid or unpiad so hardcoded ending time card name value not necessary
-$unPaidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => ['12242018', $userInterface->getEndingTimeCardName()]]); // todo Implement marking time cards as paid or unpiad so hardcoded starting time card name value not necessary
+$paidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$userInterface->getOldestTimeCardName(), '12312018']]); // @todo  Implement marking time cards as paid or unpiad so hardcoded ending time card name value not necessary
+$unPaidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => ['01012019', $userInterface->getEndingTimeCardName()]]); // todo Implement marking time cards as paid or unpiad so hardcoded starting time card name value not necessary
 // money earned/paid/owed/debt
 $moneyEarnedToDate = calculateEarnings($hoursToDate, '10.00');
-$moneyEarnedTowardDebt = calculateEarnings($hoursToDate, '2.50');
+$moneyEarnedTowardDebt = bcadd('695.13', calculateEarnings($hoursToDate, '2.50'), 2);
 $moneyPaidToDate = calculateEarnings($paidHoursToDate, '10.00');
 $moneyOwedToDate = calculateEarnings($unPaidHoursToDate, '10.00');
 $remainingDebt = bcsub('2000.00', $moneyEarnedTowardDebt, 2);

@@ -17,4 +17,8 @@
             ondblclick="hideAppPanel('ActionManager')"
             id="admin-panel-show-APPNAME-link">Action Manager
     </button>
+    <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('Todo')"
+            ondblclick="hideAppPanel('Todo')"
+            id="admin-panel-show-APPNAME-link">Todo
+    </button>
 </div>

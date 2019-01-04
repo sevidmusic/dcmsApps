@@ -26,9 +26,9 @@ $secondsWorkedToday = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\cl
 </p>
 <p><span class="earnings-key-text">Hours Worked To Date: </span><span
             class="earnings-value-text"><?php echo $hoursToDate; ?></span></p>
-<!-- @todo ! Refactor Unpaid hours calculations to be accurate to real time.*EOL*Also, their should probably be a methods added to either the TimeCardCalculator class for the most used getTime*() logic,*EOL*i.e.,*EOL*getTimeTotal(string $format = 'hours')*EOL*getTimeUnpaid(string $format = 'hours')*EOL*getTimePaid(string $format = 'hours')*EOL*
+<!-- @todo  Refactor Unpaid hours calculations to be accurate to real time.*EOL*Also, their should probably be a methods added to either the TimeCardCalculator class for the most used getTime*() logic,*EOL*i.e.,*EOL*getTimeTotal(string $format = 'hours')*EOL*getTimeUnpaid(string $format = 'hours')*EOL*getTimePaid(string $format = 'hours')*EOL*
  -->
-<!-- @todo ! UNPAID HOURS IS NOT ACCURATE AT THE MOMENT UNLESS SET MANUALLY! THIS NEEDS TO BE FIXED!
+<!-- @todo UNPAID HOURS IS NOT ACCURATE AT THE MOMENT UNLESS SET MANUALLY! THIS NEEDS TO BE FIXED!
 -->
 <p class="earnings-emphasized-text"><span class="earnings-key-text">Unpaid Hours Worked To Date: </span><span
             class="earnings-value-text"><?php echo $unPaidHoursToDate; ?></span></p>
