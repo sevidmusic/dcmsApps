@@ -85,7 +85,7 @@ class EarningsUI implements IUserInterface
 
     public function getPunchButton(): string
     {
-        return '<button id="punchButton" class="earnings-button" onclick="earningsPunch()">Punch</button>';
+        return '<button class="dcms-button" id="punchButton" class="earnings-button" onclick="earningsPunch()">Punch</button>';
     }
 
     public function getCurrentView(): string

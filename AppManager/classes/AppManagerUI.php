@@ -111,9 +111,9 @@ class AppManagerUI implements IUserInterface
     {
         $links = array();
         foreach (scandir(str_replace('classes', 'views', __DIR__)) as $view) {
-            if ($view !== '.' && $view !== '..') {
+            if ($view !== '.' && $view !== '..' && $view !== 'subViews') {
                 $viewName = str_replace('.php', '', $view);
-                array_push($links, '<a class="dcms-link" onclick="return AjaxRouterRequest(\'AppManager\',\'' . trim($viewName) . '\',\'AppManagerCurrentView\',\'GET\',undefined,\'appManagerView=' . trim($viewName) . '&ajaxRequest=true\',\'views\')" href="index.php?appManagerView=' . trim($viewName) . ($this->displayAdvancedInfo() === true ? '&amp;advancedInfo' : '') . '">' . $this->convertFromCamelCase(trim($viewName)) . '</a>');
+                array_push($links, '<a class="dcms-link app-manager-view-link" onclick="return AjaxRouterRequest(\'AppManager\',\'' . trim($viewName) . '\',\'AppManagerCurrentView\',\'GET\',undefined,\'appManagerView=' . trim($viewName) . '&ajaxRequest=true\',\'views\')" href="index.php?appManagerView=' . trim($viewName) . ($this->displayAdvancedInfo() === true ? '&amp;advancedInfo' : '') . '">' . $this->convertFromCamelCase(trim($viewName)) . '</a>');
             }
         }
         return '
@@ -158,6 +158,6 @@ class AppManagerUI implements IUserInterface
         $pattern = '/(?(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z]))/x'; // ridgerunner's answer | BETTER: This pattern can accommodate even malformed camel case like camelCASEString
         //$pattern = '/((?:^|[A-Z])[a-z]+)/'; // codaddict's answer | approved answer | WARNING: This pattern does not handle malformed camel case strings like camelCASEString, kept for reference.
         $words = preg_split($pattern, $string);
-        return implode(' ', $words);
+        return ucwords(implode(' ', $words));
     }
 }

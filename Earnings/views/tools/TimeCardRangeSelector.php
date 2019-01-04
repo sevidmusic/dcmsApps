@@ -6,7 +6,7 @@ $userInterface = new \Apps\Earnings\classes\EarningsUI($timeCard);
     <form>
         <label for="timeCardSelectRangeStart">Showing</label>
         <select onchange="AjaxRouterRequest('Earnings','<?php echo $userInterface->getCurrentViewName(); ?>','EarningsAjaxOutput','GET','undefined','earningsView=<?php echo $userInterface->getCurrentViewName(); ?>&SelectRangeSubmit=Apply+Range&startingTimeCardName='+this.value+'&endingTimeCardName='+'<?php echo $userInterface->getEndingTimeCardName(); ?>','views')"
-                name="startingTimeCardName" id="timeCardSelectRangeStart" class="timeCard-selectRange">
+                name="startingTimeCardName" id="timeCardSelectRangeStart" class="dcms-select timeCard-selectRange">
             <?php
             foreach ($timeCard->getTimeCardNames() as $timeCardName) {
                 if ($timeCardName === $userInterface->getStartingTimeCardName()) {
@@ -19,7 +19,7 @@ $userInterface = new \Apps\Earnings\classes\EarningsUI($timeCard);
         </select>
         <label for="timeCardSelectRangeEnd">through</label>
         <select onchange="AjaxRouterRequest('Earnings','<?php echo $userInterface->getCurrentViewName(); ?>','EarningsAjaxOutput','GET','undefined','earningsView=<?php echo $userInterface->getCurrentViewName(); ?>&SelectRangeSubmit=Apply+Range&startingTimeCardName='+'<?php echo $userInterface->getStartingTimeCardName(); ?>'+'&endingTimeCardName='+this.value,'views')"
-                name="endingTimeCardName" id="timeCardSelectRangeEnd" class="timeCard-selectRange">
+                name="endingTimeCardName" id="timeCardSelectRangeEnd" class="dcms-select timeCard-selectRange">
             <?php
             foreach (array_reverse($timeCard->getTimeCardNames()) as $timeCardName) {
                 if ($timeCardName === $userInterface->getEndingTimeCardName()) {
