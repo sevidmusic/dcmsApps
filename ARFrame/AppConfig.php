@@ -18,7 +18,10 @@ class AppConfig implements IAppConfig
      */
     public function validateAccess(): bool
     {
-        return true;
+        if (filter_input(INPUT_GET, 'ar') === 'on') {
+            return true;
+        }
+        return false;
     }
 
     /**
