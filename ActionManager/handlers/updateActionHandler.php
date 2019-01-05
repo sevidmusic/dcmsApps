@@ -20,7 +20,7 @@ $newActionName = filter_input(INPUT_POST, 'actionName');
 $newActionDescription = filter_input(INPUT_POST, 'actionDescription');
 // @devNote usiing var for readability...this could be passed directly to if()
 $changesDetected = !($originalActionName === $newActionName && $originalActionDescription === $newActionDescription);
-if ($changesDetected === true) {
+if ($changesDetected === true && $actionCrud->update($originalActionName, new \DarlingCms\classes\privilege\Action($newActionName, $newActionDescription)) === true) {
     ?>
     <div class="action-manager-updated-action-info">
         <p>The Action was updated successfully</p>
