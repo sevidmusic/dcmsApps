@@ -38,13 +38,25 @@ foreach ($actionCrud->readAll() as $action) {
         </td>
         <td class="action-manager-table-save-changes">
             <?php
-            $saveButton = new \DarlingCms\classes\html\HtmlTag('button', ['class' => 'dcms-button action-manager-save-changes-button'], 'Save Changes');
-            echo $saveButton->getHtml();
+            $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                'issuingApp' => 'ActionManager',
+                'handlerName' => 'updateActionHandler',
+                'outputElementId' => 'ActionManagerView',
+                'requestType' => 'POST',
+                'contentType' => '',
+                'additionalParams' => 'actionName=\'+this.dataset.actionName+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
+                'ajaxDirName' => 'handlers',
+                'callFunction' => '',
+                'callContext' => '',
+                'callArgs' => ''
+            ]);
+            $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $action->getActionName() . ' action?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $action->getActionName() . ' action.\')', 'data-action-name' => $action->getActionName(), 'class' => 'dcms-button action-manager-update-action-button'], 'update Action');
+            echo $updateButton->getHtml();
             ?>
         </td>
         <td class="action-manager-table-delete-action">
             <?php
-            $saveChangesAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+            $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
                 'issuingApp' => 'ActionManager',
                 'handlerName' => 'deleteActionHandler',
                 'outputElementId' => 'ActionManagerView',
@@ -56,7 +68,7 @@ foreach ($actionCrud->readAll() as $action) {
                 'callContext' => '',
                 'callArgs' => ''
             ]);
-            $deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => $saveChangesAjaxReq, 'data-action-name' => $action->getActionName(), 'class' => 'dcms-button action-manager-delete-action-button'], 'Delete Action');
+            $deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to delete the ' . $action->getActionName() . ' action?\') === true ? ' . $deleteAjaxReq . ' : console.log(\'Canceled request to delete the ' . $action->getActionName() . ' action.\')', 'data-action-name' => $action->getActionName(), 'class' => 'dcms-button action-manager-delete-action-button'], 'Delete Action');
             echo $deleteButton->getHtml();
             ?>
         </td>
