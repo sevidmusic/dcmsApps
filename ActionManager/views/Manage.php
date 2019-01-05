@@ -44,8 +44,20 @@ foreach ($actionCrud->readAll() as $action) {
         </td>
         <td class="action-manager-table-delete-action">
             <?php
-            $saveButton = new \DarlingCms\classes\html\HtmlTag('button', ['class' => 'dcms-button action-manager-delete-action-button'], 'Delete Action');
-            echo $saveButton->getHtml();
+            $saveChangesAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                'issuingApp' => 'ActionManager',
+                'handlerName' => 'deleteActionHandler',
+                'outputElementId' => 'ActionManagerView',
+                'requestType' => 'POST',
+                'contentType' => '',
+                'additionalParams' => 'actionName=\'+this.dataset.actionName+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
+                'ajaxDirName' => 'handlers',
+                'callFunction' => '',
+                'callContext' => '',
+                'callArgs' => ''
+            ]);
+            $deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => $saveChangesAjaxReq, 'data-action-name' => $action->getActionName(), 'class' => 'dcms-button action-manager-delete-action-button'], 'Delete Action');
+            echo $deleteButton->getHtml();
             ?>
         </td>
     </tr>
