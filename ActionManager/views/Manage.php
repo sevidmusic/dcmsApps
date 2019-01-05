@@ -26,11 +26,13 @@ $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 foreach ($actionCrud->readAll() as $action) {
     ?>
     <tr class="action-manager-table-row">
-        <td class="action-manager-table-action-name"><?php
+        <td id="<?php echo trim(str_replace(' ', '', $action->getActionName())); ?>-action-name"
+            class="action-manager-table-action-name"><?php
             $actionNameInput = new \DarlingCms\classes\html\form\Text('actionName', $action->getActionName(), ['id' => 'actionNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover action-manager-input-text']);
             echo $actionNameInput->getHtml();
             ?></td>
-        <td class="action-manager-table-action-description">
+        <td id="<?php echo trim(str_replace(' ', '', $action->getActionName())); ?>-action-description"
+            class="action-manager-table-action-description">
             <?php
             $actionDescriptionInput = new \DarlingCms\classes\html\form\TextArea('actionDescription', ['id' => 'actionDescriptionFormElement', 'class' => 'dcms-input-textarea dcms-focus dcms-hover action-manager-input-textarea'], $action->getActionDescription());
             echo $actionDescriptionInput->getHtml();
@@ -44,13 +46,13 @@ foreach ($actionCrud->readAll() as $action) {
                 'outputElementId' => 'ActionManagerView',
                 'requestType' => 'POST',
                 'contentType' => '',
-                'additionalParams' => 'actionName=\'+this.dataset.actionName+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
+                'additionalParams' => 'anId=\'+this.parentNode.parentNode.children[0].children[0].value+\'' . '&' . 'actionName=\'+this.dataset.actionName+\'' . '&' . 'actionDescription=\'+this.dataset.actionDescription+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
                 'ajaxDirName' => 'handlers',
                 'callFunction' => '',
                 'callContext' => '',
                 'callArgs' => ''
             ]);
-            $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $action->getActionName() . ' action?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $action->getActionName() . ' action.\')', 'data-action-name' => $action->getActionName(), 'class' => 'dcms-button action-manager-update-action-button'], 'update Action');
+            $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $action->getActionName() . ' action?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $action->getActionName() . ' action.\')', 'data-action-name' => $action->getActionName(), 'data-action-description' => $action->getActionDescription(), 'class' => 'dcms-button action-manager-update-action-button'], 'update Action');
             echo $updateButton->getHtml();
             ?>
         </td>
