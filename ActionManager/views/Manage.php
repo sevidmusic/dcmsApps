@@ -15,35 +15,42 @@ $sqlQuery = CoreValues::getISqlQueryInstance
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 ?>
 <h1>Manage Actions</h1>
-<table>
-    <tr class="action-manager-table-header-row">
-        <th class="action-manager-table-header">Name</th>
-        <th class="action-manager-table-header">Description</th>
-        <th class="action-manager-table-header"></th>
+<table class="action-manager-table"
+<tr class="action-manager-table-header-row">
+    <th class="action-manager-table-header">Name</th>
+    <th class="action-manager-table-header">Description</th>
+    <th class="action-manager-table-header"></th>
+    <th class="action-manager-table-header"></th>
+</tr>
+<?php
+foreach ($actionCrud->readAll() as $action) {
+    ?>
+    <tr class="action-manager-table-row">
+        <td class="action-manager-table-action-name"><?php
+            $actionNameInput = new \DarlingCms\classes\html\form\Text('actionName', $action->getActionName(), ['id' => 'actionNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover action-manager-input-text']);
+            echo $actionNameInput->getHtml();
+            ?></td>
+        <td class="action-manager-table-action-description">
+            <?php
+            $actionDescriptionInput = new \DarlingCms\classes\html\form\TextArea('actionDescription', ['id' => 'actionDescriptionFormElement', 'class' => 'dcms-input-textarea dcms-focus dcms-hover action-manager-input-textarea'], $action->getActionDescription());
+            echo $actionDescriptionInput->getHtml();
+            ?>
+        </td>
+        <td class="action-manager-table-save-changes">
+            <?php
+            $saveButton = new \DarlingCms\classes\html\HtmlTag('button', ['class' => 'dcms-button action-manager-save-changes-button'], 'Save Changes');
+            echo $saveButton->getHtml();
+            ?>
+        </td>
+        <td class="action-manager-table-delete-action">
+            <?php
+            $saveButton = new \DarlingCms\classes\html\HtmlTag('button', ['class' => 'dcms-button action-manager-delete-action-button'], 'Delete Action');
+            echo $saveButton->getHtml();
+            ?>
+        </td>
     </tr>
     <?php
-    foreach ($actionCrud->readAll() as $action) {
-        ?>
-        <tr class="action-manager-table-row">
-            <td class="action-manager-table-action-name"><?php
-                $actionNameInput = new \DarlingCms\classes\html\form\Text('actionName', $action->getActionName(), ['id' => 'actionNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover']);
-                echo $actionNameInput->getHtml();
-                ?></td>
-            <td class="action-manager-table-action-description">
-                <?php
-                $actionDescriptionInput = new \DarlingCms\classes\html\form\TextArea('actionDescription', ['id' => 'actionDescriptionFormElement', 'class' => 'dcms-input-textarea dcms-focus dcms-hover'], $action->getActionDescription());
-                echo $actionDescriptionInput->getHtml();
-                ?>
-            </td>
-            <td class="action-manager-table-action-description">
-                <?php
-                $saveButton = new \DarlingCms\classes\html\HtmlTag('button', ['class' => 'dcms-button action-manager-save-changes-button'], 'Save Changes');
-                echo $saveButton->getHtml();
-                ?>
-            </td>
-        </tr>
-        <?php
-    }
-    ?>
+}
+?>
 </table>
 
