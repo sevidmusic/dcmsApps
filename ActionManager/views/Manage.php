@@ -46,7 +46,8 @@ foreach ($actionCrud->readAll() as $action) {
                 'outputElementId' => 'ActionManagerView',
                 'requestType' => 'POST',
                 'contentType' => '',
-                'additionalParams' => 'anId=\'+this.parentNode.parentNode.children[0].children[0].value+\'' . '&' . 'actionName=\'+this.dataset.actionName+\'' . '&' . 'actionDescription=\'+this.dataset.actionDescription+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
+                // 'additionalParams' => 'actionName=\'+this.dataset.actionName+\'' . '&' . 'actionDescription=\'+this.dataset.actionDescription+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
+                'additionalParams' => 'originalActionName=\'+this.dataset.actionName+\'' . '&' . 'originalActionDescription=\'+this.dataset.actionDescription+\'' . '&' . 'actionName=\'+this.parentNode.parentNode.children[0].children[0].value+\'' . '&' . 'actionDescription=\'+this.parentNode.parentNode.children[1].children[0].value+\'',
                 'ajaxDirName' => 'handlers',
                 'callFunction' => '',
                 'callContext' => '',
