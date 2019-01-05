@@ -16,20 +16,34 @@ $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 ?>
 <h1>Manage Actions</h1>
 <table>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
+    <tr class="action-manager-table-header-row">
+        <th class="action-manager-table-header">Name</th>
+        <th class="action-manager-table-header">Description</th>
+        <th class="action-manager-table-header"></th>
     </tr>
-    <tr>
-        <td><?php
-            $actionNameInput = new \DarlingCms\classes\html\form\Text('actionName', '', ['id' => 'actionNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover']);
-            echo $actionNameInput->getHtml();
-            ?></td>
-        <td>
-            <?php
-            $actionDescriptionInput = new \DarlingCms\classes\html\form\TextArea('actionDescription', ['id' => 'actionDescriptionFormElement', 'class' => 'dcms-input-textarea dcms-focus dcms-hover']);
-            echo $actionDescriptionInput->getHtml();
-            ?>
-        </td>
-    </tr>
+    <?php
+    foreach ($actionCrud->readAll() as $action) {
+        ?>
+        <tr class="action-manager-table-row">
+            <td class="action-manager-table-action-name"><?php
+                $actionNameInput = new \DarlingCms\classes\html\form\Text('actionName', $action->getActionName(), ['id' => 'actionNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover']);
+                echo $actionNameInput->getHtml();
+                ?></td>
+            <td class="action-manager-table-action-description">
+                <?php
+                $actionDescriptionInput = new \DarlingCms\classes\html\form\TextArea('actionDescription', ['id' => 'actionDescriptionFormElement', 'class' => 'dcms-input-textarea dcms-focus dcms-hover'], $action->getActionDescription());
+                echo $actionDescriptionInput->getHtml();
+                ?>
+            </td>
+            <td class="action-manager-table-action-description">
+                <?php
+                $saveButton = new \DarlingCms\classes\html\HtmlTag('button', ['class' => 'dcms-button action-manager-save-changes-button'], 'Save Changes');
+                echo $saveButton->getHtml();
+                ?>
+            </td>
+        </tr>
+        <?php
+    }
+    ?>
 </table>
+
