@@ -1,1 +1,1 @@
-The Error Viewer provides a user interface for viewing any errors that have been logged to the default PHP error log. The Error Viewer can also be configured to display additional error logs.
+The Todo app scans the Darling Cms for any todo messages and displays them in an admin panel.

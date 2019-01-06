@@ -1,6 +1,6 @@
 <div style="background: #1f70ff;color: #040e21; border: 3px solid #ffffff;border-radius: 20px;padding:20px;"
      id="AjaxRouter">
-    <div id="AjaxOutput"></div>
+    <div style="max-height: 468px;overflow:auto;" id="AjaxOutput"></div>
     <button class="dcms-button" onclick="AjaxRouterRequest()">Test Default Request</button>
     <button class="dcms-button" onclick="AjaxRouterRequest('AjaxRouterTester','getRequest','AjaxOutput','GET')">Test GET
         Request

@@ -7,7 +7,7 @@ $timeCard = new \Apps\Earnings\classes\TimeCard('now', new DateTimeZone('America
 $timeCardCalculator = new \Apps\Earnings\classes\TimeCardCalculator($timeCard);
 $hoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS);
 $minutesToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_MINUTES);
-$unPaidHoursToDate = bcsub($hoursToDate, '226.77', 2); // 09/25/2018 to 12/09/2018 | USE INVOICE PANEL TO MANUALLY CALCULATE RIGHT OPERAND USING THE OLDEST DATE TO THE LAST DAY OF THE LAST PAY PERIOD
+$unPaidHoursToDate = bcsub($hoursToDate, '0.00', 2); // USE INVOICE PANEL TO MANUALLY CALCULATE RIGHT OPERAND USING THE OLDEST DATE TO THE LAST DAY OF THE LAST PAY PERIOD | i.e. unpaid punches/time cards
 $todayHours = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_SELECTED => array($timeCard->getCurrentTimeCardName())));
 
 $hoursWorkedToday = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_SELECTED => array($timeCard->getCurrentTimeCardName())));

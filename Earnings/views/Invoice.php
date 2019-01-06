@@ -16,7 +16,7 @@ $totalHoursWorked = $userInterface->geTimeWorkedFromSelected();
 <?php echo $userInterface->getTimeCardRangeSelector(); ?>
 <p>Total Hours Worked: <?php echo $totalHoursWorked; ?></p>
 <p>Total Money Earned (Due): $<?php echo calculateEarnings($totalHoursWorked, '10'); ?></p>
-<p>Total Money Earned Toward Debt: $<?php echo calculateEarnings($totalHoursWorked, '2.50'); ?></p>
+<p>Total Money Earned Toward Debt: $<?php echo bcadd(calculateEarnings($totalHoursWorked, '2.50'), '695.13', 2); ?></p>
 <table class="timeCard-invoice-table">
     <tr class="timeCard-invoice-table-tr">
         <th class="timeCard-invoice-table-th">Date</th>
