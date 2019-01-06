@@ -11,9 +11,9 @@ namespace Apps\ActionManager\classes;
 
 use DarlingCms\abstractions\userInterface\AjaxUi;
 
-class ActionManagerUi extends AjaxUi
+class ActionManagerUi extends AjaxUi // @todo ! Rename to ActionManagerUI
 {
-    protected $defaultView = 'createAction';
+    protected $defaultView = 'manageActions';
     /**
      * AjaxUi constructor.
      * @param string $appName Name of the app the user interface belongs to.
@@ -34,7 +34,7 @@ class ActionManagerUi extends AjaxUi
      */
     public function getUserInterface(): string
     {
-        $output = '<div id="ActionManager" class="dcms-admin-panel dcms-admin-panel-pos4 dcms-make-draggable">';
+        $output = '<div id="ActionManager" class="dcms-admin-panel dcms-admin-panel-pos1 dcms-make-draggable">';
         $output .= '<div id="ActionManagerHandle" class="dcms-drag-handle">Click here to move...</div>';
         $output .= '<div id="ActionManagerViewsMenu">' . implode('', $this->getViewLinks()) . '</div>';
         $output .= '<div id="ActionManagerView">' . $this->getCurrentViewHtml() . '</div>';
