@@ -44,7 +44,7 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                     foreach ($permission->getActions() as $action) {
                         array_push($assignedActionNames, $action->getActionName());
                         $actionCheckbox = new \DarlingCms\classes\html\form\Checkbox($action->getActionName() . '-checkbox', $action->getActionName(), ['checked', 'class' => 'dcms-input-checkbox dcms-focus dcms-hover permission-manager-input-checkbox']);
-                        echo '<div class="permission-manager-assigned-action-checkbox">' . $actionCheckbox->getHtml() . $action->getActionName() . '</div>';
+                        echo '<div title="Un-check to un-assign..." class="permission-manager-assigned-action-checkbox">' . $actionCheckbox->getHtml() . $action->getActionName() . '</div>';
                     }
                     ?>
                 </div>
@@ -56,7 +56,7 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                     foreach ($actionCrud->readAll() as $action) {
                         if (!in_array($action->getActionName(), $assignedActionNames, true) === true) {
                             $actionCheckbox = new \DarlingCms\classes\html\form\Checkbox($action->getActionName() . '-checkbox', $action->getActionName(), ['class' => 'dcms-input-checkbox dcms-focus dcms-hover permission-manager-input-checkbox']);
-                            echo '<div class="permission-manager-available-action-checkbox">' . $actionCheckbox->getHtml() . $action->getActionName() . '</div>';
+                            echo '<div title="Check to assign..." class="permission-manager-available-action-checkbox">' . $actionCheckbox->getHtml() . $action->getActionName() . '</div>';
                         }
                     }
                     ?>
