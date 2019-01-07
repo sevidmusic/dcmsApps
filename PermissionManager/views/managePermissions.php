@@ -20,71 +20,90 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
         <th class="permission-manager-table-header">Name</th>
         <th class="permission-manager-table-header">Assigned Actions</th>
         <th class="permission-manager-table-header">Available Actions (Not Assigned)</th>
-        <th class="permission-manager-table-header">update</th>
-        <th class="permission-manager-table-header">delete</th>
+        <th class="permission-manager-table-header"></th>
+        <th class="permission-manager-table-header"></th>
     </tr>
     <?php
     foreach ($permissionCrud->readAll() as $permission) {
         ?>
         <tr class="permission-manager-table-row">
             <td id="<?php echo trim(str_replace(' ', '', $permission->getPermissionName())); ?>-permission-name"
-                class="permission-manager-table-permission-name"><?php
-                $permissionNameInput = new \DarlingCms\classes\html\form\Text('permissionName', $permission->getPermissionName(), ['id' => 'permissionNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover permission-manager-input-text']);
-                echo $permissionNameInput->getHtml();
-                ?>
+                class="permission-manager-table-permission-name">
+                <div class="permission-manager-table-cell-content-container">
+                    <?php
+                    $permissionNameInput = new \DarlingCms\classes\html\form\Text('permissionName', $permission->getPermissionName(), ['id' => 'permissionNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover permission-manager-input-text']);
+                    echo $permissionNameInput->getHtml();
+                    ?>
+                </div>
             </td>
             <td id="<?php echo trim(str_replace(' ', '', $permission->getPermissionName())); ?>-permission-assigned-actions"
                 class="permission-manager-table-permission-assigned-actions">
-                <?php
-                $actionCheckboxes = '';
-                foreach ($permission->getActions() as $action) {
-                    $actionCheckbox = new \DarlingCms\classes\html\form\Checkbox($action->getActionName() . '-checkbox', $action->getActionName(), ['class' => 'dcms-input-checkbox dcms-focus dcms-hover permission-manager-input-checkbox']);
-                    echo $actionCheckbox->getHtml();
-                }
-                //var_dump($actionCheckboxes);
-                //$permissionAssignedActions = new \DarlingCms\classes\html\form\TextArea('permissionAssignedActions', ['id' => 'permissionAssignedActionsFormElement', 'class' => 'dcms-input-textarea dcms-focus dcms-hover permission-manager-input-textarea'], $actionCheckboxes);
-                //echo $permissionAssignedActions->getHtml();
-                ?>
+                <div class="permission-manager-table-cell-content-container">
+                    <?php
+                    $assignedActionNames = array();
+                    foreach ($permission->getActions() as $action) {
+                        array_push($assignedActionNames, $action->getActionName());
+                        $actionCheckbox = new \DarlingCms\classes\html\form\Checkbox($action->getActionName() . '-checkbox', $action->getActionName(), ['checked', 'class' => 'dcms-input-checkbox dcms-focus dcms-hover permission-manager-input-checkbox']);
+                        echo '<div class="permission-manager-assigned-action-checkbox">' . $actionCheckbox->getHtml() . $action->getActionName() . '</div>';
+                    }
+                    ?>
+                </div>
             </td>
             <td>
-                No Info
+                <div class="permission-manager-table-cell-content-container">
+                    <?php
+                    $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
+                    foreach ($actionCrud->readAll() as $action) {
+                        if (!in_array($action->getActionName(), $assignedActionNames, true) === true) {
+                            $actionCheckbox = new \DarlingCms\classes\html\form\Checkbox($action->getActionName() . '-checkbox', $action->getActionName(), ['class' => 'dcms-input-checkbox dcms-focus dcms-hover permission-manager-input-checkbox']);
+                            echo '<div class="permission-manager-available-action-checkbox">' . $actionCheckbox->getHtml() . $action->getActionName() . '</div>';
+                        }
+                    }
+                    ?>
+                </div>
             </td>
             <td class="permission-manager-table-update-permission">
-                <?php
-                $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
-                    'issuingApp' => 'PermissionManager',
-                    'handlerName' => 'updatePermissionHandler',
-                    'outputElementId' => 'PermissionManagerView',
-                    'requestType' => 'POST',
-                    'contentType' => '',
-                    // 'additionalParams' => 'permissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionDescription=\'+this.dataset.permissionDescription+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
-                    'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'originalPermissionDescription=\'+this.dataset.permissionDescription+\'' . '&' . 'permissionName=\'+this.parentNode.parentNode.children[0].children[0].value+\'' . '&' . 'permissionDescription=\'+this.parentNode.parentNode.children[1].children[0].value+\'',
-                    'ajaxDirName' => 'handlers',
-                    'callFunction' => '',
-                    'callContext' => '',
-                    'callArgs' => ''
-                ]);
-                //$updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'data-permission-description' => $permission->getPermissionDescription(), 'class' => 'dcms-button permission-manager-update-permission-button'], 'update Permission');
-                //echo $updateButton->getHtml();
-                ?>
+                <div class="permission-manager-table-cell-content-container">
+                    <?php
+                    $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                        'issuingApp' => 'PermissionManager',
+                        'handlerName' => 'updatePermissionHandler',
+                        'outputElementId' => 'PermissionManagerView',
+                        'requestType' => 'POST',
+                        'contentType' => '',
+                        // 'additionalParams' => 'permissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionDescription=\'+this.dataset.permissionDescription+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
+                        'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'originalPermissionDescription=\'+this.dataset.permissionDescription+\'' . '&' . 'permissionName=\'+this.parentNode.parentNode.children[0].children[0].value+\'' . '&' . 'permissionDescription=\'+this.parentNode.parentNode.children[1].children[0].value+\'',
+                        'ajaxDirName' => 'handlers',
+                        'callFunction' => '',
+                        'callContext' => '',
+                        'callArgs' => ''
+                    ]);
+                    //$updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'data-permission-description' => $permission->getPermissionDescription(), 'class' => 'dcms-button permission-manager-update-permission-button'], 'update Permission');
+                    //echo $updateButton->getHtml();
+                    $tempButton = new \DarlingCms\classes\html\HtmlTag('button', ['style' => 'cursor: not-allowed;', 'class' => 'dcms-button permission-manager-update-permission-button'], 'Not Available!');
+                    echo $tempButton->getHtml();
+                    ?>
+                </div>
             </td>
             <td class="permission-manager-table-delete-permission">
-                <?php
-                $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
-                    'issuingApp' => 'PermissionManager',
-                    'handlerName' => 'deletePermissionHandler',
-                    'outputElementId' => 'PermissionManagerView',
-                    'requestType' => 'POST',
-                    'contentType' => '',
-                    'additionalParams' => 'permissionName=\'+this.dataset.permissionName+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
-                    'ajaxDirName' => 'handlers',
-                    'callFunction' => '',
-                    'callContext' => '',
-                    'callArgs' => ''
-                ]);
-                $deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to delete the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $deleteAjaxReq . ' : console.log(\'Canceled request to delete the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'class' => 'dcms-button permission-manager-delete-permission-button'], 'Delete Permission');
-                echo $deleteButton->getHtml();
-                ?>
+                <div class="permission-manager-table-cell-content-container">
+                    <?php
+                    $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                        'issuingApp' => 'PermissionManager',
+                        'handlerName' => 'deletePermissionHandler',
+                        'outputElementId' => 'PermissionManagerView',
+                        'requestType' => 'POST',
+                        'contentType' => '',
+                        'additionalParams' => 'permissionName=\'+this.dataset.permissionName+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
+                        'ajaxDirName' => 'handlers',
+                        'callFunction' => '',
+                        'callContext' => '',
+                        'callArgs' => ''
+                    ]);
+                    $deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to delete the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $deleteAjaxReq . ' : console.log(\'Canceled request to delete the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'class' => 'dcms-button permission-manager-delete-permission-button'], 'Delete Permission');
+                    echo $deleteButton->getHtml();
+                    ?>
+                </div>
             </td>
         </tr>
         <?php
