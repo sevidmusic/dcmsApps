@@ -71,17 +71,15 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                         'outputElementId' => 'PermissionManagerView',
                         'requestType' => 'POST',
                         'contentType' => '',
-                        // 'additionalParams' => 'permissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionDescription=\'+this.dataset.permissionDescription+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
-                        'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'originalPermissionDescription=\'+this.dataset.permissionDescription+\'' . '&' . 'permissionName=\'+this.parentNode.parentNode.children[0].children[0].value+\'' . '&' . 'permissionDescription=\'+this.parentNode.parentNode.children[1].children[0].value+\'',
+                        //'additionalParams' => 'permissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionDescription=\'+this.dataset.permissionDescription+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
+                        'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionName=\'+this.parentNode.parentNode.children[0].children[0].value+\'',
                         'ajaxDirName' => 'handlers',
                         'callFunction' => '',
                         'callContext' => '',
                         'callArgs' => ''
                     ]);
-                    //$updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'data-permission-description' => $permission->getPermissionDescription(), 'class' => 'dcms-button permission-manager-update-permission-button'], 'update Permission');
-                    //echo $updateButton->getHtml();
-                    $tempButton = new \DarlingCms\classes\html\HtmlTag('button', ['style' => 'cursor: not-allowed;', 'class' => 'dcms-button permission-manager-update-permission-button'], 'Not Available!');
-                    echo $tempButton->getHtml();
+                    $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'class' => 'dcms-button permission-manager-update-permission-button'], 'update Permission');
+                    echo $updateButton->getHtml();
                     ?>
                 </div>
             </td>
@@ -100,8 +98,10 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                         'callContext' => '',
                         'callArgs' => ''
                     ]);
-                    $deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to delete the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $deleteAjaxReq . ' : console.log(\'Canceled request to delete the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'class' => 'dcms-button permission-manager-delete-permission-button'], 'Delete Permission');
-                    echo $deleteButton->getHtml();
+                    //$deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to delete the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $deleteAjaxReq . ' : console.log(\'Canceled request to delete the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'class' => 'dcms-button permission-manager-delete-permission-button'], 'Delete Permission');
+                    //echo $deleteButton->getHtml();
+                    $tempButton = new \DarlingCms\classes\html\HtmlTag('button', ['style' => 'cursor: not-allowed;', 'class' => 'dcms-button permission-manager-update-permission-button'], 'Not Available!');
+                    echo $tempButton->getHtml();
                     ?>
                 </div>
             </td>
