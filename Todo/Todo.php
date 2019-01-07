@@ -9,7 +9,7 @@ $todos = flattenArray($todos, true);
 asort($todos);
 $tasks = count($todos);
 ?>
-<div id="Todo" class="dcms-admin-panel dcms-admin-panel-pos1 dcms-make-draggable todo-container">
+<div id="Todo" class="dcms-admin-panel dcms-admin-panel-pos4 dcms-make-draggable todo-container">
     <div id="TodoHandle" draggable="true" class="dcms-drag-handle">Click here to drag...</div>
     <div id="TodoAjaxOutput" class="todo-ajax-output">
         <h1>Todo:</h1>

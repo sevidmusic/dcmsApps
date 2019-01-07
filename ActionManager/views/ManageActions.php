@@ -15,7 +15,7 @@ $sqlQuery = CoreValues::getISqlQueryInstance
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 ?>
 <h1>Manage Actions</h1>
-<table class="action-manager-table"
+<table class="action-manager-table">
 <tr class="action-manager-table-header-row">
     <th class="action-manager-table-header">Name</th>
     <th class="action-manager-table-header">Description</th>

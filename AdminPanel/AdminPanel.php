@@ -13,8 +13,8 @@
     <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('ActionManager')"
             ondblclick="hideAppPanel('ActionManager')" class="dcms-button admin-panel-button">Action Manager
     </button>
-    <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('PermissionsManager')"
-            ondblclick="hideAppPanel('PermissionsManager')" class="dcms-button admin-panel-button">Permissions Manager
+    <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('PermissionManager')"
+            ondblclick="hideAppPanel('PermissionManager')" class="dcms-button admin-panel-button">Permissions Manager
     </button>
     <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('Todo')"
             ondblclick="hideAppPanel('Todo')" class="dcms-button admin-panel-button">Todo
