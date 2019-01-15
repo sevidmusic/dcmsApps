@@ -1,5 +1,5 @@
 <?php
-
+/*
 $action = new \DarlingCms\classes\privilege\Action('Read Public', 'View public site content');
 $permission = new \DarlingCms\classes\privilege\Permission('View Public Content', $action);
 $role = new \DarlingCms\classes\privilege\Role('Basic User', $permission);
@@ -31,3 +31,4 @@ foreach ($userClasses as $user) {
     echo '</div>';
     $incrementer++;
 }
+*/
