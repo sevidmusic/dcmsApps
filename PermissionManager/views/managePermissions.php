@@ -65,14 +65,21 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
             <td class="permission-manager-table-update-permission">
                 <div class="permission-manager-table-cell-content-container">
                     <?php
+                    //
+                    // 1. Build param string from assignedActionNames, we dont need unassigned as any unchecked will be turned off.
+                    // 2. append constructed param string to additionalParams string
+                    //
+                    $assignedActionNamesStr = '';
+                    foreach ($assignedActionNames as $assignedActionName) {
+                        $assignedActionNamesStr .= '&assignedActions[]=' . $assignedActionName;
+                    }
                     $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
                         'issuingApp' => 'PermissionManager',
                         'handlerName' => 'updatePermissionHandler',
                         'outputElementId' => 'PermissionManagerView',
                         'requestType' => 'POST',
                         'contentType' => '',
-                        //'additionalParams' => 'permissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionDescription=\'+this.dataset.permissionDescription+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
-                        'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionName=\'+this.parentNode.parentNode.parentNode.children[0].children[0].children[0].value+\'',
+                        'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionName=\'+this.parentNode.parentNode.parentNode.children[0].children[0].children[0].value+\'' . '&' . 'ACTION_NAME=\'+this.parentNode.parentNode.parentNode.children[1].children[0].children[0].children[0].checked+\'',// . $assignedActionNamesStr,
                         'ajaxDirName' => 'handlers',
                         'callFunction' => '',
                         'callContext' => '',
