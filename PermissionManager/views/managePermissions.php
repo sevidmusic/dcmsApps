@@ -72,7 +72,7 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                         'requestType' => 'POST',
                         'contentType' => '',
                         //'additionalParams' => 'permissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionDescription=\'+this.dataset.permissionDescription+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
-                        'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionName=\'+this.parentNode.parentNode.children[0].children[0].value+\'',
+                        'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionName=\'+this.parentNode.parentNode.parentNode.children[0].children[0].children[0].value+\'',
                         'ajaxDirName' => 'handlers',
                         'callFunction' => '',
                         'callContext' => '',
