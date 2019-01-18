@@ -53,8 +53,10 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                 <div class="permission-manager-table-cell-content-container">
                     <?php
                     $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
+                    $unAssignedActionNames = array();
                     foreach ($actionCrud->readAll() as $action) {
                         if (!in_array($action->getActionName(), $assignedActionNames, true) === true) {
+                            array_push($unAssignedActionNames, $action->getActionName());
                             $actionCheckbox = new \DarlingCms\classes\html\form\Checkbox($action->getActionName() . '-checkbox', $action->getActionName(), ['class' => 'dcms-input-checkbox dcms-focus dcms-hover permission-manager-input-checkbox']);
                             echo '<div title="Check to assign..." class="permission-manager-available-action-checkbox">' . $actionCheckbox->getHtml() . $action->getActionName() . '</div>';
                         }
@@ -69,17 +71,22 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                     // 1. Build param string from assignedActionNames, we dont need unassigned as any unchecked will be turned off.
                     // 2. append constructed param string to additionalParams string
                     //
-                    $assignedActionNamesStr = '';
-                    foreach ($assignedActionNames as $assignedActionName) {
-                        $assignedActionNamesStr .= '&assignedActions[]=' . $assignedActionName;
+                    $assignedActionParamStr = '';
+                    for ($i = 0; $i <= (count($assignedActionNames) - 1); $i++) {
+                        $assignedActionParamStr .= '&' . 'assignedActionNames[]=\'+this.parentNode.parentNode.parentNode.children[1].children[0].children[' . $i . '].children[0].value+\'' . '&' . 'assignedActionStates[]=\'+this.parentNode.parentNode.parentNode.children[1].children[0].children[' . $i . '].children[0].checked+\'';
                     }
+                    $unAssignedActionParamStr = '';
+                    for ($i = 0; $i <= (count($unAssignedActionNames) - 1); $i++) {
+                        $unAssignedActionParamStr .= '&' . 'unAssignedActionNames[]=\'+this.parentNode.parentNode.parentNode.children[2].children[0].children[' . $i . '].children[0].value+\'' . '&' . 'unAssignedActionStates[]=\'+this.parentNode.parentNode.parentNode.children[2].children[0].children[' . $i . '].children[0].checked+\'';
+                    }
+
                     $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
                         'issuingApp' => 'PermissionManager',
                         'handlerName' => 'updatePermissionHandler',
                         'outputElementId' => 'PermissionManagerView',
                         'requestType' => 'POST',
                         'contentType' => '',
-                        'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionName=\'+this.parentNode.parentNode.parentNode.children[0].children[0].children[0].value+\'' . '&' . 'ACTION_NAME=\'+this.parentNode.parentNode.parentNode.children[1].children[0].children[0].children[0].checked+\'',// . $assignedActionNamesStr,
+                        'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionName=\'+this.parentNode.parentNode.parentNode.children[0].children[0].children[0].value+\'' . $assignedActionParamStr . $unAssignedActionParamStr,
                         'ajaxDirName' => 'handlers',
                         'callFunction' => '',
                         'callContext' => '',
