@@ -16,7 +16,16 @@ $sqlQuery = CoreValues::getISqlQueryInstance
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
 $post = filter_input_array(INPUT_POST);
-$actions = array_merge(array_combine($post['assignedActionNames'], $post['assignedActionStates']), array_combine($post['unAssignedActionNames'], $post['unAssignedActionStates']));
+$actions = array_merge(
+    array_combine(
+        (isset($post['assignedActionNames']) ? $post['assignedActionNames'] : array()),
+        (isset($post['assignedActionStates']) ? $post['assignedActionStates'] : array())
+    ),
+    array_combine(
+        (isset($post['unAssignedActionNames']) ? $post['unAssignedActionNames'] : array()),
+        (isset($post['unAssignedActionStates']) ? $post['unAssignedActionStates'] : array())
+    )
+);
 $assignedActions = array();
 foreach ($actions as $actionName => $actionState) {
     if ($actionState === 'true') {
@@ -24,6 +33,8 @@ foreach ($actions as $actionName => $actionState) {
     }
 }
 $newPermission = new \DarlingCms\classes\privilege\Permission($post['permissionName'], $assignedActions);
-var_dump($permissionCrud->update($post['originalPermissionName'], $newPermission));
-?>
-<p>This will update permissions...</p>
+if ($permissionCrud->update($post['originalPermissionName'], $newPermission) === true) {
+    echo '<p class="dcms-positive-text">Updated the ' . $post['originalPermissionName'] . ' Permission Successfully...</p>';
+} else {
+    echo '<p class="dcms-negative-text">The ' . $post['originalPermissionName'] . ' Permission could not be updated. Please try again...</p>';
+}
