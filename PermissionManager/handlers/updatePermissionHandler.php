@@ -38,3 +38,4 @@ if ($permissionCrud->update($post['originalPermissionName'], $newPermission) ===
 } else {
     echo '<p class="dcms-negative-text">The ' . $post['originalPermissionName'] . ' Permission could not be updated. Please try again...</p>';
 }
+

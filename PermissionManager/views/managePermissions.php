@@ -25,26 +25,30 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
     </tr>
     <?php
     foreach ($permissionCrud->readAll() as $permission) {
+        $permissionElementIdPrefix = trim(str_replace(' ', '', $permission->getPermissionName()));
+        $permissionNameElementId = $permissionElementIdPrefix . 'PermissionNameFormElement';
         ?>
         <tr class="permission-manager-table-row">
-            <td id="<?php echo trim(str_replace(' ', '', $permission->getPermissionName())); ?>-permission-name"
+            <td id="<?php echo $permissionElementIdPrefix; ?>-permission-name"
                 class="permission-manager-table-permission-name">
                 <div class="permission-manager-table-cell-content-container">
                     <?php
-                    $permissionNameInput = new \DarlingCms\classes\html\form\Text('permissionName', $permission->getPermissionName(), ['id' => 'permissionNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover permission-manager-input-text']);
+                    $permissionNameInput = new \DarlingCms\classes\html\form\Text('permissionName', $permission->getPermissionName(), ['id' => $permissionNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover permission-manager-input-text']);
                     echo $permissionNameInput->getHtml();
                     ?>
                 </div>
             </td>
-            <td id="<?php echo trim(str_replace(' ', '', $permission->getPermissionName())); ?>-permission-assigned-actions"
+            <td id="<?php echo $permissionElementIdPrefix; ?>-permission-assigned-actions"
                 class="permission-manager-table-permission-assigned-actions">
                 <div class="permission-manager-table-cell-content-container">
                     <?php
                     $assignedActionNames = array();
+                    $assignedActionIncrementer = 0;
                     foreach ($permission->getActions() as $action) {
                         array_push($assignedActionNames, $action->getActionName());
-                        $actionCheckbox = new \DarlingCms\classes\html\form\Checkbox($action->getActionName() . '-checkbox', $action->getActionName(), ['checked', 'class' => 'dcms-input-checkbox dcms-focus dcms-hover permission-manager-input-checkbox']);
+                        $actionCheckbox = new \DarlingCms\classes\html\form\Checkbox($action->getActionName() . '-checkbox', $action->getActionName(), ['id' => $permissionElementIdPrefix . 'AssignedActionCheckbox' . strval($assignedActionIncrementer), 'checked', 'class' => 'dcms-input-checkbox dcms-focus dcms-hover permission-manager-input-checkbox']);
                         echo '<div title="Un-check to un-assign..." class="permission-manager-assigned-action-checkbox">' . $actionCheckbox->getHtml() . $action->getActionName() . '</div>';
+                        $assignedActionIncrementer++;
                     }
                     ?>
                 </div>
@@ -54,11 +58,13 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                     <?php
                     $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
                     $unAssignedActionNames = array();
+                    $unAssignedActionIncrementer = 0;
                     foreach ($actionCrud->readAll() as $action) {
                         if (!in_array($action->getActionName(), $assignedActionNames, true) === true) {
                             array_push($unAssignedActionNames, $action->getActionName());
-                            $actionCheckbox = new \DarlingCms\classes\html\form\Checkbox($action->getActionName() . '-checkbox', $action->getActionName(), ['class' => 'dcms-input-checkbox dcms-focus dcms-hover permission-manager-input-checkbox']);
+                            $actionCheckbox = new \DarlingCms\classes\html\form\Checkbox($action->getActionName() . '-checkbox', $action->getActionName(), ['id' => $permissionElementIdPrefix . 'UnAssignedActionCheckbox' . strval($unAssignedActionIncrementer), 'class' => 'dcms-input-checkbox dcms-focus dcms-hover permission-manager-input-checkbox']);
                             echo '<div title="Check to assign..." class="permission-manager-available-action-checkbox">' . $actionCheckbox->getHtml() . $action->getActionName() . '</div>';
+                            $unAssignedActionIncrementer++;
                         }
                     }
                     ?>
@@ -73,11 +79,13 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                     //
                     $assignedActionParamStr = '';
                     for ($i = 0; $i <= (count($assignedActionNames) - 1); $i++) {
-                        $assignedActionParamStr .= '&' . 'assignedActionNames[]=\'+this.parentNode.parentNode.parentNode.children[1].children[0].children[' . $i . '].children[0].value+\'' . '&' . 'assignedActionStates[]=\'+this.parentNode.parentNode.parentNode.children[1].children[0].children[' . $i . '].children[0].checked+\'';
+                        $assignedActionTargetId = $permissionElementIdPrefix . 'AssignedActionCheckbox' . $i;
+                        $assignedActionParamStr .= '&' . 'assignedActionNames[]=\'+getElementValue(\'' . $assignedActionTargetId . '\')+\'' . '&' . 'assignedActionStates[]=\'+checkboxIsChecked(\'' . $assignedActionTargetId . '\')+\'';
                     }
                     $unAssignedActionParamStr = '';
                     for ($i = 0; $i <= (count($unAssignedActionNames) - 1); $i++) {
-                        $unAssignedActionParamStr .= '&' . 'unAssignedActionNames[]=\'+this.parentNode.parentNode.parentNode.children[2].children[0].children[' . $i . '].children[0].value+\'' . '&' . 'unAssignedActionStates[]=\'+this.parentNode.parentNode.parentNode.children[2].children[0].children[' . $i . '].children[0].checked+\'';
+                        $unAssignedActionTargetId = $permissionElementIdPrefix . 'UnAssignedActionCheckbox' . $i;
+                        $unAssignedActionParamStr .= '&' . 'unAssignedActionNames[]=\'+getElementValue(\'' . $unAssignedActionTargetId . '\')+\'' . '&' . 'unAssignedActionStates[]=\'+checkboxIsChecked(\'' . $unAssignedActionTargetId . '\')+\'';
                     }
 
                     $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
@@ -86,7 +94,7 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                         'outputElementId' => 'PermissionManagerView',
                         'requestType' => 'POST',
                         'contentType' => '',
-                        'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionName=\'+this.parentNode.parentNode.parentNode.children[0].children[0].children[0].value+\'' . $assignedActionParamStr . $unAssignedActionParamStr,
+                        'additionalParams' => 'originalPermissionName=\'+this.dataset.permissionName+\'' . '&' . 'permissionName=\'+getElementValue(\'' . $permissionNameElementId . '\')+\'' . $assignedActionParamStr . $unAssignedActionParamStr,
                         'ajaxDirName' => 'handlers',
                         'callFunction' => '',
                         'callContext' => '',
