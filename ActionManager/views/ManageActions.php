@@ -26,6 +26,7 @@ $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
     foreach ($actionCrud->readAll() as $action) {
         $actionElementIdPrefix = str_replace(' ', '', $action->getActionName());
         $actionNameFormElementId = $actionElementIdPrefix . 'ActionNameFormElement';
+        $actionDescriptionFormElementId = $actionElementIdPrefix . 'ActionDescriptionFormElement';
         ?>
         <tr class="action-manager-table-row">
             <td id="<?php echo trim($actionElementIdPrefix); ?>-action-name"
@@ -36,7 +37,7 @@ $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
             <td id="<?php echo trim($actionElementIdPrefix); ?>-action-description"
                 class="action-manager-table-action-description">
                 <?php
-                $actionDescriptionInput = new \DarlingCms\classes\html\form\TextArea('actionDescription', ['id' => $actionElementIdPrefix . 'ActionDescriptionFormElement', 'class' => 'dcms-input-textarea dcms-focus dcms-hover action-manager-input-textarea'], $action->getActionDescription());
+                $actionDescriptionInput = new \DarlingCms\classes\html\form\TextArea('actionDescription', ['id' => $actionDescriptionFormElementId, 'class' => 'dcms-input-textarea dcms-focus dcms-hover action-manager-input-textarea'], $action->getActionDescription());
                 echo $actionDescriptionInput->getHtml();
                 ?>
             </td>
@@ -48,9 +49,7 @@ $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
                     'outputElementId' => 'ActionManagerView',
                     'requestType' => 'POST',
                     'contentType' => '',
-                    'additionalParams' => 'originalActionName=\'+this.dataset.actionName+\'' . '&' . 'originalActionDescription=\'+this.dataset.actionDescription+\'' . '&' . 'actionName=\'+this.parentNode.parentNode.children[0].children[0].value+\'' . '&' . 'actionDescription=\'+this.parentNode.parentNode.children[1].children[0].value+\'',
-                    //                     'additionalParams' => 'originalActionName=\'+this.dataset.actionName+\'' . '&' . 'originalActionDescription=\'+this.dataset.actionDescription+\'' . '&' . 'actionName=\'+this.parentNode.parentNode.children[0].children[0].value+\'' . '&' . 'actionDescription=\'+this.parentNode.parentNode.children[1].children[0].value+\'',
-                    //'additionalParams' => 'originalActionName=\'+getElementValue(\'' . $actionNameFormElementId . '\')+\'' . '&' . 'originalActionDescription=\'+this.dataset.actionDescription+\'' . '&' . 'actionName=\'+this.parentNode.parentNode.children[0].children[0].value+\'' . '&' . 'actionDescription=\'+this.parentNode.parentNode.children[1].children[0].value+\'',
+                    'additionalParams' => 'originalActionName=\'+this.dataset.actionName+\'' . '&' . 'originalActionDescription=\'+this.dataset.actionDescription+\'' . '&' . 'actionName=\'+getElementValue(\'' . $actionNameFormElementId . '\')+\'' . '&' . 'actionDescription=\'+getElementValue(\'' . $actionDescriptionFormElementId . '\')+\'',
                     'ajaxDirName' => 'handlers',
                     'callFunction' => '',
                     'callContext' => '',
