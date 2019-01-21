@@ -15,7 +15,8 @@ $sqlQuery = CoreValues::getISqlQueryInstance
 );
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 $action = new \DarlingCms\classes\privilege\Action(filter_input(INPUT_POST, 'actionName'), filter_input(INPUT_POST, 'actionDescription'));
-$actionCrud->create($action);
+//$actionCrud->create($action);
+var_dump(filter_input_array(INPUT_POST));
 ?>
 
-<p>Created new action "Some Action"</p>
+<p>Created new action <?php echo filter_input(INPUT_POST, 'actionName'); ?></p>
