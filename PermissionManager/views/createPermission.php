@@ -16,11 +16,6 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $a
 $post = filter_input_array(INPUT_POST);
 
 $permissionNameInput = new \DarlingCms\classes\html\form\Input('text', 'newPermissionName', '', ['id' => 'permission-manager-permission-name-input', 'class' => 'dcms-input-text'], true);
+$createPermissionButton = new \DarlingCms\classes\html\HtmlTag('button', ['id' => 'creatPermissionButton', 'onclick' => 'alert(\'Saving Permission\')'], 'Create Permission');
 echo $permissionNameInput->getHtml();
-/*
-<h1>Create A New Permission</h1>
-<label>
-    Permission Name:
-    <input type="text" name="newPermissionName">
-</label>
-*/
+echo $createPermissionButton->getHtml();
