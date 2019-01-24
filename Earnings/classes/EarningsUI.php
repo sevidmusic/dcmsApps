@@ -74,7 +74,6 @@ class EarningsUI implements IUserInterface
                 <a onclick=\"return AjaxRouterRequest('Earnings','Punches','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Punches&ajaxRequest=true','views')\" class=\"earnings-sticky-menu-link\" href=\"{$this->getViewUrl('Punches')}\">Punches</a>
                 <a onclick=\"return AjaxRouterRequest('Earnings','TimeWorked','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=TimeWorked&ajaxRequest=true','views')\" class=\"earnings-sticky-menu-link\" href=\"{$this->getViewUrl('TimeWorked')}\">Time Worked</a>
                 <a onclick=\"return AjaxRouterRequest('Earnings','Invoice','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Invoice&ajaxRequest=true','views')\" class=\"earnings-sticky-menu-link\" href=\"{$this->getViewUrl('Invoice')}\">Invoice</a>
-                <a onclick=\"return AjaxRouterRequest('Earnings','Dev','EarningsAjaxOutput','GET',undefined,'" . self::EARNINGS_VIEW_VAR_NAME . "=Dev&ajaxRequest=true','views')\" class=\"earnings-sticky-menu-link\" href=\"{$this->getViewUrl('Dev')}\">Dev</a>
         </div>";
     }
 
@@ -156,11 +155,12 @@ class EarningsUI implements IUserInterface
     /**
      * Get the name of the starting time card based on either the $_GET['startingTimeCardName'] var or the
      * name of the oldest time card.
-     * @return string The name of the starting time card.
+     * @return string The name of the starting time card. Note: Defaults to the oldest unpaid time card.
+     * @see EarningsUI::getOldestUnpaidTimeCardName()
      */
     public function getStartingTimeCardName(): string
     {
-        return (!empty(filter_input(INPUT_GET, 'startingTimeCardName')) ? filter_input(INPUT_GET, 'startingTimeCardName') : $this->getOldestTimeCardName());
+        return (!empty(filter_input(INPUT_GET, 'startingTimeCardName')) ? filter_input(INPUT_GET, 'startingTimeCardName') : $this->getOldestUnpaidTimeCardName());
     }
 
     /**
@@ -181,6 +181,33 @@ class EarningsUI implements IUserInterface
     {
         $timeCards = $this->timeCard->getTimeCardNames();
         return array_shift($timeCards);
+    }
+
+    public function getUnLoggedMoneyEarnedTowardDebt()
+    {
+        // // NOTE: the amount of 695.13 comes from the time worked from 9/25/2018 to 12/31/2018 | see master invoice in google drive
+        return '695.13';
+    }
+
+    public function getUnLoggedMoneyEarnedToDate()
+    {
+        // // NOTE: the amount of 2780.90 comes from the time worked from 9/25/2018 to 12/31/2018 | see master invoice in google drive
+        return '2780.90';
+    }
+
+    /**
+     * Returns the name of the last time card that was paid.
+     * Note: This is a quick fix for the paid/unpaid issue. This should really be figured out better.
+     * @return string The name of the last paid time card.
+     */
+    public function getLastPaidTimeCardName()
+    {
+        return '01072018';
+    }
+
+    public function getOldestUnpaidTimeCardName()
+    {
+        return '01242019';
     }
 
     /**

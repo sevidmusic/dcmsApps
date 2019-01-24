@@ -13,12 +13,10 @@ $userInterface = new \Apps\Earnings\classes\EarningsUI($timeCard);
  */
 // time worked
 $hoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$userInterface->getOldestTimeCardName(), $userInterface->getNewestTimeCardName()]]);
-$paidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$userInterface->getOldestTimeCardName(), '01072018']]); // @todo  Implement marking time cards as paid or unpiad so hardcoded ending time card name value not necessary
-$unPaidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => ['01152019', $userInterface->getEndingTimeCardName()]]); // todo Implement marking time cards as paid or unpiad so hardcoded starting time card name value not necessary
+$unPaidHoursToDate = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$userInterface->getOldestUnpaidTimeCardName(), $userInterface->getEndingTimeCardName()]]);
 // money earned/paid/owed/debt
-$moneyEarnedToDate = calculateEarnings($hoursToDate, '10.00');
-$moneyEarnedTowardDebt = bcadd('695.13', calculateEarnings($hoursToDate, '2.50'), 2);
-$moneyPaidToDate = calculateEarnings($paidHoursToDate, '10.00');
+$moneyEarnedToDate = bcadd($userInterface->getUnLoggedMoneyEarnedToDate(), calculateEarnings($hoursToDate, '10.00'), 2);
+$moneyEarnedTowardDebt = bcadd($userInterface->getUnLoggedMoneyEarnedTowardDebt(), calculateEarnings($hoursToDate, '2.50'), 2);
 $moneyOwedToDate = calculateEarnings($unPaidHoursToDate, '10.00');
 $remainingDebt = bcsub('2000.00', $moneyEarnedTowardDebt, 2);
 // specified calculations | based on selected time card range as set by the TimeCardRangeSelector.
@@ -26,13 +24,11 @@ $specifiedEarnings = calculateEarnings($userInterface->geTimeWorkedFromSelected(
 $specifiedEarnedTowardDebt = calculateEarnings($userInterface->geTimeWorkedFromSelected(), '2.50');
 ?>
     <h1>Earnings</h1>
-    <p><span class="earnings-key-text">Money Earned To Date: </span><span
-                class="earnings-value-text earnings-monetary-value">$<?php echo $moneyEarnedToDate; ?></span></p>
-    <p><span class="earnings-key-text">Money Paid To Date: </span><span
-                class="earnings-value-text earnings-monetary-value">$<?php echo $moneyPaidToDate; ?></span></p>
     <p class="earnings-emphasized-text"><span class="earnings-key-text">Money Owed To Date: </span><span
                 class="earnings-value-text earnings-monetary-value">$<?php echo $moneyOwedToDate; ?></span></p>
-    <p><span class="earnings-key-text">Money Earned Toward Debt To Date: </span><span
+    <p><span class="earnings-key-text">Money Earned To Date (Including $2780.90 for time worked form 9/25/2018 to 12/31/2018): </span><span
+                class="earnings-value-text earnings-monetary-value">$<?php echo $moneyEarnedToDate; ?></span></p>
+    <p><span class="earnings-key-text">Money Earned Toward Debt To Date (Including $695.13 for time worked form 9/25/2018 to 12/31/2018): </span><span
                 class="earnings-value-text earnings-monetary-value">$<?php echo $moneyEarnedTowardDebt; ?></span></p>
     <p><span class="earnings-key-text">Remaining Debt: </span><span
                 class="earnings-value-text earnings-monetary-value earnings-negative-value">$<?php echo $remainingDebt; ?></span>
