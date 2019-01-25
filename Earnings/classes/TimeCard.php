@@ -41,7 +41,7 @@ class TimeCard extends \DateTime
 
     public function getCurrentTimeCardName(): string
     {
-        return $this->timestampToString($this->getCurrentTimestamp(), 'mdY');
+        return $this->timestampToString($this->getCurrentTimestamp(), 'Ymd');
     }
 
     public function getCurrentTimestamp()
