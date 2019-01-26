@@ -15,6 +15,10 @@ class EarningsUI implements IUserInterface
 {
     public const EARNINGS_VIEW_VAR_NAME = 'earningsView';
 
+    private const CURRENT_WAGE = '10.00';
+
+    private const DEBT_WAGE = '2.50';
+
     private $timeCard;
 
     private $timeCardCalculator;
@@ -183,20 +187,6 @@ class EarningsUI implements IUserInterface
         return array_shift($timeCards);
     }
 
-    public function getUnLoggedMoneyEarnedTowardDebt()
-    {
-        // // NOTE: the amount of 695.13 comes from the time worked from 9/25/2018 to 12/31/2018 | see master invoice in google drive
-        return '0';
-        //return '695.13';
-    }
-
-    public function getUnLoggedMoneyEarnedToDate()
-    {
-        // // NOTE: the amount of 2780.90 comes from the time worked from 9/25/2018 to 12/31/2018 | see master invoice in google drive
-        return '0';
-        //return '2780.90';
-    }
-
     /**
      * Returns the name of the last time card that was paid.
      * Note: This is a quick fix for the paid/unpaid issue. This should really be figured out better.
@@ -204,12 +194,12 @@ class EarningsUI implements IUserInterface
      */
     public function getLastPaidTimeCardName()
     {
-        return '01072018';
+        return '20180118';
     }
 
     public function getOldestUnpaidTimeCardName()
     {
-        return '01242019';
+        return '20190124';
     }
 
     /**
@@ -251,6 +241,71 @@ class EarningsUI implements IUserInterface
             default:
                 return $this->timeCardCalculator->calculateTimeWorked($format, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$this->getEndingTimeCardName(), $this->getStartingTimeCardName()]]);
         }
+    }
+
+    public function getHoursToDate()
+    {
+        return $this->timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$this->getOldestTimeCardName(), $this->getNewestTimeCardName()]]);
+    }
+
+    public function getUnPaidHoursToDate()
+    {
+        return $this->timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$this->getOldestUnpaidTimeCardName(), $this->getEndingTimeCardName()]]);
+    }
+
+    public function getUnPaidMinutesToDate()
+    {
+        return $this->timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_MINUTES, [\Apps\Earnings\classes\TimeCardCalculator::OPTION_RANGE => [$this->getOldestUnpaidTimeCardName(), $this->getEndingTimeCardName()]]);
+    }
+
+    public function getMoneyEarnedToDate()
+    {
+        return calculateEarnings($this->getHoursToDate(), self::CURRENT_WAGE); // @todo calculate earnings must be moved to TimeCardCalculator
+    }
+
+    public function getMoneyEarnedTowardDebt()
+    {
+        return calculateEarnings($this->getHoursToDate(), self::DEBT_WAGE);
+    }
+
+    public function getMoneyOwedToDate()
+    {
+        return calculateEarnings($this->getUnPaidHoursToDate(), self::CURRENT_WAGE);
+    }
+
+    public function getRemainingDebt()
+    {
+        return bcsub('2000.00', $this->getMoneyEarnedTowardDebt(), 2);
+    }
+
+    public function getSpecifiedEarnings()
+    {
+        return calculateEarnings($this->geTimeWorkedFromSelected(), self::CURRENT_WAGE);
+    }
+
+    public function getSpecifiedEarnedTowardDebt()
+    {
+        return calculateEarnings($this->geTimeWorkedFromSelected(), self::DEBT_WAGE);
+    }
+
+    public function getHoursWorkedToday()
+    {
+        return $this->timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_HOURS, array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_SELECTED => array($this->timeCard->getCurrentTimeCardName())));
+    }
+
+    public function getMinutesWorkedToday()
+    {
+        return $this->timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_MINUTES, array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_SELECTED => array($this->timeCard->getCurrentTimeCardName())));
+    }
+
+    public function getMinutesWorkedToDate()
+    {
+        return $this->timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_MINUTES);
+    }
+
+    public function getSecondsWorkedToday()
+    {
+        return $this->timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes\TimeCardCalculator::FORMAT_SECONDS, array(\Apps\Earnings\classes\TimeCardCalculator::OPTION_SELECTED => array($this->timeCard->getCurrentTimeCardName())));
     }
 
 }

@@ -4,6 +4,7 @@
  * @param string $hoursWorked Number of hours worked. Note: Decimal values are allowed.
  * @param string $wage The hourly wage.
  * @return string The money earned based on the specified hours and wage.
+ * // @todo calculate earnings must be moved to TimeCardCalculator
  */
 function calculateEarnings(string $hoursWorked, string $wage)
 {

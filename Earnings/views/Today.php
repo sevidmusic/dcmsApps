@@ -12,9 +12,7 @@ $minutesWorked = $timeCardCalculator->calculateTimeWorked(\Apps\Earnings\classes
     <p>
         <span class="earnings-key-text">Time worked today:</span>
         <span class="earnings-value-text"><?php echo \Apps\Earnings\classes\EarningsUI::formatTimeForDisplay($hoursWorked, $minutesWorked); ?>
-            <span style="color: #5786aa;">
-                <span style="color: #ffffff;margin-left: 10px;margin-right: 5px;"> | </span><?php echo $hoursWorked; ?> hours
-            </span>
+            <span style="color: #5786aa;">(<?php echo $hoursWorked; ?> hours)</span>
             <span style="clear: both;"></span>
         </span>
     </p>
