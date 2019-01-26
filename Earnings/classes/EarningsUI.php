@@ -186,13 +186,15 @@ class EarningsUI implements IUserInterface
     public function getUnLoggedMoneyEarnedTowardDebt()
     {
         // // NOTE: the amount of 695.13 comes from the time worked from 9/25/2018 to 12/31/2018 | see master invoice in google drive
-        return '695.13';
+        return '0';
+        //return '695.13';
     }
 
     public function getUnLoggedMoneyEarnedToDate()
     {
         // // NOTE: the amount of 2780.90 comes from the time worked from 9/25/2018 to 12/31/2018 | see master invoice in google drive
-        return '2780.90';
+        return '0';
+        //return '2780.90';
     }
 
     /**
@@ -222,7 +224,10 @@ class EarningsUI implements IUserInterface
 
     public function formatTimeCardName(string $timeCardName)
     {
-        return "{$timeCardName[0]}{$timeCardName[1]}/{$timeCardName[2]}{$timeCardName[3]}/{$timeCardName[4]}{$timeCardName[5]}{$timeCardName[6]}{$timeCardName[7]}";
+        if (strlen($timeCardName) === 9) { // accommodate time cards with names like 11242018a, 11242018b, etc.
+            return "{$timeCardName[4]}{$timeCardName[5]}/{$timeCardName[6]}{$timeCardName[7]}/{$timeCardName[0]}{$timeCardName[1]}{$timeCardName[2]}{$timeCardName[3]}{$timeCardName[8]}";
+        }
+        return "{$timeCardName[4]}{$timeCardName[5]}/{$timeCardName[6]}{$timeCardName[7]}/{$timeCardName[0]}{$timeCardName[1]}{$timeCardName[2]}{$timeCardName[3]}";
     }
 
     /**
