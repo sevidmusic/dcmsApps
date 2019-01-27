@@ -164,7 +164,33 @@ class EarningsUI implements IUserInterface
      */
     public function getStartingTimeCardName(): string
     {
+        $forSelect = $this->formatForSelect(!empty(filter_input(INPUT_GET, 'startingTimeCardName')) ? filter_input(INPUT_GET, 'startingTimeCardName') : $this->getOldestUnpaidTimeCardName());
+        $fromSelect = $this->formatFromSelect($forSelect);
+        var_dump($forSelect, $fromSelect);
         return (!empty(filter_input(INPUT_GET, 'startingTimeCardName')) ? filter_input(INPUT_GET, 'startingTimeCardName') : $this->getOldestUnpaidTimeCardName());
+    }
+
+    private function formatForSelect(string $timeCardName)
+    {
+        if (ctype_digit(substr($timeCardName, 0, 8)) && (strlen($timeCardName) === 9)) {
+            return "{$timeCardName[4]}{$timeCardName[5]}/{$timeCardName[6]}{$timeCardName[7]}/{$timeCardName[0]}{$timeCardName[1]}{$timeCardName[2]}{$timeCardName[3]}{$timeCardName[8]}";
+        }
+        if (ctype_digit($timeCardName) && (strlen($timeCardName) === 8)) {
+            return "{$timeCardName[4]}{$timeCardName[5]}/{$timeCardName[6]}{$timeCardName[7]}/{$timeCardName[0]}{$timeCardName[1]}{$timeCardName[2]}{$timeCardName[3]}";
+        }
+        return "{$timeCardName}";
+    }
+
+    private function formatFromSelect(string $timeCardName)
+    {
+        $testString = substr($timeCardName[0] . $timeCardName[1] . $timeCardName[3] . $timeCardName[4] . $timeCardName[6] . $timeCardName[7] . $timeCardName[8] . $timeCardName[9], 0, 8);
+        if (ctype_digit($testString) && (strlen($timeCardName) === 11)) {
+            return str_replace('/', '', "{$timeCardName[6]}{$timeCardName[7]}{$timeCardName[8]}{$timeCardName[9]}{$timeCardName[0]}{$timeCardName[1]}{$timeCardName[2]}{$timeCardName[3]}{$timeCardName[4]}{$timeCardName[5]}{$timeCardName[10]}");
+        }
+        if (ctype_digit($testString) && (strlen($timeCardName) === 10)) {
+            return str_replace('/', '', "{$timeCardName[6]}{$timeCardName[7]}{$timeCardName[8]}{$timeCardName[9]}{$timeCardName[0]}{$timeCardName[1]}{$timeCardName[2]}{$timeCardName[3]}{$timeCardName[4]}{$timeCardName[5]}");
+        }
+        return "{$timeCardName}";
     }
 
     /**
