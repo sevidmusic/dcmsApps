@@ -28,7 +28,7 @@ $totalHoursWorked = $userInterface->geTimeWorkedFromSelected();
     <?php foreach ($userInterface->getTimeCardNames() as $timeCardName) { ?>
         <tr class="timeCard-invoice-table-tr">
             <td class="timeCard-invoice-table-td timeCard-invoice-table-date-col">
-                <?php echo "{$timeCardName[0]}{$timeCardName[1]}/{$timeCardName[2]}{$timeCardName[3]}/{$timeCardName[4]}{$timeCardName[5]}{$timeCardName[6]}{$timeCardName[7]}"; ?>
+                <?php echo "{$userInterface->formatForSelect($timeCardName)}"; ?>
             </td>
             <td class="timeCard-invoice-table-td timeCard-invoice-table-punches-col">
                 <ul>

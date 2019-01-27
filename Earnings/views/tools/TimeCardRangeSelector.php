@@ -9,11 +9,12 @@ $userInterface = new \Apps\Earnings\classes\EarningsUI($timeCard);
                 name="startingTimeCardName" id="timeCardSelectRangeStart" class="dcms-select timeCard-selectRange">
             <?php
             foreach ($timeCard->getTimeCardNames() as $timeCardName) {
+                $formattedTimeCardName = $userInterface->formatForSelect($timeCardName);
                 if ($timeCardName === $userInterface->getStartingTimeCardName()) {
-                    echo "<option selected>{$timeCardName}</option>";
+                    echo "<option selected>{$formattedTimeCardName}</option>";
                     continue;
                 }
-                echo "<option>{$timeCardName}</option>";
+                echo "<option>{$formattedTimeCardName}</option>";
             }
             ?>
         </select>
@@ -22,11 +23,12 @@ $userInterface = new \Apps\Earnings\classes\EarningsUI($timeCard);
                 name="endingTimeCardName" id="timeCardSelectRangeEnd" class="dcms-select timeCard-selectRange">
             <?php
             foreach (array_reverse($timeCard->getTimeCardNames()) as $timeCardName) {
+                $formattedTimeCardName = $userInterface->formatForSelect($timeCardName);
                 if ($timeCardName === $userInterface->getEndingTimeCardName()) {
-                    echo "<option selected>{$timeCardName}</option>";
+                    echo "<option selected>{$formattedTimeCardName}</option>";
                     continue;
                 }
-                echo "<option>{$timeCardName}</option>";
+                echo "<option>{$formattedTimeCardName}</option>";
             }
             ?>
         </select>
