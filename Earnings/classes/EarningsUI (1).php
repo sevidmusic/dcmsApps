@@ -107,7 +107,7 @@ class EarningsUI implements IUserInterface
 
     public function getMainContainerStart(): string
     {
-        return '<div id="Earnings" class="dcms-admin-panel dcms-admin-panel-pos4 dcms-make-draggable">'; // @todo Rename "Earnings" to "Earnings"
+        return '<div id="Earnings" class="dcms-admin-panel dcms-admin-panel-pos3 dcms-make-draggable">'; // @todo Rename "Earnings" to "Earnings"
     }
 
     public function getMainContainerEnd()

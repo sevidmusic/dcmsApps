@@ -34,7 +34,7 @@ class PermissionManagerUI extends AjaxUi
      */
     public function getUserInterface(): string
     {
-        $output = '<div id="PermissionManager" class="dcms-admin-panel dcms-admin-panel-pos2 dcms-make-draggable">';
+        $output = '<div id="PermissionManager" class="dcms-admin-panel dcms-admin-panel-pos4 dcms-make-draggable">';
         $output .= '<div id="PermissionManagerHandle" class="dcms-drag-handle">Click here to move...</div>';
         $output .= '<div id="PermissionManagerViewsMenu">' . implode('', $this->getViewLinks()) . '</div>';
         $output .= '<div id="PermissionManagerView">' . $this->getCurrentViewHtml() . '</div>';
