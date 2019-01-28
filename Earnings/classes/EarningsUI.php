@@ -132,7 +132,7 @@ class EarningsUI implements IUserInterface
 
     public function getTimeCardRangeSelector()
     {
-        include realpath('../views/tools/TimeCardRangeSelector.php');
+        include str_replace('classes', 'views/tools/TimeCardRangeSelector.php', __DIR__);
     }
 
     /**
