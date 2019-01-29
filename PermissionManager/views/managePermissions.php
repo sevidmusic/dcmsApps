@@ -100,7 +100,7 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                         'callContext' => '',
                         'callArgs' => ''
                     ]);
-                    $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'class' => 'dcms-button permission-manager-update-permission-button'], 'update Permission');
+                    $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'class' => 'dcms-button permission-manager-update-permission-button'], 'Update Permission');
                     echo $updateButton->getHtml();
                     ?>
                 </div>
@@ -120,10 +120,10 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
                         'callContext' => '',
                         'callArgs' => ''
                     ]);
-                    //$deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to delete the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $deleteAjaxReq . ' : console.log(\'Canceled request to delete the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'class' => 'dcms-button permission-manager-delete-permission-button'], 'Delete Permission');
-                    //echo $deleteButton->getHtml();
-                    $tempButton = new \DarlingCms\classes\html\HtmlTag('button', ['style' => 'cursor: not-allowed;', 'class' => 'dcms-button permission-manager-update-permission-button'], 'Not Available!');
-                    echo $tempButton->getHtml();
+                    $deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to delete the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $deleteAjaxReq . ' : console.log(\'Canceled request to delete the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'class' => 'dcms-button permission-manager-delete-permission-button'], 'Delete Permission');
+                    echo $deleteButton->getHtml();
+                    //$tempButton = new \DarlingCms\classes\html\HtmlTag('button', ['style' => 'cursor: not-allowed;', 'class' => 'dcms-button permission-manager-update-permission-button'], 'Not Available!');
+                    //echo $tempButton->getHtml();
                     ?>
                 </div>
             </td>

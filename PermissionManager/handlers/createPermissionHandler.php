@@ -34,8 +34,8 @@ foreach ($actions as $actionName => $actionState) {
 }
 $newPermission = new \DarlingCms\classes\privilege\Permission($post['permissionName'], $assignedActions);
 if ($permissionCrud->create($newPermission) === true) {
-    echo '<p class="dcms-positive-text">Updated the ' . $post['originalPermissionName'] . ' Permission Successfully...</p>';
+    echo '<p class="dcms-positive-text">Created the new ' . $post['permissionName'] . ' Permission Successfully...</p>';
 } else {
-    echo '<p class="dcms-negative-text">The ' . $post['originalPermissionName'] . ' Permission could not be updated. Please try again...</p>';
+    echo '<p class="dcms-negative-text">The ' . $post['permissionName'] . ' Permission could not be created. Please try again...</p>';
 }
 
