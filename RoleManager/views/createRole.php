@@ -25,6 +25,6 @@ $createRoleForm = new \DarlingCms\classes\html\form\Form(
     ]
 );
 $createRoleForm->addHtml(new \DarlingCms\classes\html\HtmlTag('label', ['for' => 'roleName'], 'Role Name'));
-$createRoleForm->addFormElement(new \DarlingCms\classes\html\form\Text('roleName', '', ['id' => 'roleNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover']));
-$createRoleForm->addFormElement(new \DarlingCms\classes\html\form\Submit('saveNewRole', 'Save New Role', ['id' => 'saveNewRoleFormElement', 'class' => 'dcms-button dcms-focus dcms-hover']));
+$createRoleForm->addFormElement(new \DarlingCms\classes\html\form\Text('roleName', '', ['id' => 'roleNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover role-manager-input-text']));
+$createRoleForm->addFormElement(new \DarlingCms\classes\html\form\Submit('saveNewRole', 'Save New Role', ['id' => 'saveNewRoleFormElement', 'class' => 'dcms-button role-manager-create-permission-button']));
 echo $createRoleForm->getHtml();

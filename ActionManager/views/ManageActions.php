@@ -31,7 +31,7 @@ $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
         <tr class="action-manager-table-row">
             <td id="<?php echo trim($actionElementIdPrefix); ?>-action-name"
                 class="action-manager-table-action-name"><?php
-                $actionNameInput = new \DarlingCms\classes\html\form\Text('actionName', $action->getActionName(), ['id' => $actionNameFormElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover action-manager-input-text']);
+                $actionNameInput = new \DarlingCms\classes\html\form\Text('actionName', $action->getActionName(), ['id' => $actionNameFormElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover action-manager-input-text', 'disabled']); // @todo ! *ACTIVE* Need to figure out how to let permissions that use this action know when the permission's name is changed and update accordingly.*EOL*NOTE:*EOL*- This MUST not create new dependency between the relevant objects*EOL*- This MUST not effect the app's current functional state as it is at present, i.e. MUST not introduce new bugs
                 echo $actionNameInput->getHtml();
                 ?></td>
             <td id="<?php echo trim($actionElementIdPrefix); ?>-action-description"
@@ -55,7 +55,7 @@ $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
                     'callContext' => '',
                     'callArgs' => ''
                 ]);
-                $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $action->getActionName() . ' action?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $action->getActionName() . ' action.\')', 'data-action-name' => $action->getActionName(), 'data-action-description' => $action->getActionDescription(), 'class' => 'dcms-button action-manager-update-action-button'], 'update Action');
+                $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $action->getActionName() . ' action?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $action->getActionName() . ' action.\')', 'data-action-name' => $action->getActionName(), 'data-action-description' => $action->getActionDescription(), 'class' => 'dcms-button action-manager-update-action-button'], 'Update Action');
                 echo $updateButton->getHtml();
                 ?>
             </td>
