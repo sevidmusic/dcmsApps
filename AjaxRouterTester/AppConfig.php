@@ -6,7 +6,7 @@
  * Time: 8:30 PM
  */
 
-namespace Apps\PDOPlayground;
+namespace Apps\AjaxRouterTester;
 
 
 use DarlingCms\interfaces\accessControl\IAppConfig;
@@ -28,7 +28,7 @@ class AppConfig implements IAppConfig
      */
     public function getName(): string
     {
-        return 'PDOPlayground';
+        return 'AjaxRouterTester';
     }
 
     /**
@@ -37,7 +37,7 @@ class AppConfig implements IAppConfig
      */
     public function getThemeNames(): array
     {
-        return array();
+        return array('');
     }
 
     /**
@@ -46,7 +46,7 @@ class AppConfig implements IAppConfig
      */
     public function getJsLibraryNames(): array
     {
-        return array();
+        return array('AjaxRouter');
     }
 
 }
