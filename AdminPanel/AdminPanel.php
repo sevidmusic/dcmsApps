@@ -1,6 +1,10 @@
 <div id="AdminPanel">
-    <button title="Show all admin panels" id="admin-panel-show-all-link" class="dcms-button admin-panel-button">Show Admin Panels</button>
-    <button title="Hide all admin panels" id="admin-panel-hide-all-link" class="dcms-button admin-panel-button">Hide Admin Panels</button>
+    <button title="Show all admin panels" id="admin-panel-show-all-link" class="dcms-button admin-panel-button">Show
+        Admin Panels
+    </button>
+    <button title="Hide all admin panels" id="admin-panel-hide-all-link" class="dcms-button admin-panel-button">Hide
+        Admin Panels
+    </button>
     <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('AppManager')"
             ondblclick="hideAppPanel('AppManager')" class="dcms-button admin-panel-button">App Manager
     </button>
@@ -15,6 +19,9 @@
     </button>
     <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('PermissionManager')"
             ondblclick="hideAppPanel('PermissionManager')" class="dcms-button admin-panel-button">Permissions Manager
+    </button>
+    <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('RoleManager')"
+            ondblclick="hideAppPanel('RoleManager')" class="dcms-button admin-panel-button">Role Manager
     </button>
     <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('Todo')"
             ondblclick="hideAppPanel('Todo')" class="dcms-button admin-panel-button">Todo

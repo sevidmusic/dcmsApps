@@ -13,9 +13,10 @@ $sqlQuery = CoreValues::getISqlQueryInstance
     'root',
     'root'
 );
-$roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery);
-$role = new \DarlingCms\classes\privilege\Role(filter_input(INPUT_POST, 'roleName'), filter_input(INPUT_POST, 'roleDescription'));
-$roleCrud->create($role);
-?>
+$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
+$permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
+$roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
 
-<p>Created new role "Some Role"</p>
+$post = filter_input_array(INPUT_POST);
+var_dump($post);
+

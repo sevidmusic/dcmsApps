@@ -13,14 +13,10 @@ $sqlQuery = CoreValues::getISqlQueryInstance
     'root',
     'root'
 );
-$roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery);
-if ($roleCrud->delete(filter_input(INPUT_POST, 'roleName')) === true) {
-    ?>
-    <p class="dcms-positive-text">Deleted Role <?php echo filter_input(INPUT_POST, 'roleName'); ?></p>
-    <?php
-} else {
-    ?>
-    <p class="dcms-negative-text">An error occurred and the <?php echo filter_input(INPUT_POST, 'roleName'); ?> role
-        could not be deleted.</p>
-    <?php
-}
+$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
+$permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
+$roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
+
+$post = filter_input_array(INPUT_POST);
+var_dump($post);
+

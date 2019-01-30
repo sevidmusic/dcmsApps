@@ -16,7 +16,7 @@ $createRoleForm = new \DarlingCms\classes\html\form\Form(
                 'outputElementId' => 'RoleManagerView',
                 'requestType' => 'POST',
                 'contentType' => '',
-                'additionalParams' => 'roleName=\'+this.children[1].value+\'&' . 'roleDescription=\'+this.children[3].value+\'',
+                'additionalParams' => 'roleName=\'+getElementValue(\'roleNameFormElement\')+\'',
                 'ajaxDirName' => 'handlers',
                 'callFunction' => '',
                 'callContext' => '',
@@ -26,7 +26,5 @@ $createRoleForm = new \DarlingCms\classes\html\form\Form(
 );
 $createRoleForm->addHtml(new \DarlingCms\classes\html\HtmlTag('label', ['for' => 'roleName'], 'Role Name'));
 $createRoleForm->addFormElement(new \DarlingCms\classes\html\form\Text('roleName', '', ['id' => 'roleNameFormElement', 'class' => 'dcms-input-text dcms-focus dcms-hover']));
-$createRoleForm->addHtml(new \DarlingCms\classes\html\HtmlTag('label', ['for' => 'roleDescription'], 'Role Description'));
-$createRoleForm->addFormElement(new \DarlingCms\classes\html\form\TextArea('roleDescription', ['id' => 'roleDescriptionFormElement', 'class' => 'dcms-input-textarea dcms-focus dcms-hover']));
 $createRoleForm->addFormElement(new \DarlingCms\classes\html\form\Submit('saveNewRole', 'Save New Role', ['id' => 'saveNewRoleFormElement', 'class' => 'dcms-button dcms-focus dcms-hover']));
 echo $createRoleForm->getHtml();

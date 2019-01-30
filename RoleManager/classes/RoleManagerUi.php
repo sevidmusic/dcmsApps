@@ -13,7 +13,7 @@ use DarlingCms\abstractions\userInterface\AjaxUi;
 
 class RoleManagerUi extends AjaxUi
 {
-    protected $defaultView = 'createRole';
+    protected $defaultView = 'manageRoles';
     /**
      * AjaxUi constructor.
      * @param string $appName Name of the app the user interface belongs to.
