@@ -21,7 +21,7 @@ $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCru
     <tr class="role-manager-table-header-row">
         <th class="role-manager-table-header">Name</th>
         <th class="role-manager-table-header">Assigned Permissions</th>
-        <th class="role-manager-table-header">Available Permissions</th>
+        <th class="role-manager-table-header">Available Permissions (Not assigned)</th>
         <th class="role-manager-table-header"></th>
         <th class="role-manager-table-header"></th>
     </tr>
@@ -60,6 +60,9 @@ $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCru
                     $availablePermissionNames = array();
                     $availablePermissionIncrementer = 0;
                     foreach ($permissionCrud->readAll() as $permission) {
+                        if (in_array($permission->getPermissionName(), $assignedPermissionNames, true) === true) {
+                            continue;
+                        }
                         array_push($availablePermissionNames, $permission->getPermissionName());
                         $permissionCheckbox = new \DarlingCms\classes\html\form\Checkbox($permission->getPermissionName() . '-checkbox', $permission->getPermissionName(), ['id' => $roleElementIdPrefix . 'AvailablePermissionCheckbox' . strval($availablePermissionIncrementer), 'class' => 'dcms-input-checkbox dcms-focus dcms-hover role-manager-input-checkbox']);
                         echo '<div title="Check to assign..." class="role-manager-available-permission-checkbox">' . $permissionCheckbox->getHtml() . $permission->getPermissionName() . '</div>';
@@ -92,13 +95,13 @@ $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCru
                         'outputElementId' => 'RoleManagerView',
                         'requestType' => 'POST',
                         'contentType' => '',
-                        'additionalParams' => 'roleName=\'+getElementValue(\'' . $roleNameElementId . '\')+\'' . $assignedPermissionParamStr . $availablePermissionParamStr,
+                        'additionalParams' => 'originalRoleName=\'+this.dataset.roleName+\'' . '&' . 'roleName=\'+getElementValue(\'' . $roleNameElementId . '\')+\'' . $assignedPermissionParamStr . $availablePermissionParamStr,
                         'ajaxDirName' => 'handlers',
                         'callFunction' => '',
                         'callContext' => '',
                         'callArgs' => ''
                     ]);
-                    $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $permission->getPermissionName() . ' permission.\')', 'data-permission-name' => $permission->getPermissionName(), 'class' => 'dcms-button permission-manager-update-permission-button'], 'Update Permission');
+                    $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $permission->getPermissionName() . ' permission.\')', 'data-role-name' => $role->getRoleName(), 'class' => 'dcms-button permission-manager-update-permission-button'], 'Update Role');
                     echo $updateButton->getHtml();
                     ?>
                 </div>
