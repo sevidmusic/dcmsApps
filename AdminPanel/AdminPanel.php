@@ -23,6 +23,9 @@
     <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('RoleManager')"
             ondblclick="hideAppPanel('RoleManager')" class="dcms-button admin-panel-button">Role Manager
     </button>
+    <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('UserManager')"
+            ondblclick="hideAppPanel('UserManager')" class="dcms-button admin-panel-button">User Manager
+    </button>
     <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('Todo')"
             ondblclick="hideAppPanel('Todo')" class="dcms-button admin-panel-button">Todo
     </button>
