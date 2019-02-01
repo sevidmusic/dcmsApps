@@ -18,8 +18,11 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $a
 $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
 $post = filter_input_array(INPUT_POST);
 $newRole = new \DarlingCms\classes\privilege\Role($post['roleName'], array());
+var_dump($post);
+/*
 if ($roleCrud->create($newRole) === true) {
-    echo '<p class="dcms-positive-text">Deleted the ' . $post['roleName'] . ' Role Successfully...</p>';
+echo '<p class="dcms-positive-text">Created the ' . $post['roleName'] . ' Role Successfully...</p>';
 } else {
-    echo '<p class="dcms-negative-text">The ' . $post['roleName'] . ' Role could not be deleted. Please try again...</p>';
+echo '<p class="dcms-negative-text">The ' . $post['roleName'] . ' Role could not be created. Please try again...</p>';
 }
+*/
