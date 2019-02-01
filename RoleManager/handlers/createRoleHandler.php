@@ -16,7 +16,10 @@ $sqlQuery = CoreValues::getISqlQueryInstance
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
 $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
-
 $post = filter_input_array(INPUT_POST);
-var_dump($post);
-
+$newRole = new \DarlingCms\classes\privilege\Role($post['roleName'], array());
+if ($roleCrud->create($newRole) === true) {
+    echo '<p class="dcms-positive-text">Deleted the ' . $post['roleName'] . ' Role Successfully...</p>';
+} else {
+    echo '<p class="dcms-negative-text">The ' . $post['roleName'] . ' Role could not be deleted. Please try again...</p>';
+}
