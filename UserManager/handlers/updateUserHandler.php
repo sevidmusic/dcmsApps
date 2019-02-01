@@ -3,7 +3,7 @@
 use \DarlingCms\classes\staticClasses\core\CoreValues;
 
 if (filter_input(INPUT_POST, 'ajaxRequest') === 'true') {
-    require str_replace('/apps/RoleManager/handlers', '/vendor/autoload.php', __DIR__);
+    require str_replace('/apps/UserManager/handlers', '/vendor/autoload.php', __DIR__);
 }
 
 $sqlQuery = CoreValues::getISqlQueryInstance
@@ -16,8 +16,9 @@ $sqlQuery = CoreValues::getISqlQueryInstance
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
 $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
-
+$userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
 $post = filter_input_array(INPUT_POST);
+/*
 $permissions = array_merge(
     array_combine(
         (isset($post['assignedPermissionNames']) ? $post['assignedPermissionNames'] : array()),
@@ -41,3 +42,4 @@ if ($roleCrud->update($post['originalRoleName'], $newRole) === true) {
     echo '<p class="dcms-negative-text">The ' . $post['originalRoleName'] . ' Role could not be updated. Please try again...</p>';
 }
 
+*/
