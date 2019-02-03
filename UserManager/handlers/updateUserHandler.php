@@ -61,12 +61,9 @@ $metaData = array_map(function ($array) {
 ////
 
 $newUser = new User($post['userName'], $metaData, $assignedRoles);
-var_dump($newUser);
-/*
 if ($userCrud->update($post['originalUserName'], $newUser) === true) {
-    echo '<p class="dcms-positive-text">Updated the ' . $post['originalUserName'] . ' User Successfully...</p>';
+    echo '<p class="dcms-positive-text">Updated user ' . $post['originalUserName'] . ' successfully...</p>';
 } else {
-    echo '<p class="dcms-negative-text">The ' . $post['originalUserName'] . ' User could not be updated. Please try again...</p>';
+    echo '<p class="dcms-negative-text">The user ' . $post['originalUserName'] . ' could not be updated. Please try again...</p>';
 }
-*/
 
