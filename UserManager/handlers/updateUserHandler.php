@@ -47,7 +47,15 @@ $metaData = array(
     )
 );
 
-
+$metaData = array_filter($metaData, function ($value) {
+    if (is_array($value)) {
+        $status = array();
+        foreach ($value as $item) {
+            array_push($status, !empty($item));
+        }
+    }
+    return !empty($value) && !in_array(false, $status, true);
+});
 $newUser = new User($post['userName'], $metaData, $assignedRoles);
 var_dump($newUser);
 /*
