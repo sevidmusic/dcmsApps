@@ -47,15 +47,19 @@ $metaData = array(
     )
 );
 
-$metaData = array_filter($metaData, function ($value) {
-    if (is_array($value)) {
-        $status = array();
-        foreach ($value as $item) {
-            array_push($status, !empty($item));
+////
+$metaData = array_map(function ($array) {
+    foreach ($array as $key => $value) {
+        if (empty($key) === true) {
+            unset($array[$key]);
         }
     }
-    return !empty($value) && !in_array(false, $status, true);
-});
+    return array_filter($array, function ($value, $key) {
+        return ($key !== null && $key !== false && $key !== '' && $value !== null && $value !== false && $value !== '');
+    }, ARRAY_FILTER_USE_BOTH);
+}, $metaData);
+////
+
 $newUser = new User($post['userName'], $metaData, $assignedRoles);
 var_dump($newUser);
 /*
@@ -64,5 +68,5 @@ if ($userCrud->update($post['originalUserName'], $newUser) === true) {
 } else {
     echo '<p class="dcms-negative-text">The ' . $post['originalUserName'] . ' User could not be updated. Please try again...</p>';
 }
-
 */
+
