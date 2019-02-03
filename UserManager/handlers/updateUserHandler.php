@@ -1,6 +1,7 @@
 <?php
 
-use \DarlingCms\classes\staticClasses\core\CoreValues;
+use DarlingCms\classes\staticClasses\core\CoreValues;
+use DarlingCms\classes\user\User;
 
 if (filter_input(INPUT_POST, 'ajaxRequest') === 'true') {
     require str_replace('/apps/UserManager/handlers', '/vendor/autoload.php', __DIR__);
@@ -18,28 +19,42 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $a
 $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
 $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
 $post = filter_input_array(INPUT_POST);
-/*
-$permissions = array_merge(
+$roles = array_merge(
     array_combine(
-        (isset($post['assignedPermissionNames']) ? $post['assignedPermissionNames'] : array()),
-        (isset($post['assignedPermissionStates']) ? $post['assignedPermissionStates'] : array())
+        (isset($post['assignedRoleNames']) ? $post['assignedRoleNames'] : array()),
+        (isset($post['assignedRoleStates']) ? $post['assignedRoleStates'] : array())
     ),
     array_combine(
-        (isset($post['availablePermissionNames']) ? $post['availablePermissionNames'] : array()),
-        (isset($post['availablePermissionStates']) ? $post['availablePermissionStates'] : array())
+        (isset($post['availableRoleNames']) ? $post['availableRoleNames'] : array()),
+        (isset($post['availableRoleStates']) ? $post['availableRoleStates'] : array())
     )
 );
-$assignedPermissions = array();
-foreach ($permissions as $permissionName => $permissionState) {
-    if ($permissionState === 'true') {
-        array_push($assignedPermissions, $permissionCrud->read($permissionName));
+$assignedRoles = array();
+foreach ($roles as $roleName => $roleState) {
+    if ($roleState === 'true') {
+        array_push($assignedRoles, $roleCrud->read($roleName));
     }
 }
-$newRole = new \DarlingCms\classes\privilege\Role($post['roleName'], $assignedPermissions);
-if ($roleCrud->update($post['originalRoleName'], $newRole) === true) {
-    echo '<p class="dcms-positive-text">Updated the ' . $post['originalRoleName'] . ' Role Successfully...</p>';
+////
+$metaData = array(
+    User::USER_PUBLIC_META_INDEX => array_combine(
+        (isset($post['publicMetaDataKeys']) ? $post['publicMetaDataKeys'] : array()),
+        (isset($post['publicMetaDataValues']) ? $post['publicMetaDataValues'] : array())
+    ),
+    User::USER_PRIVATE_META_INDEX => array_combine(
+        (isset($post['privateMetaDataKeys']) ? $post['privateMetaDataKeys'] : array()),
+        (isset($post['privateMetaDataValues']) ? $post['privateMetaDataValues'] : array())
+    )
+);
+
+
+$newUser = new User($post['userName'], $metaData, $assignedRoles);
+var_dump($newUser);
+/*
+if ($userCrud->update($post['originalUserName'], $newUser) === true) {
+    echo '<p class="dcms-positive-text">Updated the ' . $post['originalUserName'] . ' User Successfully...</p>';
 } else {
-    echo '<p class="dcms-negative-text">The ' . $post['originalRoleName'] . ' Role could not be updated. Please try again...</p>';
+    echo '<p class="dcms-negative-text">The ' . $post['originalUserName'] . ' User could not be updated. Please try again...</p>';
 }
 
 */

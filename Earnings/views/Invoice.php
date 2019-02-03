@@ -21,7 +21,7 @@ $totalHoursWorked = $userInterface->geTimeWorkedFromSelected();
     <tr class="timeCard-invoice-table-tr">
         <th class="timeCard-invoice-table-th">Date</th>
         <th class="timeCard-invoice-table-th">Punches</th>
-        <th class="timeCard-invoice-table-th">Total Time Worked</th>
+        <th class="timeCard-invoice-table-th">Total Time Worked <span class="earnings-small-text">(hours)</span></th>
         <th class="timeCard-invoice-table-th">Money Earned On This Date</th>
         <th class="timeCard-invoice-table-th">Money Earned Toward Debt On This Date</th>
     </tr>
@@ -41,7 +41,7 @@ $totalHoursWorked = $userInterface->geTimeWorkedFromSelected();
                 </ul>
             </td>
             <td class="timeCard-invoice-table-td timeCard-invoice-table-timeWorked-col">
-                <span title="<?php echo \Apps\Earnings\classes\EarningsUI::formatTimeForDisplay($timeCardCalculator->calculateTimeCard($timeCardName, 'hours'), $timeCardCalculator->calculateTimeCard($timeCardName, 'minutes')); ?>"><?php echo ' ' . $timeCardCalculator->calculateTimeCard($timeCardName, 'hours') . ' <span class="earnings-small-text">hours</span>'; ?></span>
+                <span title="<?php echo \Apps\Earnings\classes\EarningsUI::formatTimeForDisplay($timeCardCalculator->calculateTimeCard($timeCardName, 'hours'), $timeCardCalculator->calculateTimeCard($timeCardName, 'minutes')); ?>"><?php echo ' ' . $timeCardCalculator->calculateTimeCard($timeCardName, 'hours'); /* <span class="earnings-small-text">hours</span> */ ?></span>
             </td>
             <td class="timeCard-invoice-table-td timeCard-invoice-table-moneyEarned-col">
                 <?php echo '$' . calculateEarnings($timeCardCalculator->calculateTimeCard($timeCardName, 'hours'), '10'); ?>
