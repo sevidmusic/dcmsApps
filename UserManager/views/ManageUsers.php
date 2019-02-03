@@ -82,6 +82,24 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                         <div class="user-manager-meta-data-container">
                             <?php
                             $publicMetaDataIncrementer = 0;
+                            /////
+                            $newPublicMetaKeyText = new \DarlingCms\classes\html\form\Text('new-public-meta-key', '', ['id' => $userElementIdPrefix . 'PublicMetaKeyTextInput' . strval($publicMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
+                            $newPublicMetaValueText = new \DarlingCms\classes\html\form\Text('new-public-meta-value', '', ['id' => $userElementIdPrefix . 'PublicMetaValueTextInput' . strval($publicMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
+                            ?>
+                            <p class="user-manager-small-text user-manager-hint">Use the fields below to edit the user's
+                                meta data.</p>
+                            <p class="user-manager-small-text user-manager-hint">Hint: Use the empty fields to add new
+                                meta data.</p>
+                            <div title="Name" class="user-manager-meta-key-text-input">
+                                <?php echo $newPublicMetaKeyText->getHtml(); ?>
+                            </div>
+                            <div title="Value" class="user-manager-meta-value-text-input">
+                                <?php echo $newPublicMetaValueText->getHtml(); ?>
+                            </div>
+                            <div class="user-manager-meta-separator"></div>
+                            <?php
+                            $publicMetaDataIncrementer++;
+                            ///
                             foreach ($user->getPublicMeta() as $publicMetaKey => $publicMetaValue) {
                                 $publicMetaKeyText = new \DarlingCms\classes\html\form\Text($publicMetaKey . '-public-meta-key', $publicMetaKey, ['id' => $userElementIdPrefix . 'PublicMetaKeyTextInput' . strval($publicMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
                                 $publicMetaValueText = new \DarlingCms\classes\html\form\Text($publicMetaKey . '-public-meta-value', $publicMetaValue, ['id' => $userElementIdPrefix . 'PublicMetaValueTextInput' . strval($publicMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
@@ -111,13 +129,14 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                         <div class="user-manager-meta-data-container">
                             <?php
                             $privateMetaDataIncrementer = 0;
-
-
                             /////
-                            /*
-                            $newPrivateMetaKeyText = new \DarlingCms\classes\html\form\Text($newPrivateMetaKey . '-new-meta-key', $newPrivateMetaKey, ['id' => $userElementIdPrefix . 'PrivateMetaKeyTextInput' . strval($newPrivateMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
-                            $newPrivateMetaValueText = new \DarlingCms\classes\html\form\Text($newPrivateMetaKey . '-new-meta-value', $newPrivateMetaValue, ['id' => $userElementIdPrefix . 'PrivateMetaValueTextInput' . strval($newPrivateMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
+                            $newPrivateMetaKeyText = new \DarlingCms\classes\html\form\Text('new-private-meta-key', '', ['id' => $userElementIdPrefix . 'PrivateMetaKeyTextInput' . strval($privateMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
+                            $newPrivateMetaValueText = new \DarlingCms\classes\html\form\Text('new-private-meta-value', '', ['id' => $userElementIdPrefix . 'PrivateMetaValueTextInput' . strval($privateMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
                             ?>
+                            <p class="user-manager-small-text user-manager-hint">Use the fields below to edit the user's
+                                meta data.</p>
+                            <p class="user-manager-small-text user-manager-hint">Hint: Use the empty fields to add new
+                                meta data.</p>
                             <div title="Name" class="user-manager-meta-key-text-input">
                                 <?php echo $newPrivateMetaKeyText->getHtml(); ?>
                             </div>
@@ -126,10 +145,8 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                             </div>
                             <div class="user-manager-meta-separator"></div>
                             <?php
-                            $newPrivateMetaDataIncrementer++;
-                            ///*/
-
-
+                            $privateMetaDataIncrementer++;
+                            ///
                             foreach ($user->getPrivateMeta() as $privateMetaKey => $privateMetaValue) {
                                 $privateMetaKeyText = new \DarlingCms\classes\html\form\Text($privateMetaKey . '-private-meta-key', $privateMetaKey, ['id' => $userElementIdPrefix . 'PrivateMetaKeyTextInput' . strval($privateMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
                                 $privateMetaValueText = new \DarlingCms\classes\html\form\Text($privateMetaKey . '-private-meta-value', $privateMetaValue, ['id' => $userElementIdPrefix . 'PrivateMetaValueTextInput' . strval($privateMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
