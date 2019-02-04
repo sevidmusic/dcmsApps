@@ -35,7 +35,6 @@ foreach ($roles as $roleName => $roleState) {
         array_push($assignedRoles, $roleCrud->read($roleName));
     }
 }
-////
 $metaData = array(
     User::USER_PUBLIC_META_INDEX => array_combine(
         (isset($post['publicMetaDataKeys']) ? $post['publicMetaDataKeys'] : array()),
@@ -46,8 +45,6 @@ $metaData = array(
         (isset($post['privateMetaDataValues']) ? $post['privateMetaDataValues'] : array())
     )
 );
-
-////
 $metaData = array_map(function ($array) {
     foreach ($array as $key => $value) {
         if (empty($key) === true) {
@@ -58,8 +55,6 @@ $metaData = array_map(function ($array) {
         return ($key !== null && $key !== false && $key !== '' && $value !== null && $value !== false && $value !== '');
     }, ARRAY_FILTER_USE_BOTH);
 }, $metaData);
-////
-
 $newUser = new User($post['userName'], $metaData, $assignedRoles);
 if ($userCrud->update($post['originalUserName'], $newUser) === true) {
     echo '<p class="dcms-positive-text">Updated user ' . $post['originalUserName'] . ' successfully...</p>';

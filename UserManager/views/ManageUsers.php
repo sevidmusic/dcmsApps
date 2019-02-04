@@ -88,10 +88,11 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                                 $publicMetaKeyText = new \DarlingCms\classes\html\form\Text($publicMetaKey . '-public-meta-key', $publicMetaKey, ['id' => $userElementIdPrefix . 'PublicMetaKeyTextInput' . strval($publicMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
                                 $publicMetaValueText = new \DarlingCms\classes\html\form\Text($publicMetaKey . '-public-meta-value', $publicMetaValue, ['id' => $userElementIdPrefix . 'PublicMetaValueTextInput' . strval($publicMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
                                 ?>
-                                <div title="Name" class="user-manager-meta-key-text-input">
+                                <div title="Meta Data Name | Hint: To delete meta data, simply clear the name and value fields of the meta data that should be deleted on update."
+                                     class="user-manager-meta-key-text-input">
                                     <?php echo $publicMetaKeyText->getHtml(); ?>
                                 </div>
-                                <div title="Value" class="user-manager-meta-value-text-input">
+                                <div title="Meta Data Value | Hint: To delete meta data, simply clear the name and value fields of the meta data that should be deleted on update." class="user-manager-meta-value-text-input">
                                     <?php echo $publicMetaValueText->getHtml(); ?>
                                 </div>
                                 <div class="user-manager-meta-separator"></div>
@@ -104,10 +105,11 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                         ?>
                         <p class="user-manager-small-text user-manager-hint">Hint: Use the empty fields below to add new
                             meta data.</p>
-                        <div title="Name" class="user-manager-meta-key-text-input">
+                        <div title="Enter a name for the new meta data. Hint: New meta data will only be assigned to the user if both the name and value fields are set."
+                             class="user-manager-meta-key-text-input">
                             <?php echo $newPublicMetaKeyText->getHtml(); ?>
                         </div>
-                        <div title="Value" class="user-manager-meta-value-text-input">
+                        <div title="Enter a value for the new meta data. Hint: New meta data will only be assigned to the user if both the name and value fields are set." class="user-manager-meta-value-text-input">
                             <?php echo $newPublicMetaValueText->getHtml(); ?>
                         </div>
                         <div class="user-manager-meta-separator"></div>
@@ -128,10 +130,11 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                                 $privateMetaKeyText = new \DarlingCms\classes\html\form\Text($privateMetaKey . '-private-meta-key', $privateMetaKey, ['id' => $userElementIdPrefix . 'PrivateMetaKeyTextInput' . strval($privateMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
                                 $privateMetaValueText = new \DarlingCms\classes\html\form\Text($privateMetaKey . '-private-meta-value', $privateMetaValue, ['id' => $userElementIdPrefix . 'PrivateMetaValueTextInput' . strval($privateMetaDataIncrementer), 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
                                 ?>
-                                <div title="Name" class="user-manager-meta-key-text-input">
+                                <div title="Meta Data Name | Hint: To delete meta data, simply clear the name and value fields of the meta data that should be deleted on update."
+                                     class="user-manager-meta-key-text-input">
                                     <?php echo $privateMetaKeyText->getHtml(); ?>
                                 </div>
-                                <div title="Value" class="user-manager-meta-value-text-input">
+                                <div title="Meta Data Value | Hint: To delete meta data, simply clear the name and value fields of the meta data that should be deleted on update." class="user-manager-meta-value-text-input">
                                     <?php echo $privateMetaValueText->getHtml(); ?>
                                 </div>
                                 <div class="user-manager-meta-separator"></div>
@@ -144,10 +147,11 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                         ?>
                         <p class="user-manager-small-text user-manager-hint">Hint: Use the empty fields below to add new
                             meta data.</p>
-                        <div title="Name" class="user-manager-meta-key-text-input">
+                        <div title="Enter a name for the new meta data. Hint: New meta data will only be assigned to the user if both the name and value fields are set."
+                             class="user-manager-meta-key-text-input">
                             <?php echo $newPrivateMetaKeyText->getHtml(); ?>
                         </div>
-                        <div title="Value" class="user-manager-meta-value-text-input">
+                        <div title="Enter a value for the new meta data. Hint: New meta data will only be assigned to the user if both the name and value fields are set." class="user-manager-meta-value-text-input">
                             <?php echo $newPrivateMetaValueText->getHtml(); ?>
                         </div>
                         <div class="user-manager-meta-separator"></div>
