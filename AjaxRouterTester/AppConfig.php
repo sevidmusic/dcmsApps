@@ -19,7 +19,7 @@ class AppConfig implements IAppConfig
      */
     public function validateAccess(): bool
     {
-        return true;
+        return false;
     }
 
     /**
