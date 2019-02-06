@@ -9,6 +9,7 @@
 namespace Apps\Earnings\classes;
 
 
+use DarlingCms\classes\staticClasses\core\CoreValues;
 use DarlingCms\interfaces\userInterface\IUserInterface;
 
 class EarningsUI implements IUserInterface
@@ -60,9 +61,9 @@ class EarningsUI implements IUserInterface
     private function getViewUrl(string $viewName): string
     {
         if (empty($viewName) === false) {
-            return 'http://localhost:8888/DarlingCms/?' . self::EARNINGS_VIEW_VAR_NAME . '=' . $viewName;
+            return CoreValues::getSiteRootUrl() . '/?' . self::EARNINGS_VIEW_VAR_NAME . '=' . $viewName;
         }
-        return 'http://localhost:8888/DarlingCms/?' . self::EARNINGS_VIEW_VAR_NAME . '=' . $this->view;
+        return CoreValues::getSiteRootUrl() . '/?' . self::EARNINGS_VIEW_VAR_NAME . '=' . $this->view;
     }
 
     public function getDragHandle()

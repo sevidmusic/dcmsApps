@@ -10,6 +10,7 @@ namespace Apps\AppManager\classes;
 
 
 use DarlingCms\classes\FileSystem\ZipCrud;
+use DarlingCms\classes\staticClasses\core\CoreValues;
 
 class DisabledAppInfo extends AppInfo
 {
@@ -108,10 +109,10 @@ class DisabledAppInfo extends AppInfo
     {
         if (file_exists($this->getTempImgPath($appName)) === false) {
             $this->generateTempImage($appName);
-            return 'http://localhost:8888/DarlingCms/apps/AppManager/resources/images/DcmsAppManagerDefaultAppImg.png';
+            return CoreValues::getSiteRootUrl() . '/apps/AppManager/resources/images/DcmsAppManagerDefaultAppImg.png';
 
         }
-        return 'http://localhost:8888/DarlingCms/apps/AppManager/resources/images/' . $appName . '.logo.png';
+        return CoreValues::getSiteRootUrl() . '/apps/AppManager/resources/images/' . $appName . '.logo.png';
     }
 
     private function generateTempImage(string $appName): bool
