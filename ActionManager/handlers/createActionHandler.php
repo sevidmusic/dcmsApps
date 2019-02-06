@@ -6,7 +6,7 @@ if (filter_input(INPUT_POST, 'ajaxRequest') === 'true') {
     require str_replace('/apps/ActionManager/handlers', '/vendor/autoload.php', __DIR__);
 }
 
-$sqlQuery = CoreValues::getISqlQueryInstance
+$sqlQuery = CoreValues::getMySqlQueryInstance
 (
     CoreValues::CORE_DB_HOST,
     CoreValues::CORE_DB_NAME,

@@ -5,7 +5,7 @@ use \DarlingCms\classes\staticClasses\core\CoreValues;
 if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
     require str_replace('/apps/PermissionManager/views', '/vendor/autoload.php', __DIR__);
 }
-$sqlQuery = CoreValues::getISqlQueryInstance
+$sqlQuery = CoreValues::getMySqlQueryInstance
 (
     CoreValues::CORE_DB_HOST,
     CoreValues::CORE_DB_NAME,
