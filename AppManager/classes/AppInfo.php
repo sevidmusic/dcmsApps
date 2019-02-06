@@ -109,7 +109,7 @@ class AppInfo extends \DarlingCms\classes\info\AppInfo
     public function getDemoImgPath(string $appName): string
     {
         if (file_exists($this->getPath($appName) . '/logo.png')) {
-            return CoreValues::getSiteRootUrl() . '/apps/' . $appName . '/logo.png';
+            return CoreValues::getSiteRootUrl() . 'apps/' . $appName . '/logo.png';
             //return 'http://localhost:8888/DarlingCms/apps/' . $appName . '/logo.png';
         }
         return CoreValues::getSiteRootUrl() . 'apps/AppManager/resources/images/DcmsAppManagerDefaultAppImg.png';

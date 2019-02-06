@@ -109,10 +109,10 @@ class DisabledAppInfo extends AppInfo
     {
         if (file_exists($this->getTempImgPath($appName)) === false) {
             $this->generateTempImage($appName);
-            return CoreValues::getSiteRootUrl() . '/apps/AppManager/resources/images/DcmsAppManagerDefaultAppImg.png';
+            return CoreValues::getSiteRootUrl() . 'apps/AppManager/resources/images/DcmsAppManagerDefaultAppImg.png';
 
         }
-        return CoreValues::getSiteRootUrl() . '/apps/AppManager/resources/images/' . $appName . '.logo.png';
+        return CoreValues::getSiteRootUrl() . 'apps/AppManager/resources/images/' . $appName . '.logo.png';
     }
 
     private function generateTempImage(string $appName): bool

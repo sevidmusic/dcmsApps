@@ -61,9 +61,9 @@ class EarningsUI implements IUserInterface
     private function getViewUrl(string $viewName): string
     {
         if (empty($viewName) === false) {
-            return CoreValues::getSiteRootUrl() . '/?' . self::EARNINGS_VIEW_VAR_NAME . '=' . $viewName;
+            return CoreValues::getSiteRootUrl() . '?' . self::EARNINGS_VIEW_VAR_NAME . '=' . $viewName;
         }
-        return CoreValues::getSiteRootUrl() . '/?' . self::EARNINGS_VIEW_VAR_NAME . '=' . $this->view;
+        return CoreValues::getSiteRootUrl() . '?' . self::EARNINGS_VIEW_VAR_NAME . '=' . $this->view;
     }
 
     public function getDragHandle()
