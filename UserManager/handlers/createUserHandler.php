@@ -34,9 +34,10 @@ foreach ($roles as $roleName => $roleState) {
         array_push($assignedRoles, $roleCrud->read($roleName));
     }
 }
-$newUser = new \DarlingCms\classes\user\User($post['userName'], $assignedRoles);
+$newUser = new \DarlingCms\classes\user\User($post['userName'], [], $assignedRoles);
 if ($userCrud->create($newUser) === true) {
     echo '<p class="dcms-positive-text">Created the new ' . $post['userName'] . ' User Successfully...</p>';
 } else {
     echo '<p class="dcms-negative-text">The ' . $post['userName'] . ' User could not be created. Please try again...</p>';
 }
+
