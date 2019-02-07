@@ -9,11 +9,7 @@ $sqlQuery = CoreValues::getMySqlQueryInstance
     'root',
     'root'
 );
-// Test Vars //
-$testUser = 'sevidmusic';
-$testPass = 'IL0v9Dor1a7Al2018';
 
-// CRUDS //
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
 $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
@@ -36,18 +32,16 @@ $passwordCrud = new \DarlingCms\classes\crud\MySqlUserPasswordCrud($sqlQuery);
  *   would more tightly couple these object to each other.
  *
  */
-/*
-// TEMP UserPassword //
-$tempPass = new \DarlingCms\classes\user\UserPassword($userCrud->read($testUser), $testPass);
 
-// User //
+// DEV //
+$testUser = 'sevidmusic';
+$testPass = 'IL0v9Dor1a7Al2018';
 $sdm = $userCrud->read($testUser);
-
-// Update password //
-//$passwordCrud->update($sdm, $tempPass); @todo  | whenever a user is updated the password needs to be updated as well or else stored password and user will fall out of sync.
-
-// User's Password //
 $sdmPw = $passwordCrud->read($sdm);
+var_dump(
+    [
+        'User Name' => $sdm->getUserName(),
+        'User Id' => $sdm->getUserId(),
+        'Password "' . $testPass . '" is valid' => ($sdmPw->validatePassword($sdm, $testPass) === true ? 'True' : 'False')
+    ]);
 
-var_dump($sdmPw->validatePassword($sdm, $testPass));
-*/
