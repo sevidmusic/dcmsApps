@@ -33,15 +33,15 @@ $passwordCrud = new \DarlingCms\classes\crud\MySqlUserPasswordCrud($sqlQuery);
  *
  */
 
-// DEV //
-$testUser = 'sevidmusic';
+// DEV // GOAL: This should show the password is valid with both the passwordId and password checks in place!
+$testUserName = 'dorianDarling';
 $testPass = 'IL0v9Dor1a7Al2018';
-$sdm = $userCrud->read($testUser);
-$sdmPw = $passwordCrud->read($sdm);
+$testUser = $userCrud->read($testUserName);
+$testUserPass = $passwordCrud->read($testUser);
 var_dump(
     [
-        'User Name' => $sdm->getUserName(),
-        'User Id' => $sdm->getUserId(),
-        'Password "' . $testPass . '" is valid' => ($sdmPw->validatePassword($sdm, $testPass) === true ? 'True' : 'False')
+        'User Name' => $testUser->getUserName(),
+        'User Id' => $testUser->getUserId(),
+        'Password "' . $testPass . '" is valid' => ($testUserPass->validatePassword($testUser, $testPass) === true ? 'True' : 'False')
     ]);
 
