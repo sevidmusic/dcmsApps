@@ -42,6 +42,8 @@ var_dump(
     [
         'User Name' => $testUser->getUserName(),
         'User Id' => $testUser->getUserId(),
+        'Hashed Password Id"' => $testUserPass->getHashedPasswordId(),
+        'Hashed Password"' => $testUserPass->getHashedPassword(),
         'Password "' . $testPass . '" is valid' => ($testUserPass->validatePassword($testUser, $testPass) === true ? 'True' : 'False')
     ]);
 
