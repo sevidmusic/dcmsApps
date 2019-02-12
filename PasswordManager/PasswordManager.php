@@ -38,8 +38,8 @@ $testUserName = 'AAAAAA';
 $testPass = 'IL0v9Dor1a7Al2018';
 $testUser = $userCrud->read($testUserName);
 $testUserPass = $passwordCrud->read($testUser);
-$passwordCrud->delete($userCrud->read($testUser->getUserName()));
-$passwordCrud->create(new \DarlingCms\classes\user\UserPassword($userCrud->read($testUser->getUserName()), $testPass));
+//$passwordCrud->delete($userCrud->read($testUser->getUserName()));
+//$passwordCrud->create(new \DarlingCms\classes\user\UserPassword($userCrud->read($testUser->getUserName()), $testPass));
 var_dump(
     [
         'User Name' => $testUser->getUserName(),
