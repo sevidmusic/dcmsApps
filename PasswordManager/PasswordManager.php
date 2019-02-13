@@ -40,7 +40,7 @@ $testUser = $userCrud->read($testUserName);
 $testUserPass = $passwordCrud->read($testUser);
 //$passwordCrud->delete($userCrud->read($testUser->getUserName()));
 //$passwordCrud->create(new \DarlingCms\classes\user\UserPassword($userCrud->read($testUser->getUserName()), $testPass));
-var_dump(
+/*var_dump(
     [
         'User Name' => $testUser->getUserName(),
         'User Id' => $testUser->getUserId(),
@@ -49,4 +49,4 @@ var_dump(
         'Password "' . $testPass . '" is valid' => ($testUserPass->validatePassword($testUser, $testPass) === true ? 'True' : 'False')
     ]
 );
-
+*/
