@@ -9,17 +9,17 @@ $sqlQuery = CoreValues::getMySqlQueryInstance
     'root',
     'root'
 );
-$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
-$permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
-$roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
-$userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
-$passwordCrud = new \DarlingCms\classes\crud\MySqlUserPasswordCrud($sqlQuery);
-$userLogin = new \DarlingCms\classes\accessControl\UserLogin(/*$userCrud, $passwordCrud*/);
+$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery); // @todo ! Add to CoreValues
+$permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud); // @todo ! Add to CoreValues
+$roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud); // @todo ! Add to CoreValues
+$userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud); // @todo ! Add to CoreValues
+$passwordCrud = new \DarlingCms\classes\crud\MySqlUserPasswordCrud($sqlQuery); // @todo ! Add to CoreValues
+$userLogin = new \DarlingCms\classes\accessControl\UserLogin(/*$userCrud, $passwordCrud*/); // @todo ! Add to CoreValues
 $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? filter_input(INPUT_POST, 'userName') : (empty($userLogin->read(\DarlingCms\classes\accessControl\UserLogin::CURRENT_USER_POST_VAR_NAME)) === false ? $userLogin->read(\DarlingCms\classes\accessControl\UserLogin::CURRENT_USER_POST_VAR_NAME) : ''));
 ?>
 <div id="UserLoginContainer" class="">
     <?php
-    echo '<p>' . ($userLogin->isLoggedIn($submittedUserName) === true ? 'User ' . $userCrud->read($submittedUserName)->getUserName() . ' is logged in:' : 'User ' . $userCrud->read($submittedUserName)->getUserName() . ' is not logged in:') . '</p>';
+    echo '<p>' . ($userLogin->isLoggedIn($submittedUserName) === true ? 'You are logged in as "' . $userCrud->read($submittedUserName)->getUserName() . '"' : 'You are not logged in:') . '</p>';
 
 
     // Check if user login form was submitted
