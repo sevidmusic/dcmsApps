@@ -1,5 +1,5 @@
 <?php
-
+/*
 use DarlingCms\classes\staticClasses\core\CoreValues;
 
 $sqlQuery = CoreValues::getMySqlQueryInstance
@@ -15,7 +15,7 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $a
 $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
 $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
 $passwordCrud = new \DarlingCms\classes\crud\MySqlUserPasswordCrud($sqlQuery);
-
+*/
 /**
  * Problem: Whenever a User is updated, the User's UserPassword must be updated, whenever a role is updated,
  *          all effected User's, i.e. those user's who are assigned the role, must be updated, whenever a
@@ -32,14 +32,15 @@ $passwordCrud = new \DarlingCms\classes\crud\MySqlUserPasswordCrud($sqlQuery);
  *   would more tightly couple these object to each other.
  *
  */
-
+/*
 // DEV // GOAL: This should show the password is valid with both the passwordId and password checks in place!
-$testUserName = 'AAA';
+$testUserName = 'sevidmusic';
 $testPass = 'IL0v9Dor1a7Al2018';
 $testUser = $userCrud->read($testUserName);
 $testUserPass = $passwordCrud->read($testUser);
 //$passwordCrud->delete($userCrud->read($testUser->getUserName()));
 //$passwordCrud->create(new \DarlingCms\classes\user\UserPassword($userCrud->read($testUser->getUserName()), $testPass));
+*/
 /*var_dump(
     [
         'User Name' => $testUser->getUserName(),
@@ -48,5 +49,5 @@ $testUserPass = $passwordCrud->read($testUser);
         'Hashed Password"' => $testUserPass->getHashedPassword(),
         'Password "' . $testPass . '" is valid' => ($testUserPass->validatePassword($testUser, $testPass) === true ? 'True' : 'False')
     ]
-);
-*/
+);*/
+
