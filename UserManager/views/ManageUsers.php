@@ -92,7 +92,8 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                                      class="user-manager-meta-key-text-input">
                                     <?php echo $publicMetaKeyText->getHtml(); ?>
                                 </div>
-                                <div title="Meta Data Value | Hint: To delete meta data, simply clear the name and value fields of the meta data that should be deleted on update." class="user-manager-meta-value-text-input">
+                                <div title="Meta Data Value | Hint: To delete meta data, simply clear the name and value fields of the meta data that should be deleted on update."
+                                     class="user-manager-meta-value-text-input">
                                     <?php echo $publicMetaValueText->getHtml(); ?>
                                 </div>
                                 <div class="user-manager-meta-separator"></div>
@@ -109,7 +110,8 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                              class="user-manager-meta-key-text-input">
                             <?php echo $newPublicMetaKeyText->getHtml(); ?>
                         </div>
-                        <div title="Enter a value for the new meta data. Hint: New meta data will only be assigned to the user if both the name and value fields are set." class="user-manager-meta-value-text-input">
+                        <div title="Enter a value for the new meta data. Hint: New meta data will only be assigned to the user if both the name and value fields are set."
+                             class="user-manager-meta-value-text-input">
                             <?php echo $newPublicMetaValueText->getHtml(); ?>
                         </div>
                         <div class="user-manager-meta-separator"></div>
@@ -134,7 +136,8 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                                      class="user-manager-meta-key-text-input">
                                     <?php echo $privateMetaKeyText->getHtml(); ?>
                                 </div>
-                                <div title="Meta Data Value | Hint: To delete meta data, simply clear the name and value fields of the meta data that should be deleted on update." class="user-manager-meta-value-text-input">
+                                <div title="Meta Data Value | Hint: To delete meta data, simply clear the name and value fields of the meta data that should be deleted on update."
+                                     class="user-manager-meta-value-text-input">
                                     <?php echo $privateMetaValueText->getHtml(); ?>
                                 </div>
                                 <div class="user-manager-meta-separator"></div>
@@ -151,7 +154,8 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                              class="user-manager-meta-key-text-input">
                             <?php echo $newPrivateMetaKeyText->getHtml(); ?>
                         </div>
-                        <div title="Enter a value for the new meta data. Hint: New meta data will only be assigned to the user if both the name and value fields are set." class="user-manager-meta-value-text-input">
+                        <div title="Enter a value for the new meta data. Hint: New meta data will only be assigned to the user if both the name and value fields are set."
+                             class="user-manager-meta-value-text-input">
                             <?php echo $newPrivateMetaValueText->getHtml(); ?>
                         </div>
                         <div class="user-manager-meta-separator"></div>
@@ -199,7 +203,7 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                         'callContext' => '',
                         'callArgs' => ''
                     ]);
-                    $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $role->getRoleName() . ' role?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $role->getRoleName() . ' role.\')', 'data-user-name' => $user->getUserName(), 'class' => 'dcms-button role-manager-update-role-button'], 'Update User');
+                    $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update user ' . $user->getUserName() . '?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update user ' . $user->getUserName() . '.\')', 'data-user-name' => $user->getUserName(), 'class' => 'dcms-button user-manager-update-user-button'], 'Update User');
                     echo $updateButton->getHtml();
                     ?>
                 </div>
