@@ -223,7 +223,7 @@ $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
                         'callContext' => '',
                         'callArgs' => ''
                     ]);
-                    $deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to delete the ' . $user->getUserName() . ' user?\') === true ? ' . $deleteAjaxReq . ' : console.log(\'Canceled request to delete the ' . $user->getUserName() . ' user.\')', 'data-user-name' => $user->getUserName(), 'class' => 'dcms-button user-manager-delete-user-button'], 'Delete User');
+                    $deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to delete user ' . $user->getUserName() . '?\') === true ? ' . $deleteAjaxReq . ' : console.log(\'Canceled request to delete the ' . $user->getUserName() . ' user.\')', 'data-user-name' => $user->getUserName(), 'class' => 'dcms-button user-manager-delete-user-button'], 'Delete User');
                     echo $deleteButton->getHtml();
                     ?>
                 </div>
