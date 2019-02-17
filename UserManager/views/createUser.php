@@ -1,14 +1,12 @@
 <?php
 
-use \DarlingCms\classes\staticClasses\core\CoreValues;
-
 require str_replace('/apps/UserManager/views', '/vendor/autoload.php', __DIR__);
 
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getUsersDBName());
-$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
-$permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
-$roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
-$userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
+$crudFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+$actionCrud = $crudFactory->getActionCrud();
+$permissionCrud = $crudFactory->getPermissionCrud();
+$roleCrud = $crudFactory->getRoleCrud();
+$userCrud = $crudFactory->getUserCrud();
 ?>
 <div class="user-manager-create-user-container">
     <?php

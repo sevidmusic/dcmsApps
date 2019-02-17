@@ -1,16 +1,14 @@
 <?php
 
-use DarlingCms\classes\staticClasses\core\CoreValues;
-
 if (filter_input(INPUT_POST, 'ajaxRequest') === 'true') {
     require str_replace('/apps/UserManager/handlers', '/vendor/autoload.php', __DIR__);
 }
 
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getUsersDBName());
-$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
-$permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
-$roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
-$userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
+$crudFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+$actionCrud = $crudFactory->getActionCrud();
+$permissionCrud = $crudFactory->getPermissionCrud();
+$roleCrud = $crudFactory->getRoleCrud();
+$userCrud = $crudFactory->getUserCrud();
 $post = filter_input_array(INPUT_POST);
 $roles = array_merge(
     array_combine(
