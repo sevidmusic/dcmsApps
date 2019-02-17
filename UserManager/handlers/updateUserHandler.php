@@ -7,7 +7,7 @@ if (filter_input(INPUT_POST, 'ajaxRequest') === 'true') {
     require str_replace('/apps/UserManager/handlers', '/vendor/autoload.php', __DIR__);
 }
 
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::USERS_DB_NAME);
+$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getUsersDBName());
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
 $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);

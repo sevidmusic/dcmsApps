@@ -6,7 +6,7 @@ if (filter_input(INPUT_POST, 'ajaxRequest') === 'true') {
     require str_replace('/apps/PermissionManager/handlers', '/vendor/autoload.php', __DIR__);
 }
 
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::PRIVILEGES_DB_NAME);
+$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getPrivilegesDBName());
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
 $post = filter_input_array(INPUT_POST);

@@ -2,7 +2,7 @@
 
 use DarlingCms\classes\staticClasses\core\CoreValues;
 
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::USERS_DB_NAME);
+$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getUsersDBName());
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery); // @todo ! Add to CoreValues
 $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud); // @todo ! Add to CoreValues
 $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud); // @todo ! Add to CoreValues

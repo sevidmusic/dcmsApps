@@ -5,7 +5,7 @@ use \DarlingCms\classes\staticClasses\core\CoreValues;
 if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
     require str_replace('/apps/PermissionManager/views', '/vendor/autoload.php', __DIR__);
 }
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::PRIVILEGES_DB_NAME);
+$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getPrivilegesDBName());
 $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery));
 ?>
 <h1>Manage Permissions</h1>

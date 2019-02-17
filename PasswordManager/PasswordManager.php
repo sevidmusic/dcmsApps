@@ -3,7 +3,7 @@
 use DarlingCms\classes\staticClasses\core\CoreValues;
 
 if (false === true) {
-    $sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::PASSWORD_DB_NAME);
+    $sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getPasswordsDBName());
     $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
     $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
     $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);

@@ -5,7 +5,7 @@ use \DarlingCms\classes\staticClasses\core\CoreValues;
 if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
     require str_replace('/apps/RoleManager/views', '/vendor/autoload.php', __DIR__);
 }
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::PRIVILEGES_DB_NAME);
+$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getPrivilegesDBName());
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
 $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);

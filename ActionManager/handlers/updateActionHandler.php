@@ -6,7 +6,7 @@ if (filter_input(INPUT_POST, 'ajaxRequest') === 'true') {
     require str_replace('/apps/ActionManager/handlers', '/vendor/autoload.php', __DIR__);
 }
 
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::PRIVILEGES_DB_NAME);
+$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getPrivilegesDBName());
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 $originalActionName = filter_input(INPUT_POST, 'originalActionName');
 $originalActionDescription = filter_input(INPUT_POST, 'originalActionDescription');
