@@ -4,10 +4,10 @@ use \DarlingCms\classes\staticClasses\core\CoreValues;
 
 require str_replace('/apps/RoleManager/views', '/vendor/autoload.php', __DIR__);
 
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getPrivilegesDBName());
-$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
-$permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
-$roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
+$crudFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+$actionCrud = $crudFactory->getActionCrud();
+$permissionCrud = $crudFactory->getPermissionCrud();
+$roleCrud = $crudFactory->getRoleCrud();
 ?>
 <div class="role-manager-create-role-container">
     <?php
