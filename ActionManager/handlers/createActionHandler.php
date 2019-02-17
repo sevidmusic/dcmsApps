@@ -6,8 +6,8 @@ if (filter_input(INPUT_POST, 'ajaxRequest') === 'true') {
     require str_replace('/apps/ActionManager/handlers', '/vendor/autoload.php', __DIR__);
 }
 
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getPrivilegesDBName());
-$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
+$curdFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+$actionCrud = $curdFactory->getActionCrud();
 $action = new \DarlingCms\classes\privilege\Action(filter_input(INPUT_POST, 'actionName'), filter_input(INPUT_POST, 'actionDescription'));
 if ($actionCrud->create($action) === true) {
     echo '<p class="dcms-positive-text">Created new action ' . filter_input(INPUT_POST, 'actionName') . '</p>';
