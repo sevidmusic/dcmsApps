@@ -1,15 +1,14 @@
 <?php
 
-use \DarlingCms\classes\staticClasses\core\CoreValues;
-
 if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
     require str_replace('/apps/UserManager/views', '/vendor/autoload.php', __DIR__);
 }
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getUsersDBName());
-$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
-$permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
-$roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
-$userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
+$coreCrud = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+$actionCrud = $coreCrud->getActionCrud();
+$permissionCrud = $coreCrud->getPermissionCrud();
+$roleCrud = $coreCrud->getRoleCrud();
+$userCrud = $coreCrud->getUserCrud();
+
 ?>
 <h1>Manage Users</h1>
 <table class="user-manager-table">
