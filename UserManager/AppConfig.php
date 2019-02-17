@@ -5,9 +5,12 @@
 
 namespace Apps\UserManager;
 
+use DarlingCms\abstractions\accessControl\AAdminAppConfig;
+use DarlingCms\classes\accessControl\UserLogin;
+use DarlingCms\classes\factory\CoreMySqlCrudFactory;
 use DarlingCms\interfaces\accessControl\IAppConfig;
 
-class AppConfig implements IAppConfig
+class AppConfig extends AAdminAppConfig implements IAppConfig
 {
     /**
      * Validates access.
@@ -15,7 +18,7 @@ class AppConfig implements IAppConfig
      */
     public function validateAccess(): bool
     {
-        return true;
+        return parent::validateAccess();
     }
 
     /**
