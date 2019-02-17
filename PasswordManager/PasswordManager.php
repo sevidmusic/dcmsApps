@@ -3,15 +3,7 @@
 use DarlingCms\classes\staticClasses\core\CoreValues;
 
 if (false === true) {
-
-    $sqlQuery = CoreValues::getMySqlQueryInstance
-    (
-        CoreValues::CORE_DB_HOST,
-        CoreValues::CORE_DB_NAME,
-        'root',
-        'root'
-    );
-
+    $sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::PASSWORD_DB_NAME);
     $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
     $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
     $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
