@@ -2,13 +2,13 @@
 
 use DarlingCms\classes\staticClasses\core\CoreValues;
 
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getUsersDBName());
-$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery); // @todo ! Add to CoreValues
-$permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud); // @todo ! Add to CoreValues
-$roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud); // @todo ! Add to CoreValues
-$userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud); // @todo ! Add to CoreValues
-$passwordCrud = new \DarlingCms\classes\crud\MySqlUserPasswordCrud($sqlQuery); // @todo ! Add to CoreValues
-$userLogin = new \DarlingCms\classes\accessControl\UserLogin(/*$userCrud, $passwordCrud*/); // @todo ! Add to CoreValues
+$crudFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+$actionCrud = $crudFactory->getActionCrud();
+$permissionCrud = $crudFactory->getPermissionCrud();
+$roleCrud = $crudFactory->getRoleCrud();
+$userCrud = $crudFactory->getUserCrud(); // @todo ! Add to CoreValues
+$passwordCrud = $crudFactory->getPasswordCrud(); // @todo ! Add to CoreValues
+$userLogin = new \DarlingCms\classes\accessControl\UserLogin(); // @todo ! Add to CoreValues
 $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? filter_input(INPUT_POST, 'userName') : (empty($userLogin->read(\DarlingCms\classes\accessControl\UserLogin::CURRENT_USER_POST_VAR_NAME)) === false ? $userLogin->read(\DarlingCms\classes\accessControl\UserLogin::CURRENT_USER_POST_VAR_NAME) : ''));
 ?>
 <div id="UserLoginContainer" class="user-login-container">
