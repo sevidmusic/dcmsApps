@@ -33,7 +33,7 @@ class AppConfig implements IAppConfig
      */
     public function getThemeNames(): array
     {
-        return array('UserLogin');
+        return array('UserLogin', 'DCMSBase');
     }
 
     /**

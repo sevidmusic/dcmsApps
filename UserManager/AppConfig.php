@@ -6,21 +6,10 @@
 namespace Apps\UserManager;
 
 use DarlingCms\abstractions\accessControl\AAdminAppConfig;
-use DarlingCms\classes\accessControl\UserLogin;
-use DarlingCms\classes\factory\CoreMySqlCrudFactory;
 use DarlingCms\interfaces\accessControl\IAppConfig;
 
 class AppConfig extends AAdminAppConfig implements IAppConfig
 {
-    /**
-     * Validates access.
-     * @return bool True if access is valid, false otherwise.
-     */
-    public function validateAccess(): bool
-    {
-        return parent::validateAccess();
-    }
-
     /**
      * Gets the app's name.
      * @return string The app's name.
@@ -46,5 +35,15 @@ class AppConfig extends AAdminAppConfig implements IAppConfig
     public function getJsLibraryNames(): array
     {
         return array('AjaxRouter');
+    }
+
+    /**
+     * Returns an array of the names of the Roles that are required by this app.
+     * ALL IMPLEMENTATIONS OF THIS CLASS MUST IMPLEMENT THIS METHOD!
+     * @return array Array of the names of the Roles that are required by this app.
+     */
+    protected function defineValidRoles(): array
+    {
+        return array('Administrator');
     }
 }
