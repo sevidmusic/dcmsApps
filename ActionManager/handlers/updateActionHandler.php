@@ -6,13 +6,7 @@ if (filter_input(INPUT_POST, 'ajaxRequest') === 'true') {
     require str_replace('/apps/ActionManager/handlers', '/vendor/autoload.php', __DIR__);
 }
 
-$sqlQuery = CoreValues::getMySqlQueryInstance
-(
-    CoreValues::CORE_DB_HOST,
-    CoreValues::CORE_DB_NAME,
-    'root',
-    'root'
-);
+$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::PRIVILEGES_DB_NAME);
 $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
 $originalActionName = filter_input(INPUT_POST, 'originalActionName');
 $originalActionDescription = filter_input(INPUT_POST, 'originalActionDescription');
@@ -23,7 +17,7 @@ $changesDetected = !($originalActionName === $newActionName && $originalActionDe
 if ($changesDetected === true && $actionCrud->update($originalActionName, new \DarlingCms\classes\privilege\Action($newActionName, $newActionDescription)) === true) {
     ?>
     <div class="action-manager-updated-action-info">
-        <p>The Action was updated successfully</p>
+        <p class="dcms-positive-text">The action was updated successfully</p>
         <table style="width:100%;padding: 20px;border: 1px solid #ffffff;"
                class="action-manager-original-action-info-table">
             <tr>
@@ -50,7 +44,7 @@ if ($changesDetected === true && $actionCrud->update($originalActionName, new \D
     <?php
 } else {
     ?>
-    <p>The action was not updated, either no changes were detected, or an error occurred.</p>
+    <p class="dcms-negative-text">The action was not updated, either no changes were detected, or an error occurred.</p>
     <?php
 }
 
