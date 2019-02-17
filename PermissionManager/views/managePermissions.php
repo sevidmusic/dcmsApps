@@ -5,8 +5,9 @@ use \DarlingCms\classes\staticClasses\core\CoreValues;
 if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
     require str_replace('/apps/PermissionManager/views', '/vendor/autoload.php', __DIR__);
 }
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getPrivilegesDBName());
-$permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery));
+$crudFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+$actionCrud = $crudFactory->getActionCrud();
+$permissionCrud = $crudFactory->getPermissionCrud();
 ?>
 <h1>Manage Permissions</h1>
 <table class="permission-manager-table">
@@ -50,7 +51,6 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, ne
             <td>
                 <div class="permission-manager-table-cell-content-container">
                     <?php
-                    $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
                     $unAssignedActionNames = array();
                     $unAssignedActionIncrementer = 0;
                     foreach ($actionCrud->readAll() as $action) {

@@ -6,8 +6,8 @@ if (filter_input(INPUT_POST, 'ajaxRequest') === 'true') {
     require str_replace('/apps/ActionManager/handlers', '/vendor/autoload.php', __DIR__);
 }
 
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getPrivilegesDBName());
-$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
+$crudFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+$actionCrud = $crudFactory->getActionCrud();
 if ($actionCrud->delete(filter_input(INPUT_POST, 'actionName')) === true) {
     ?>
     <p class="dcms-positive-text">The <?php echo filter_input(INPUT_POST, 'actionName'); ?> action was deleted

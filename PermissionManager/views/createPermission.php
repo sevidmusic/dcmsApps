@@ -4,10 +4,9 @@ use \DarlingCms\classes\staticClasses\core\CoreValues;
 
 require str_replace('/apps/PermissionManager/views', '/vendor/autoload.php', __DIR__);
 
-$sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getPrivilegesDBName());
-$actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
-$permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
-?>
+$crudFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+$actionCrud = $crudFactory->getActionCrud();
+$permissionCrud = $crudFactory->getPermissionCrud();?>
 <div class="permission-manager-create-permission-container">
     <?php
     $permission = new \DarlingCms\classes\privilege\Permission('', array());
@@ -35,7 +34,6 @@ $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $a
             <div class="permission-manager-sub-content-container">
                 <h3>Select the actions that should be assigned to the new Permission</h3>
                 <?php
-                $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
                 $unAssignedActionNames = array();
                 $unAssignedActionIncrementer = 0;
                 foreach ($actionCrud->readAll() as $action) {

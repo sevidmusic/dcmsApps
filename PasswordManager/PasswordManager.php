@@ -1,14 +1,12 @@
 <?php
 
-use DarlingCms\classes\staticClasses\core\CoreValues;
-
 if (false === true) {
-    $sqlQuery = \DarlingCms\classes\staticClasses\core\CoreMySqlQuery::DbConnection(CoreValues::getPasswordsDBName());
-    $actionCrud = new \DarlingCms\classes\crud\MySqlActionCrud($sqlQuery);
-    $permissionCrud = new \DarlingCms\classes\crud\MySqlPermissionCrud($sqlQuery, $actionCrud);
-    $roleCrud = new \DarlingCms\classes\crud\MySqlRoleCrud($sqlQuery, $permissionCrud);
-    $userCrud = new \DarlingCms\classes\crud\MySqlUserCrud($sqlQuery, $roleCrud);
-    $passwordCrud = new \DarlingCms\classes\crud\MySqlUserPasswordCrud($sqlQuery);
+    $crudFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+    $actionCrud = $crudFactory->getActionCrud();
+    $permissionCrud = $crudFactory->getPermissionCrud();
+    $roleCrud = $crudFactory->getRoleCrud();
+    $userCrud = $crudFactory->getUserCrud();
+    $passwordCrud = $crudFactory->getPasswordCrud();
 
     /**
      * Problem: Whenever a User is updated, the User's UserPassword must be updated, whenever a role is updated,
