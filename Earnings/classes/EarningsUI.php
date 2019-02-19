@@ -220,12 +220,12 @@ class EarningsUI implements IUserInterface
      */
     public function getLastPaidTimeCardName()
     {
-        return '20190209';
+        return '20190217';
     }
 
     public function getOldestUnpaidTimeCardName()
     {
-        return '20190210';
+        return '20190218';
     }
 
     /**

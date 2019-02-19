@@ -19,7 +19,15 @@ $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? fi
     // Check if user login form was submitted
     if (filter_input(INPUT_POST, 'loginUser') === 'Login') {
         if ($userLogin->login($userCrud->read($submittedUserName), $passwordCrud->read($userCrud->read($submittedUserName))) === true) {
-            echo '<p class="dcms-positive-text dcms-float-left user-login-text user-login-status-msg">You are now logged in.</p>';
+            ?>
+            <p class="dcms-positive-text dcms-float-left user-login-text user-login-status-msg">You are now logged
+                in.</p>
+            <script type="text/javascript">
+                /* Assign js vars used by postLoginRedirect.js */
+                window.redirectUser = true;
+                window.redirectUrl = '<?php echo CoreValues::getSiteRootUrl(); ?>';
+            </script>
+            <?php
         } else {
             echo '<p class="dcms-negative-text dcms-float-left user-login-text user-login-status-msg">Login failed. Please try again.</p>';
         }
@@ -29,8 +37,15 @@ $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? fi
     // Check if user logout form was submitted
     if (filter_input(INPUT_POST, 'logoutUser') === 'Logout') {
         if ($userLogin->logout($submittedUserName) === true) {
-            echo '<p class="dcms-positive-text dcms-float-left user-login-text user-login-status-msg">You are now logged out.</p>';
-        } else {
+            ?>
+            <p class="dcms-positive-text dcms-float-left user-login-text user-login-status-msg">You are now logged
+                out.</p>
+            <script type="text/javascript">
+                /* Assign js vars used by postLoginRedirect.js */
+                window.redirectUser = true;
+                window.redirectUrl = '<?php echo CoreValues::getSiteRootUrl(); ?>';
+            </script>
+        <?php } else {
             echo '<p class="dcms-negative-text dcms-float-left user-login-text user-login-status-msg">Logout failed. Please try again.</p>';
         }
     }
