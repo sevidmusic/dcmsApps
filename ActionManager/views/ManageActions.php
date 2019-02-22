@@ -25,7 +25,7 @@ $actionCrud = $crudFactory->getActionCrud();
         <tr class="action-manager-table-row">
             <td id="<?php echo trim($actionElementIdPrefix); ?>-action-name"
                 class="action-manager-table-action-name"><?php
-                $actionNameInput = new \DarlingCms\classes\html\form\Text('actionName', $action->getActionName(), ['id' => $actionNameFormElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover action-manager-input-text', 'disabled']); // @todo ! *ACTIVE* Need to figure out how to let permissions that use this action know when the permission's name is changed and update accordingly.*EOL*NOTE:*EOL*- This MUST not create new dependency between the relevant objects*EOL*- This MUST not effect the app's current functional state as it is at present, i.e. MUST not introduce new bugs
+                $actionNameInput = new \DarlingCms\classes\html\form\Text('actionName', $action->getActionName(), ['id' => $actionNameFormElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover action-manager-input-text']); // @todo ! *ACTIVE* Need to figure out how to let permissions that use this action know when the permission's name is changed and update accordingly.*EOL*NOTE:*EOL*- This MUST not create new dependency between the relevant objects*EOL*- This MUST not effect the app's current functional state as it is at present, i.e. MUST not introduce new bugs
                 echo $actionNameInput->getHtml();
                 ?></td>
             <td id="<?php echo trim($actionElementIdPrefix); ?>-action-description"
