@@ -6,22 +6,10 @@
 namespace Apps\PHPMyAdminFrame;
 
 use DarlingCms\interfaces\accessControl\IAppConfig;
+use DarlingCms\abstractions\accessControl\AAdminAppConfig;
 
-class AppConfig implements IAppConfig
+class AppConfig extends AAdminAppConfig implements IAppConfig
 {
-    /**
-     * Validates access.
-     * @return bool True if access is valid, false otherwise.
-     */
-    public function validateAccess(): bool
-    {
-        // WARNING! Only run on localhost!!!!!!!!
-        //var_dump(substr("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]", 0, 32) === 'http://localhost:8888/DarlingCms');
-        if (substr("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]", 0, 32) === 'http://localhost:8888/DarlingCms') {
-            return true;
-        }
-        return false;
-    }
 
     /**
      * Gets the app's name.
@@ -48,5 +36,15 @@ class AppConfig implements IAppConfig
     public function getJsLibraryNames(): array
     {
         return array('makeDraggable');
+    }
+
+    /**
+     * Returns an array of the names of the Roles that are required by this app.
+     * ALL IMPLEMENTATIONS OF THIS CLASS MUST IMPLEMENT THIS METHOD!
+     * @return array Array of the names of the Roles that are required by this app.
+     */
+    protected function defineValidRoles(): array
+    {
+        return array('Administrator');
     }
 }
