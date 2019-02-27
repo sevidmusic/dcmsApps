@@ -28,7 +28,7 @@ $permissionCrud = $crudFactory->getPermissionCrud();
                 class="permission-manager-table-permission-name">
                 <div class="permission-manager-table-cell-content-container">
                     <?php
-                    $permissionNameInput = new \DarlingCms\classes\html\form\Text('permissionName', $permission->getPermissionName(), ['id' => $permissionNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover permission-manager-input-text', 'disabled']); // @todo ! *ACTIVE* Need to figure out how to let roles that use this permission know when the permission's name is changed and update accordingly.*EOL*NOTE:*EOL*- This MUST not create new dependency between the relevant objects*EOL*- This MUST not effect the app's current functional state as it is at present, i.e. MUST not introduce new bugs
+                    $permissionNameInput = new \DarlingCms\classes\html\form\Text('permissionName', $permission->getPermissionName(), ['id' => $permissionNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover permission-manager-input-text']); // @todo ! *ACTIVE* Need to figure out how to let roles that use this permission know when the permission's name is changed and update accordingly.*EOL*NOTE:*EOL*- This MUST not create new dependency between the relevant objects*EOL*- This MUST not effect the app's current functional state as it is at present, i.e. MUST not introduce new bugs
                     echo $permissionNameInput->getHtml();
                     ?>
                 </div>

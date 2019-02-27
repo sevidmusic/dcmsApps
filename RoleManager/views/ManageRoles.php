@@ -95,7 +95,7 @@ $roleCrud = $crudFactory->getRoleCrud();
                         'callContext' => '',
                         'callArgs' => ''
                     ]);
-                    $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $permission->getPermissionName() . ' permission?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $permission->getPermissionName() . ' permission.\')', 'data-role-name' => $role->getRoleName(), 'class' => 'dcms-button permission-manager-update-permission-button'], 'Update Role');
+                    $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $permission->getPermissionName() . ' role?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $permission->getPermissionName() . ' permission.\')', 'data-role-name' => $role->getRoleName(), 'class' => 'dcms-button permission-manager-update-permission-button'], 'Update Role');
                     echo $updateButton->getHtml();
                     ?>
                 </div>
