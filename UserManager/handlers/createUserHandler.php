@@ -27,8 +27,6 @@ foreach ($roles as $roleName => $roleState) {
         array_push($assignedRoles, $roleCrud->read($roleName));
     }
 }
-var_dump($post);
-
 if (!empty($post['userName']) === true && !empty($post['userPassword']) === true) {
     $newUser = new \DarlingCms\classes\user\User($post['userName'], [], $assignedRoles);
     $newUserPassword = new \DarlingCms\classes\user\UserPassword($newUser, $post['userPassword']);
