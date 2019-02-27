@@ -13,6 +13,7 @@ $userCrud = $crudFactory->getUserCrud();
     $user = new \DarlingCms\classes\user\User('', array());
     $userElementIdPrefix = trim(str_replace(' ', '', $user->getUserName()));
     $userNameElementId = $userElementIdPrefix . 'UserNameFormElement';
+    $userPasswordElementId = $userElementIdPrefix . 'UserPasswordFormElement';
     ?>
     <?php
     $assignedRoleNames = array();
@@ -28,6 +29,12 @@ $userCrud = $crudFactory->getUserCrud();
                 <?php
                 $userNameInput = new \DarlingCms\classes\html\form\Text('userName', $user->getUserName(), ['id' => $userNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
                 echo $userNameInput->getHtml();
+                ?>
+                <h3>Enter a password for the new User</h3>
+                <?php
+                $userPasswordInput = new \DarlingCms\classes\html\form\Password('userPassword', '', ['id' => $userPasswordElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text user-manager-input-password']);
+                echo $userPasswordInput->getHtml();
+                // @todo ! Add second password field that uses js to verify passwords match as is standard on most websites.
                 ?>
             </div>
         </div>
@@ -68,7 +75,7 @@ $userCrud = $crudFactory->getUserCrud();
                     'outputElementId' => 'UserManagerView',
                     'requestType' => 'POST',
                     'contentType' => '',
-                    'additionalParams' => 'originalUserName=\'+this.dataset.userName+\'' . '&' . 'userName=\'+getElementValue(\'' . $userNameElementId . '\')+\'' . $assignedRoleParamStr . $unAssignedRoleParamStr,
+                    'additionalParams' => 'userName=\'+getElementValue(\'' . $userNameElementId . '\')+\'' . '&' . 'userPassword=\'+getElementValue(\'' . $userPasswordElementId . '\')+\'' . $assignedRoleParamStr . $unAssignedRoleParamStr,
                     'ajaxDirName' => 'handlers',
                     'callFunction' => '',
                     'callContext' => '',
