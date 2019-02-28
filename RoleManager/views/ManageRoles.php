@@ -29,7 +29,7 @@ $roleCrud = $crudFactory->getRoleCrud();
                 class="role-manager-table-role-name">
                 <div class="role-manager-table-cell-content-container">
                     <?php
-                    $roleNameInput = new \DarlingCms\classes\html\form\Text('roleName', $role->getRoleName(), ['id' => $roleNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover role-manager-input-text', 'disabled']);
+                    $roleNameInput = new \DarlingCms\classes\html\form\Text('roleName', $role->getRoleName(), ['id' => $roleNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover role-manager-input-text']);
                     echo $roleNameInput->getHtml();
                     ?>
                 </div>
