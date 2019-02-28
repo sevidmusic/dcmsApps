@@ -29,7 +29,7 @@ $roleCrud = $crudFactory->getRoleCrud();
                 class="role-manager-table-role-name">
                 <div class="role-manager-table-cell-content-container">
                     <?php
-                    $roleNameInput = new \DarlingCms\classes\html\form\Text('roleName', $role->getRoleName(), ['id' => $roleNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover role-manager-input-text', 'disabled']); // @todo ! *ACTIVE* ! Need to figure out how to let Users that use this Role know when the Roles's name is changed and update accordingly.*EOL* NOTE:*EOL*- This MUST not create new dependency between the relevant objects*EOL*- This MUST not effect the app's current functional state as it is at present, i.e. MUST not introduce new bugs
+                    $roleNameInput = new \DarlingCms\classes\html\form\Text('roleName', $role->getRoleName(), ['id' => $roleNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover role-manager-input-text', 'disabled']);
                     echo $roleNameInput->getHtml();
                     ?>
                 </div>

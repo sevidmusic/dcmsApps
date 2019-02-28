@@ -31,7 +31,7 @@ $userCrud = $coreCrud->getUserCrud();
                 class="user-manager-table-user-name">
                 <div class="user-manager-table-cell-content-container">
                     <?php
-                    $userNameInput = new \DarlingCms\classes\html\form\Text('userName', $user->getUserName(), ['id' => $userNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text', 'disabled']); // @todo ! *ACTIVE* ! Need to figure out how to let Users that use this User know when the Users's name is changed and update accordingly.*EOL* NOTE:*EOL*- This MUST not create new dependency between the relevant objects*EOL*- This MUST not effect the app's current functional state as it is at present, i.e. MUST not introduce new bugs
+                    $userNameInput = new \DarlingCms\classes\html\form\Text('userName', $user->getUserName(), ['id' => $userNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text', 'disabled']);
                     echo $userNameInput->getHtml();
                     ?>
                 </div>
