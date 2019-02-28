@@ -17,7 +17,7 @@ $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? fi
 
 
     // Check if user login form was submitted
-    if (filter_input(INPUT_POST, 'loginUser') === 'Login') {
+    if (filter_input(INPUT_POST, $userLogin::LOGIN_STATE_VAR_NAME) === $userLogin::LOGIN_STATE_VAR_VALUE) {
         if ($userLogin->login($userCrud->read($submittedUserName), $passwordCrud->read($userCrud->read($submittedUserName))) === true) {
             ?>
             <p class="dcms-positive-text dcms-float-left user-login-text user-login-status-msg">You are now logged
@@ -35,7 +35,7 @@ $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? fi
 
 
     // Check if user logout form was submitted
-    if (filter_input(INPUT_POST, 'logoutUser') === 'Logout') {
+    if (filter_input(INPUT_POST, $userLogin::LOGOUT_STATE_VAR_NAME) === $userLogin::LOGOUT_STATE_VAR_VALUE) {
         if ($userLogin->logout($submittedUserName) === true) {
             ?>
             <p class="dcms-positive-text dcms-float-left user-login-text user-login-status-msg">You are now logged
@@ -58,7 +58,7 @@ $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? fi
                 ,
                 new \DarlingCms\classes\html\form\Text('userName', '', ['placeholder' => 'Username', 'class' => 'dcms-input-text dcms-focus dcms-hover user-login-user-name-text-input']),
                 new \DarlingCms\classes\html\form\Password('password', '', ['placeholder' => 'Password', 'class' => 'dcms-input-text dcms-focus dcms-hover user-login-user-password-input']),
-                new \DarlingCms\classes\html\form\Submit('loginUser', 'Login', ['class' => 'dcms-button dcms-focus dcms-hover user-login-submit-button'])
+                new \DarlingCms\classes\html\form\Submit($userLogin::LOGIN_STATE_VAR_NAME, $userLogin::LOGIN_STATE_VAR_VALUE, ['class' => 'dcms-button dcms-focus dcms-hover user-login-submit-button'])
             );
             echo $form->getHtml();
             break;
@@ -67,7 +67,7 @@ $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? fi
                 'POST',
                 ['class' => 'dcms-float-right user-logout-form']
                 ,
-                new \DarlingCms\classes\html\form\Submit('logoutUser', 'Logout', ['class' => 'dcms-button dcms-focus dcms-hover user-logout-submit-button'])
+                new \DarlingCms\classes\html\form\Submit($userLogin::LOGOUT_STATE_VAR_NAME, $userLogin::LOGOUT_STATE_VAR_VALUE, ['class' => 'dcms-button dcms-focus dcms-hover user-logout-submit-button'])
             );
             echo $form->getHtml();
             break;
