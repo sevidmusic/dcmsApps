@@ -1,4 +1,7 @@
 <?php
+
+use DarlingCms\classes\staticClasses\core\CoreValues;
+
 if (file_exists(ini_get('error_log'))) {
     $errorLog = explode(PHP_EOL, file_get_contents(ini_get('error_log')));
     if (((count($errorLog) <= 1 && count($errorLog) > 0) && $errorLog[0] === '') === false) {
@@ -7,7 +10,16 @@ if (file_exists(ini_get('error_log'))) {
             <div draggable="true" id="ErrorViewerHandle" class="dcms-drag-handle">Click here to move</div>
             <a class="ev-link" href="index.php?ErrorViewerAction=ClearErrors&ErrorLog=default">Clear Errors</a>
             <div class="dcms-clear-float"></div>
-            <h3>The following errors occurred:</h3>
+            <?php
+            $numErrs = 0;
+            foreach ($errorLog as $item) {
+                if (empty($item) === true) {
+                    continue;
+                }
+                $numErrs++;
+            }
+            ?>
+            <h3>The following <?php echo strval($numErrs); ?> errors occurred:</h3>
             <?php
             foreach ($errorLog as $item) {
                 if (empty($item) === true) {
@@ -22,7 +34,9 @@ if (file_exists(ini_get('error_log'))) {
                         echo '<p class="dcms-negative-text ev-message">Failed to clear error log.</p>';
                         break;
                     default:
-                        echo '<p class="dcms-positive-text ev-message">Cleared error log.</p>';
+                        echo '<p style="background: black; padding: 5px;" class="dcms-positive-text ev-message">Cleared error log.</p>';
+                        $rootUrl = CoreValues::getSiteRootUrl();
+                        echo "<meta http-equiv='refresh' content='1;url={$rootUrl}' />";
                         break;
                 }
             }

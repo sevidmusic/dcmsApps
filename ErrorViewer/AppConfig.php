@@ -11,9 +11,18 @@ namespace Apps\ErrorViewer;
 
 use DarlingCms\abstractions\accessControl\AAdminAppConfig;
 use DarlingCms\interfaces\accessControl\IAppConfig;
-
-class AppConfig extends AAdminAppConfig implements IAppConfig
+// @todo Revert this app, it has been modified for use during development of Installers
+class AppConfig implements IAppConfig//extends AAdminAppConfig implements IAppConfig
 {
+    /**
+     * Validates access.
+     * @return bool True if access is valid, false otherwise.
+     */
+    public function validateAccess(): bool
+    {
+        return true;
+    }
+
     /**
      * Gets the app's name.
      * @return string The app's name.
