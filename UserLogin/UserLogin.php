@@ -13,6 +13,7 @@ $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? fi
 ?>
 <div id="UserLoginContainer" class="user-login-container">
     <?php
+    $loader = '<div class="dcms-loader user-login-loader-spinner"><p style="text-shadow: 15px 14px #3c8ecd;font-family: monospace;">@ - * - @ - * - @ - * - @</p></div>';
     echo '<p class="user-login-text user-login-status-msg">' . ($userLogin->isLoggedIn($submittedUserName) === true ? 'You are logged in as "' . $userCrud->read($submittedUserName)->getUserName() . '"' : 'You are not logged in:') . '</p>';
 
 
@@ -21,13 +22,14 @@ $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? fi
         if ($userLogin->login($userCrud->read($submittedUserName), $passwordCrud->read($userCrud->read($submittedUserName))) === true) {
             ?>
             <p class="dcms-positive-text dcms-float-left user-login-text user-login-status-msg">You are now logged
-                in.</p>
+                in. You will be re-directed shortly...</p>
             <script type="text/javascript">
                 /* Assign js vars used by postLoginRedirect.js */
                 window.redirectUser = true;
                 window.redirectUrl = '<?php echo CoreValues::getSiteRootUrl(); ?>';
             </script>
             <?php
+            echo $loader;
         } else {
             echo '<p class="dcms-negative-text dcms-float-left user-login-text user-login-status-msg">Login failed. Please try again.</p>';
         }
@@ -39,13 +41,15 @@ $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? fi
         if ($userLogin->logout($submittedUserName) === true) {
             ?>
             <p class="dcms-positive-text dcms-float-left user-login-text user-login-status-msg">You are now logged
-                out.</p>
+                out. You will be re-directed shortly...</p>
             <script type="text/javascript">
                 /* Assign js vars used by postLoginRedirect.js */
                 window.redirectUser = true;
                 window.redirectUrl = '<?php echo CoreValues::getSiteRootUrl(); ?>';
             </script>
-        <?php } else {
+            <?php
+            echo $loader;
+        } else {
             echo '<p class="dcms-negative-text dcms-float-left user-login-text user-login-status-msg">Logout failed. Please try again.</p>';
         }
     }
