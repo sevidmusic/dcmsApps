@@ -13,7 +13,7 @@ $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? fi
 ?>
 <div id="UserLoginContainer" class="user-login-container">
     <?php
-    $loader = '<div class="dcms-loader user-login-loader-spinner"><p style="text-shadow: 15px 14px #3c8ecd;font-family: monospace;">@ - * - @ - * - @ - * - @</p></div>';
+    $loader = '<div class="dcms-loader user-login-loader-spinner"></div>';
     echo '<p class="user-login-text user-login-status-msg">' . ($userLogin->isLoggedIn($submittedUserName) === true ? 'You are logged in as "' . $userCrud->read($submittedUserName)->getUserName() . '"' : 'You are not logged in:') . '</p>';
 
 
