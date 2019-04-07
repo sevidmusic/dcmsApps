@@ -21,11 +21,14 @@ if (file_exists(ini_get('error_log'))) {
             ?>
             <h3>The following <?php echo strval($numErrs); ?> errors occurred:</h3>
             <?php
+            $bgColors = array('#04060A', '#0D161B');
+            $bgColor = $bgColors[0];
             foreach ($errorLog as $item) {
+                $bgColor = ($bgColor === $bgColors[0] ? $bgColors[1] : $bgColors[0]);
                 if (empty($item) === true) {
                     continue;
                 }
-                echo '<p style="overflow: auto;border: 3px solid #ffffff; border-radius: 20px; padding: 15px;">' . htmlentities($item) . '</p>';
+                echo '<p class="error-viewer-error" style="opacity:.87; background-color:' . $bgColor . ';overflow: auto;border: 3px solid #ffffff; border-radius: 20px; padding: 15px;margin-bottom: 2%;">' . htmlentities($item) . '</p>';
             }
             if (empty(filter_input(INPUT_GET, 'ErrorViewerAction')) === false && empty(filter_input(INPUT_GET, 'ErrorLog')) === false) {
                 $status = file_put_contents(ini_get('error_log'), '', LOCK_EX);
