@@ -111,7 +111,7 @@ class AppManagerUI implements IUserInterface
     {
         $links = array();
         foreach (scandir(str_replace('classes', 'views', __DIR__)) as $view) {
-            if ($view !== '.' && $view !== '..' && $view !== 'subViews') {
+            if ($view !== '.' && $view !== '..' && $view !== '.DS_Store' && $view !== 'subViews') {
                 $viewName = str_replace('.php', '', $view);
                 array_push($links, '<a class="dcms-link app-manager-view-link" onclick="return AjaxRouterRequest(\'AppManager\',\'' . trim($viewName) . '\',\'AppManagerCurrentView\',\'GET\',undefined,\'appManagerView=' . trim($viewName) . '&ajaxRequest=true\',\'views\')" href="index.php?appManagerView=' . trim($viewName) . ($this->displayAdvancedInfo() === true ? '&amp;advancedInfo' : '') . '">' . $this->convertFromCamelCase(trim($viewName)) . '</a>');
             }
