@@ -1,4 +1,4 @@
-<div id="AdminPanel">
+<div id="AdminPanel" class="dcms-make-draggable">
     <button title="Show all admin panels" id="admin-panel-show-all-link" class="dcms-button admin-panel-button">Show
         Admin Panels
     </button>
