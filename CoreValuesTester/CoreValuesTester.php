@@ -1,13 +1,16 @@
 <?php
 
+use DarlingCms\classes\html\HtmlBlock;
+use DarlingCms\classes\html\HtmlContainer;
+use DarlingCms\classes\html\HtmlTag;
 use DarlingCms\classes\staticClasses\core\CoreValues;
 
-$CoreValues = [
+$coreValues = [
     'Config' =>
         [
             'CoreValues::getSiteConfigPath()' => CoreValues::getSiteConfigPath(),
             'CoreValues::getSiteConfigFilename()' => CoreValues::getSiteConfigFilename(),
-            'CoreValues::getSiteConfigValue(\'DBUserName\')' => CoreValues::getSiteConfigValue('DBUserName'),
+            'CoreValues::getSiteConfigValue(\'CoreDBName\')' => CoreValues::getSiteConfigValue('CoreDBName'),
         ],
     'Paths' =>
         [
@@ -25,9 +28,9 @@ $CoreValues = [
         ],
     'Database' =>
         [
-            'CoreValues::getDBHostName()' => CoreValues::getDBHostName(),
-            'CoreValues::getDBUserName()' => CoreValues::getDBUserName(),
-            'CoreValues::getDBPassword()' => CoreValues::getDBPassword(),
+            'CoreValues::getDBHostName(CoreValues::getCoreDBName())' => CoreValues::getDBHostName(CoreValues::getCoreDBName()),
+            'CoreValues::getDBUserName(CoreValues::getAppsDBName())' => CoreValues::getDBUserName(CoreValues::getAppsDBName()),
+            'CoreValues::getDBPassword(CoreValues::getPrivilegesDBName())' => CoreValues::getDBPassword(CoreValues::getPrivilegesDBName()),
             'CoreValues::getCoreDBName()' => CoreValues::getCoreDBName(),
             'CoreValues::getAppsDBName()' => CoreValues::getAppsDBName(),
             'CoreValues::getPrivilegesDBName()' => CoreValues::getPrivilegesDBName(),
@@ -37,6 +40,22 @@ $CoreValues = [
     'Misc' =>
         [
             'CoreValues::getSiteDirName()' => CoreValues::getSiteDirName(),
+            'CoreValues::getSiteUrlName()' => CoreValues::getSiteUrlName(),
+            'CoreValues::siteConfigured()' => CoreValues::siteConfigured(),
         ]
 ];
-var_dump($CoreValues);
+$coreValuesTableDiv = new HtmlContainer(new HtmlBlock(), 'div', ['style' => 'width:90%;margin:0 auto;height:420px;overflow:auto;']);
+$coreValuesTable = new HtmlContainer(new HtmlBlock(), 'table', ['style' => 'table-layout: fixed; width: 100%;']);
+foreach ($coreValues as $category => $values) {
+    $row = new HtmlContainer(new HtmlBlock(), 'tr', ['class' => 'dcms-table-row']);
+    $row->addHtml(new HtmlTag('th', ['style' => 'overflow:auto;text-align:left;padding:20px;', 'class' => 'dcms-table-th'], $category));
+    $coreValuesTable->addHtml($row);
+    foreach ($values as $valueName => $value) {
+        $vRow = new HtmlContainer(new HtmlBlock(), 'tr', ['class' => 'dcms-table-row']);
+        $vRow->addHtml(new HtmlTag('td', ['style' => 'overflow:auto;border:3px double #ffffff;border-radius:20px;padding:20px;background:#555555;', 'class' => 'dcms-table-td'], $valueName));
+        $vRow->addHtml(new HtmlTag('td', ['style' => 'overflow:auto;border:3px double #ffffff;border-radius:20px;padding:20px;', 'class' => 'dcms-table-td'], $value));
+        $coreValuesTable->addHtml($vRow);
+    }
+}
+$coreValuesTableDiv->addHtml($coreValuesTable);
+echo $coreValuesTableDiv->getHtml();
