@@ -29,4 +29,7 @@
     <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('Todo')"
             ondblclick="hideAppPanel('Todo')" class="dcms-button admin-panel-button">Todo
     </button>
+    <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('TokenConverter')"
+            ondblclick="hideAppPanel('TokenConverter')" class="dcms-button admin-panel-button">Token Converter
+    </button>
 </div>
