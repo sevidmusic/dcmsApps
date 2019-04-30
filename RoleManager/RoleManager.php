@@ -1,4 +1,4 @@
 <?php
 
-$roleUi = new \Apps\RoleManager\classes\RoleManagerUi();
+$roleUi = new \Apps\RoleManager\classes\RoleManagerUI();
 echo $roleUi->getUserInterface();

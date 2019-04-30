@@ -4,7 +4,7 @@ if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
 }
 echo '<h1>Create New App</h1>';
 echo '<p>Create boilerplate code for a new Darling Cms App</p>';
-$ajaxRouterRequest = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest(
+$ajaxRouterRequest = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest(
     [
         'issuingApp' => 'AppManager',
         'handlerName' => 'createApp',

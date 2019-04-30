@@ -4,10 +4,10 @@
 namespace Apps\TokenConverter;
 
 
-use DarlingCms\abstractions\userInterface\AjaxUi;
+use DarlingCms\abstractions\userInterface\AjaxUI;
 use DarlingCms\interfaces\userInterface\IUserInterface;
 
-class UI extends AjaxUi implements IUserInterface
+class UI extends AjaxUI implements IUserInterface
 {
 
     protected $defaultView = 'tokensToCash';

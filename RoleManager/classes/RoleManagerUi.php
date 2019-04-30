@@ -9,9 +9,9 @@
 namespace Apps\RoleManager\classes;
 
 
-use DarlingCms\abstractions\userInterface\AjaxUi;
+use DarlingCms\abstractions\userInterface\AjaxUI;
 
-class RoleManagerUi extends AjaxUi
+class RoleManagerUI extends AjaxUI
 {
     protected $defaultView = 'manageRoles';
     /**

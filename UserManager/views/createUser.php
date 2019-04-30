@@ -69,7 +69,7 @@ $userCrud = $crudFactory->getUserCrud();
                     $unAssignedRoleParamStr .= '&' . 'unAssignedRoleNames[]=\'+getElementValue(\'' . $unAssignedRoleTargetId . '\')+\'' . '&' . 'unAssignedRoleStates[]=\'+checkboxIsChecked(\'' . $unAssignedRoleTargetId . '\')+\'';
                 }
 
-                $createAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                $createAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
                     'issuingApp' => 'UserManager',
                     'handlerName' => 'createUserHandler',
                     'outputElementId' => 'UserManagerView',

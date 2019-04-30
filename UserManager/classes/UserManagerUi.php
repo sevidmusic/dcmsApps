@@ -9,9 +9,9 @@
 namespace Apps\UserManager\classes;
 
 
-use DarlingCms\abstractions\userInterface\AjaxUi;
+use DarlingCms\abstractions\userInterface\AjaxUI;
 
-class UserManagerUi extends AjaxUi
+class UserManagerUI extends AjaxUI
 {
     protected $defaultView = 'manageUsers';
 

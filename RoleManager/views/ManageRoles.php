@@ -83,7 +83,7 @@ $roleCrud = $crudFactory->getRoleCrud();
                         $availablePermissionParamStr .= '&' . 'availablePermissionNames[]=\'+getElementValue(\'' . $availablePermissionTargetId . '\')+\'' . '&' . 'availablePermissionStates[]=\'+checkboxIsChecked(\'' . $availablePermissionTargetId . '\')+\'';
                     }
 
-                    $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                    $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
                         'issuingApp' => 'RoleManager',
                         'handlerName' => 'updateRoleHandler',
                         'outputElementId' => 'RoleManagerView',
@@ -103,7 +103,7 @@ $roleCrud = $crudFactory->getRoleCrud();
             <td class="role-manager-table-delete-role">
                 <div class="role-manager-table-cell-content-container">
                     <?php
-                    $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                    $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
                         'issuingApp' => 'RoleManager',
                         'handlerName' => 'deleteRoleHandler',
                         'outputElementId' => 'RoleManagerView',

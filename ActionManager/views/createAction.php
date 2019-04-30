@@ -10,7 +10,7 @@ $createActionForm = new \DarlingCms\classes\html\form\Form(
     [
         'id' => 'createActionForm',
         'class' => 'action-manager-form',
-        'onsubmit' => 'return ' . \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+        'onsubmit' => 'return ' . \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
                 'issuingApp' => 'ActionManager',
                 'handlerName' => 'createActionHandler',
                 'outputElementId' => 'ActionManagerView',

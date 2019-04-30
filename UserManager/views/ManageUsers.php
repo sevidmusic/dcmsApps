@@ -184,7 +184,7 @@ $userCrud = $coreCrud->getUserCrud();
                         $privateMetaDataKeyParamStr .= '&' . 'privateMetaDataKeys[]=\'+getElementValue(\'' . $privateMetaDataTargetKeyId . '\')+\'';
                         $privateMetaDataValueParamStr .= '&' . 'privateMetaDataValues[]=\'+getElementValue(\'' . $privateMetaDataTargetValueId . '\')+\'';
                     }
-                    $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                    $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
                         'issuingApp' => 'UserManager',
                         'handlerName' => 'updateUserHandler',
                         'outputElementId' => 'UserManagerView',
@@ -204,7 +204,7 @@ $userCrud = $coreCrud->getUserCrud();
             <td class="user-manager-table-delete-user">
                 <div class="user-manager-table-cell-content-container">
                     <?php
-                    $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                    $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
                         'issuingApp' => 'UserManager',
                         'handlerName' => 'deleteUserHandler',
                         'outputElementId' => 'UserManagerView',

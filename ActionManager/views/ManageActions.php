@@ -37,7 +37,7 @@ $actionCrud = $crudFactory->getActionCrud();
             </td>
             <td class="action-manager-table-save-changes">
                 <?php
-                $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
                     'issuingApp' => 'ActionManager',
                     'handlerName' => 'updateActionHandler',
                     'outputElementId' => 'ActionManagerView',
@@ -55,7 +55,7 @@ $actionCrud = $crudFactory->getActionCrud();
             </td>
             <td class="action-manager-table-delete-action">
                 <?php
-                $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
                     'issuingApp' => 'ActionManager',
                     'handlerName' => 'deleteActionHandler',
                     'outputElementId' => 'ActionManagerView',

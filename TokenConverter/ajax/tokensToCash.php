@@ -5,12 +5,12 @@ if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
 
 use DarlingCms\classes\html\form\Form;
 use DarlingCms\classes\html\form\Text;
-use DarlingCms\abstractions\userInterface\AjaxUi;
+use DarlingCms\abstractions\userInterface\AjaxUI;
 use DarlingCms\classes\html\HtmlBlock;
 use DarlingCms\classes\html\HtmlContainer;
 use DarlingCms\classes\html\HtmlTag;
 
-$ajax = AjaxUi::generateAjaxRequest([
+$ajax = AjaxUI::generateAjaxRequest([
     'issuingApp' => 'TokenConverter',
     'handlerName' => 'cashFromTokens',
     'outputElementId' => 'TokenConversionView',

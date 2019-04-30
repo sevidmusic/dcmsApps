@@ -82,7 +82,7 @@ $permissionCrud = $crudFactory->getPermissionCrud();
                         $unAssignedActionParamStr .= '&' . 'unAssignedActionNames[]=\'+getElementValue(\'' . $unAssignedActionTargetId . '\')+\'' . '&' . 'unAssignedActionStates[]=\'+checkboxIsChecked(\'' . $unAssignedActionTargetId . '\')+\'';
                     }
 
-                    $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                    $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
                         'issuingApp' => 'PermissionManager',
                         'handlerName' => 'updatePermissionHandler',
                         'outputElementId' => 'PermissionManagerView',
@@ -102,7 +102,7 @@ $permissionCrud = $crudFactory->getPermissionCrud();
             <td class="permission-manager-table-delete-permission">
                 <div class="permission-manager-table-cell-content-container">
                     <?php
-                    $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                    $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
                         'issuingApp' => 'PermissionManager',
                         'handlerName' => 'deletePermissionHandler',
                         'outputElementId' => 'PermissionManagerView',

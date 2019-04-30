@@ -6,9 +6,9 @@ $crudFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
 $actionCrud = $crudFactory->getActionCrud();
 $permissionCrud = $crudFactory->getPermissionCrud();
 $roleCrud = $crudFactory->getRoleCrud();
-$userCrud = $crudFactory->getUserCrud(); // @todo ! Add to CoreValues
-$passwordCrud = $crudFactory->getPasswordCrud(); // @todo ! Add to CoreValues
-$userLogin = new \DarlingCms\classes\accessControl\UserLogin(); // @todo ! Add to CoreValues
+$userCrud = $crudFactory->getUserCrud();
+$passwordCrud = $crudFactory->getPasswordCrud();
+$userLogin = new \DarlingCms\classes\accessControl\UserLogin();
 $submittedUserName = (empty(filter_input(INPUT_POST, 'userName')) === false ? filter_input(INPUT_POST, 'userName') : (empty($userLogin->read(\DarlingCms\classes\accessControl\UserLogin::CURRENT_USER_POST_VAR_NAME)) === false ? $userLogin->read(\DarlingCms\classes\accessControl\UserLogin::CURRENT_USER_POST_VAR_NAME) : ''));
 ?>
 <div id="UserLoginContainer" class="user-login-container">

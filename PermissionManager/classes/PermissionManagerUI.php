@@ -9,9 +9,9 @@
 namespace Apps\PermissionManager\classes;
 
 
-use DarlingCms\abstractions\userInterface\AjaxUi;
+use DarlingCms\abstractions\userInterface\AjaxUI;
 
-class PermissionManagerUI extends AjaxUi
+class PermissionManagerUI extends AjaxUI
 {
     protected $defaultView = 'managePermissions';
     /**

@@ -65,7 +65,7 @@ $permissionCrud = $crudFactory->getPermissionCrud();?>
                     $unAssignedActionParamStr .= '&' . 'unAssignedActionNames[]=\'+getElementValue(\'' . $unAssignedActionTargetId . '\')+\'' . '&' . 'unAssignedActionStates[]=\'+checkboxIsChecked(\'' . $unAssignedActionTargetId . '\')+\'';
                 }
 
-                $createAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUi::generateAjaxRequest([
+                $createAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
                     'issuingApp' => 'PermissionManager',
                     'handlerName' => 'createPermissionHandler',
                     'outputElementId' => 'PermissionManagerView',

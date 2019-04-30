@@ -9,9 +9,9 @@
 namespace Apps\ActionManager\classes;
 
 
-use DarlingCms\abstractions\userInterface\AjaxUi;
+use DarlingCms\abstractions\userInterface\AjaxUI;
 
-class ActionManagerUi extends AjaxUi // @todo ! Rename to ActionManagerUI
+class ActionManagerUI extends AjaxUI
 {
     protected $defaultView = 'manageActions';
 
