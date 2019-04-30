@@ -39,4 +39,5 @@ $logoImgPath = $amInfo->getDemoImgPath('ARFrame');
     <a-image src="<?php echo $logoImgPath; ?>"></a-image>
     <!-- REQUIRED: Define a camera which will move according to the marker position -->
     <a-marker-camera preset='hiro'></a-marker-camera>
+    <!-- <a-marker-camera preset='custom' type="pattern" url="CoreValues::getSiteRootUrl()/UMNLOgoMarker.patt"></a-marker-camera> -->
 </a-scene>
