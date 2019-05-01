@@ -79,15 +79,13 @@ class DisabledAppInfo extends AppInfo
      */
     public function getReadme(string $appName): string
     {
-        $zip = new \DarlingCms\classes\FileSystem\ZipCrud(); // @todo: if used in long run, should be injected via __construct() method
-        $path = str_replace('/AppManager/classes', '', __DIR__) . '/' . $appName . '.zip';
-        return ($zip->zipHasFile($path, 'README.md') === true ? $zip->readFileFromZip($path, 'README.md') : 'No Information Available...');
+        return ($this->zipCrud->zipHasFile($this->getPath($appName), 'README.md') === true ? $this->zipCrud->readFileFromZip($this->getPath($appName), 'README.md') : 'No Information Available...');
     }
 
     /**
-     * Returns the path to the specified app.
-     * @param string $appName The name of the app.
-     * @return string The path to the specified app.
+     * Returns the path to the specified disabled app's zip file.
+     * @param string $appName The name of the disabled app whose zip's file path should be returned.
+     * @return string The path to the specified disabled app's zip file.
      */
     public function getPath(string $appName): string
     {
@@ -115,13 +113,25 @@ class DisabledAppInfo extends AppInfo
         return CoreValues::getSiteRootUrl() . 'apps/AppManager/resources/images/' . $appName . '.logo.png';
     }
 
+    // @here @todo Fix, images are not being generated, perahps used ZipCrud method like ZipCrud::readFileFromZip()...
     private function generateTempImage(string $appName): bool
     {
-        if (file_exists($this->getLogoImgStreamPath($appName)) === false) {
-            //error_log('Disabled App Info Error: Failed to generate temp image for app ' . $appName . ' The archive does not contain an image at stream ' . $this->getLogoImgStreamPath($appName));
+        $zipFilePath = CoreValues::getAppDirPath($appName) . '.zip';
+        $fileName = 'logo.png';
+        if ($this->zipHasFile($zipFilePath, $fileName) === false) {
+            error_log('Disabled App Info Error: Failed to generate temp image for app ' . $appName . ' The archive does not contain an image at stream ' . $this->getLogoImgStreamPath($appName));
             return false;
         }
-        return (file_put_contents($this->getTempImgPath($appName), file_get_contents($this->getLogoImgStreamPath($appName))) === false ? false : true);
+        return empty(file_put_contents($this->getTempImgPath($appName), $this->zipCrud->readFileFromZip($zipFilePath, $fileName)));
+    }
+
+    // @todo Move to ZipFileCrud if it works and make it a public method...
+    private function zipHasFile(string $zipFilePath, string $fileName): bool
+    {
+        if (!empty($this->zipCrud->readFileFromZip($zipFilePath, $fileName))) {
+            return true;
+        }
+        return false;
     }
 
     private function getTempImgFileName(string $appName): string
@@ -137,7 +147,7 @@ class DisabledAppInfo extends AppInfo
      */
     private function getZipStreamPath(string $appName, string $fileName = ''): string
     {
-        return 'zip://' . $this->getPath($appName) . ($fileName !== '' ? '#' . $fileName : '');
+        return str_replace('///', '//', 'zip://' . $this->getPath($appName) . ($fileName !== '' ? '#' . $fileName : ''));
     }
 
     private function getLogoImgStreamPath(string $appName): string

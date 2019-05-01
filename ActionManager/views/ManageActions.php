@@ -61,7 +61,7 @@ $actionCrud = $crudFactory->getActionCrud();
                     'outputElementId' => 'ActionManagerView',
                     'requestType' => 'POST',
                     'contentType' => '',
-                    'additionalParams' => 'actionName=\'+this.dataset.actionName+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
+                    'additionalParams' => 'actionName=\'+this.dataset.actionName+\'',
                     'ajaxDirName' => 'handlers',
                     'callFunction' => '',
                     'callContext' => '',

@@ -44,7 +44,9 @@ $coreValues = [
             'CoreValues::siteConfigured()' => CoreValues::siteConfigured(),
         ]
 ];
-$coreValuesTableDiv = new HtmlContainer(new HtmlBlock(), 'div', ['style' => 'width:90%;margin:0 auto;height:420px;overflow:auto;']);
+$coreValuesTableDiv = new HtmlContainer(new HtmlBlock(), 'div', ['id' => 'CoreValuesTester', 'class' => 'dcms-admin-panel dcms-admin-panel-pos1 dcms-make-draggable']);//'style' => 'width:90%;margin:0 auto;height:420px;overflow:auto;'
+// <div id="AppManagerHandle" draggable="true" class="dcms-drag-handle">Click here to move...</div>
+$coreValuesTableDiv->addHtml(new HtmlTag('div', ['id' => 'CoreValuesTesterHandle', 'class' => 'dcms-drag-handle'], 'Click here to move...'));
 $coreValuesTable = new HtmlContainer(new HtmlBlock(), 'table', ['style' => 'table-layout: fixed; width: 100%;']);
 foreach ($coreValues as $category => $values) {
     $row = new HtmlContainer(new HtmlBlock(), 'tr', ['class' => 'dcms-table-row']);

@@ -32,4 +32,7 @@
     <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('TokenConverter')"
             ondblclick="hideAppPanel('TokenConverter')" class="dcms-button admin-panel-button">Token Converter
     </button>
+    <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('CoreValuesTester')"
+            ondblclick="hideAppPanel('CoreValuesTester')" class="dcms-button admin-panel-button">Core Values Tester
+    </button>
 </div>

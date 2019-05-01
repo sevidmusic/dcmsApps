@@ -1,1 +1,0 @@
-Tests if the Ajax Router library is installed and working properly.
