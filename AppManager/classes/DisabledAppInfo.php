@@ -101,7 +101,6 @@ class DisabledAppInfo extends AppInfo
      * @param string $appName The name of the app whose logo image path should be returned.
      * @return string The path to the apps logo image, or, if the app does not provide a logo image, the path
      *                to the default logo image.
-     * @todo: if ZipCrud is used in the future, make sure to use it's extractFileFromZip() method to create the temp copy of the logo img
      */
     public function getDemoImgPath(string $appName): string
     {
@@ -113,25 +112,15 @@ class DisabledAppInfo extends AppInfo
         return CoreValues::getSiteRootUrl() . 'apps/AppManager/resources/images/' . $appName . '.logo.png';
     }
 
-    // @here @todo Fix, images are not being generated, perahps used ZipCrud method like ZipCrud::readFileFromZip()...
     private function generateTempImage(string $appName): bool
     {
         $zipFilePath = CoreValues::getAppDirPath($appName) . '.zip';
         $fileName = 'logo.png';
-        if ($this->zipHasFile($zipFilePath, $fileName) === false) {
+        if ($this->zipCrud->zipHasFile($zipFilePath, $fileName) === false) {
             error_log('Disabled App Info Error: Failed to generate temp image for app ' . $appName . ' The archive does not contain an image at stream ' . $this->getLogoImgStreamPath($appName));
             return false;
         }
         return empty(file_put_contents($this->getTempImgPath($appName), $this->zipCrud->readFileFromZip($zipFilePath, $fileName)));
-    }
-
-    // @todo Move to ZipFileCrud if it works and make it a public method...
-    private function zipHasFile(string $zipFilePath, string $fileName): bool
-    {
-        if (!empty($this->zipCrud->readFileFromZip($zipFilePath, $fileName))) {
-            return true;
-        }
-        return false;
     }
 
     private function getTempImgFileName(string $appName): string
