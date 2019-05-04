@@ -108,7 +108,7 @@ $permissionCrud = $crudFactory->getPermissionCrud();
                         'outputElementId' => 'PermissionManagerView',
                         'requestType' => 'POST',
                         'contentType' => '',
-                        'additionalParams' => 'permissionName=\'+this.dataset.permissionName+\'',// @todo this should actually reference sybilings to get text and textarea values @see https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_previoussibling
+                        'additionalParams' => 'permissionName=\'+this.dataset.permissionName+\'',
                         'ajaxDirName' => 'handlers',
                         'callFunction' => '',
                         'callContext' => '',

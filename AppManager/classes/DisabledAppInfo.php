@@ -9,7 +9,7 @@
 namespace Apps\AppManager\classes;
 
 
-use DarlingCms\classes\FileSystem\ZipCrud;
+use DarlingCms\classes\FileSystem\ZipArchiveUtility;
 use DarlingCms\classes\staticClasses\core\CoreValues;
 
 class DisabledAppInfo extends AppInfo
@@ -40,7 +40,7 @@ class DisabledAppInfo extends AppInfo
      * @see AppInfo::setAppConfigObjects()
      * @see AppInfo::setAppStartupObjects()
      */
-    public function __construct(ZipCrud $zipCrud, int $startupMode = 2, string  ...$excludeApp)
+    public function __construct(ZipArchiveUtility $zipCrud, int $startupMode = 2, string  ...$excludeApp)
     {
         $this->zipCrud = $zipCrud;
         $excludedApps = array_merge($excludeApp, glob(str_replace('/AppManager/classes', '', __DIR__) . '/*[!.zip]'));
@@ -63,7 +63,7 @@ class DisabledAppInfo extends AppInfo
     {
         foreach ($this->getDisabledAppPaths() as $zipFilePath) {
             $extractionPath = str_replace('.zip', '', $zipFilePath);
-            ZipCrud::removeDir($extractionPath);
+            ZipArchiveUtility::removeDir($extractionPath);
         }
     }
 

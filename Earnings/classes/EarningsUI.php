@@ -108,7 +108,7 @@ class EarningsUI implements IUserInterface
 
     public function getMainContainerStart(): string
     {
-        return '<div id="Earnings" class="dcms-admin-panel dcms-admin-panel-pos4 dcms-make-draggable">'; // @todo Rename "Earnings" to "Earnings"
+        return '<div id="Earnings" class="dcms-admin-panel dcms-admin-panel-pos4 dcms-make-draggable">';
     }
 
     public function getMainContainerEnd()
@@ -286,7 +286,7 @@ class EarningsUI implements IUserInterface
 
     public function getMoneyEarnedToDate()
     {
-        return calculateEarnings($this->getHoursToDate(), self::CURRENT_WAGE); // @todo calculate earnings must be moved to TimeCardCalculator
+        return calculateEarnings($this->getHoursToDate(), self::CURRENT_WAGE);
     }
 
     public function getMoneyEarnedTowardDebt()

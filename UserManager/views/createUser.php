@@ -25,6 +25,7 @@ $userCrud = $crudFactory->getUserCrud();
         <div id="<?php echo $userElementIdPrefix; ?>-user-name"
              class="user-manager-user-name">
             <div class="user-manager-sub-content-container">
+                <div id="createUserJsMessages"></div>
                 <h3>Enter a name for the new User</h3>
                 <?php
                 $userNameInput = new \DarlingCms\classes\html\form\Text('userName', $user->getUserName(), ['id' => $userNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text']);
@@ -32,9 +33,13 @@ $userCrud = $crudFactory->getUserCrud();
                 ?>
                 <h3>Enter a password for the new User</h3>
                 <?php
-                $userPasswordInput = new \DarlingCms\classes\html\form\Password('userPassword', '', ['id' => $userPasswordElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text user-manager-input-password']);
+                $userPasswordInput = new \DarlingCms\classes\html\form\Password('userPassword', '', ['id' => $userPasswordElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text user-manager-input-password', 'oninput' => 'verifyPasswordsMatch()']);
                 echo $userPasswordInput->getHtml();
-                // @todo ! Add second password field that uses js to verify passwords match as is standard on most websites.
+                ?>
+                <h3>Re-enter the password for the new User</h3>
+                <?php
+                $userPasswordVerificationInput = new \DarlingCms\classes\html\form\Password('userPasswordVerification', '', ['id' => $userPasswordElementId . 'Verification', 'class' => 'dcms-input-text dcms-focus dcms-hover user-manager-input-text user-manager-input-password user-manager-input-password-verification', 'oninput' => 'verifyPasswordsMatch()']);
+                echo $userPasswordVerificationInput->getHtml();
                 ?>
             </div>
         </div>
@@ -81,7 +86,7 @@ $userCrud = $crudFactory->getUserCrud();
                     'callContext' => '',
                     'callArgs' => ''
                 ]);
-                $createButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to create the ' . $user->getUserName() . ' user?\') === true ? ' . $createAjaxReq . ' : console.log(\'Canceled request to create the ' . $user->getUserName() . ' user.\')', 'data-user-name' => $user->getUserName(), 'class' => 'dcms-button user-manager-create-user-button'], 'Create New User');
+                $createButton = new \DarlingCms\classes\html\HtmlTag('button', ['id'=>'createUserAppCreateUserButton','onclick' => 'confirm(\'Are you sure you want to create the ' . $user->getUserName() . ' user?\') === true ? ' . $createAjaxReq . ' : console.log(\'Canceled request to create the ' . $user->getUserName() . ' user.\')', 'data-user-name' => $user->getUserName(), 'class' => 'dcms-button user-manager-create-user-button'], 'Create New User');
                 echo $createButton->getHtml();
                 ?>
             </div>

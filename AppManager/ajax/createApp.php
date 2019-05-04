@@ -2,7 +2,7 @@
 if (filter_input(INPUT_POST, 'ajaxRequest') === 'true') {
     require '../../../vendor/autoload.php';
 }
-$appManager = new \Apps\AppManager\classes\AppManager(new \DarlingCms\classes\FileSystem\ZipCrud());
+$appManager = new \Apps\AppManager\classes\AppManager(new \DarlingCms\classes\FileSystem\ZipArchiveUtility());
 if (empty(filter_input(INPUT_POST, 'appName')) === false) {
     $appName = filter_input(INPUT_POST, 'appName');
     $appManager->createApp($appName);

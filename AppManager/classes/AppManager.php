@@ -9,7 +9,7 @@
 namespace Apps\AppManager\classes;
 
 
-use DarlingCms\classes\FileSystem\ZipCrud;
+use DarlingCms\classes\FileSystem\ZipArchiveUtility;
 
 class AppManager
 {
@@ -17,9 +17,9 @@ class AppManager
 
     /**
      * AppManager constructor.
-     * @param ZipCrud $zipCrud Instance of a ZipCrud implementation.
+     * @param ZipArchiveUtility $zipCrud Instance of a ZipCrud implementation.
      */
-    public function __construct(ZipCrud $zipCrud)
+    public function __construct(ZipArchiveUtility $zipCrud)
     {
         $this->zipCrud = $zipCrud;
 

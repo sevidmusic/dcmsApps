@@ -12,8 +12,7 @@
  * @return array Array of paths to the items in the specified directory. Note: If $whitelist is set to true
  *               then only items whose filename or extension match a value in the $filter array will be returned,
  *               otherwise items whose filename or extension match a value in the $filter array will be ignored.
- * @WARNING: At the moment this method is case sensitive! So "fileName" and "filename" are not the same!
- * @todo: FSgetPaths() should accommodate upper and lower case versions of extensions. right now the extensions "Php" and "php" do not match, they should.
+ * @WARNING: This method is case sensitive! So "fileName" and "filename" are not the same!
  */
 function FSgetPaths($dir, $filter = array(), bool $whitelist = false)
 {
