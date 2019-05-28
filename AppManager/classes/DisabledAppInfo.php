@@ -20,15 +20,7 @@ class DisabledAppInfo extends AppInfo
      * AppInfo constructor. Sets the startup mode, determines the path to the apps directory, determines
      * the paths to each app's AppConfig.php file, determines each app's namespace, and instantiates the
      * appropriate IAppStartup implementation for each app based on the $startupMode.
-     * @param int $startupMode The mode to use for startup. This parameter determines which IAppStartup
-     *                         implementation will be instantiated for each app. Supported modes are
-     *                         represented by the following class constants:
-     *
-     *          - AppInfo::STARTUP_DEFAULT    Use the AppStartup implementation of the IAppStartup interface,
-     *                                        which does not use a caching mechanism. (Default)
-     *
-     *         - AppInfo::STARTUP_JSON_CACHE Use the AppStartupJsonCache implementation of the IAppStartup
-     *                                        interface, which uses JSON as a caching mechanism.
+     * @param ZipArchiveUtility $zipCrud
      * @param string ...$excludeApp Name of the app(s) that should be excluded from this AppInfo instance.
      *                              Note: To set more then one app to be excluded from this App Info instance,
      *                              pass additional app names as additional parameters.
@@ -40,7 +32,7 @@ class DisabledAppInfo extends AppInfo
      * @see AppInfo::setAppConfigObjects()
      * @see AppInfo::setAppStartupObjects()
      */
-    public function __construct(ZipArchiveUtility $zipCrud, int $startupMode = 2, string  ...$excludeApp)
+    public function __construct(ZipArchiveUtility $zipCrud, string ...$excludeApp)
     {
         $this->zipCrud = $zipCrud;
         $excludedApps = array_merge($excludeApp, glob(str_replace('/AppManager/classes', '', __DIR__) . '/*[!.zip]'));
