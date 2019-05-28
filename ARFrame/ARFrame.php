@@ -9,7 +9,7 @@
  *
  * CUBE EXAMPLE:
  * <a-scene embedded arjs>
- * <!-- Ar Elements | Must be at least 1 defined, or there will be now ar elements to show. -->
+ * <!-- Ar Elements | Must be at least 1 defined, or there will be no ar elements to show. -->
  * <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
  * <!-- REQUIRED! Define a camera which will move according to the marker position -->
  * <a-marker-camera preset='hiro'></a-marker-camera>
@@ -32,12 +32,31 @@
  * </a-scene>
  *
  */
-$amInfo = new \Apps\AppManager\classes\AppInfo();
+
+use Apps\AppManager\classes\AppInfo;
+
+$amInfo = new AppInfo();
 $logoImgPath = $amInfo->getDemoImgPath('ARFrame');
+/**
+ * Interfaces To Implement | KEY: {shared/inherited properties...}, unique properties...
+ *
+ * IARComponent: Represents an ar component | {name, description, type, creator, dateCreated, dateModified}
+ *
+ * IARScene: Represents an AR Scene | {IARComponent: name, description, type, creator, dateCreated, dateModified}, arElements
+ *
+ * @devNote: AR scene types will be used in future to differentiate between scenes
+ *           that use markers, location (GPS), a mix, or a custom methodology to generate
+ *           an ar experience
+ *
+ * IARSceneElement: Represents an AR Scene Element | {IARComponent: name, description, type, creator, dateCreated, dateModified}
+ *
+ */
 ?>
-<a-scene embedded arjs>
-    <a-image src="<?php echo $logoImgPath; ?>"></a-image>
-    <!-- REQUIRED: Define a camera which will move according to the marker position -->
+<!-- IARComponent, IARScene | {name, description, type}, arElements -->
+<a-scene embedded arjs="debugUIEnabled: false; sourceType: webcam;">
+    <!-- IARComponent, IARSceneElement, IARImage  | {IARComponent: name, description, type, creator, dateCreated, dateModified}, src -->
+    <a-image position="1 0.3 0" rotation="0 0 0" src="<?php echo $logoImgPath; ?>"></a-image>
+    <!-- IARComponent, IARSceneElement, IARCamera | {IARComponent: name, description, type, creator, dateCreated, dateModified}, preset -->
     <a-marker-camera preset='hiro'></a-marker-camera>
-    <!-- <a-marker-camera preset='custom' type="pattern" url="CoreValues::getSiteRootUrl()/UMNLOgoMarker.patt"></a-marker-camera> -->
+    <!-- @devNote: A CAMERA IS REQUIRED BY ALL SCENES: Define a camera which will move according to the marker position -->
 </a-scene>

@@ -47,6 +47,8 @@ class AppConfig extends AAdminAppConfig implements IAppConfig
      */
     protected function defineValidRoles(): array
     {
-        return array('AR User');
+        return array('Augmented Reality User');
+        //return array();
     }
 }
+
