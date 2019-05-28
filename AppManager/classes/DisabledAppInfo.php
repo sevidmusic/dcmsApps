@@ -53,7 +53,7 @@ class DisabledAppInfo extends AppInfo
             $this->zipCrud->extractFileFromZip($zipFilePath, $extractionPath, 'AppConfig.php');
             //var_dump((file_exists($extractionPath . '/AppConfig.php') === true ? 'Temp AppConfig exists' : 'Temp AppConfig does not exist'));
         }
-        parent::__construct($startupMode);
+        parent::__construct();
     }
 
     /**
