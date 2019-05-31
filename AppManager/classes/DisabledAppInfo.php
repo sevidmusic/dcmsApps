@@ -26,7 +26,7 @@ class DisabledAppInfo extends AppInfo
      *                              pass additional app names as additional parameters.
      * @see $startupMode
      * @see $excludedApps
-     * @see AppInfo::excludeApp()
+     * @see AppInfo::addAppName()
      * @see AppInfo::setAppConfigPaths()
      * @see AppInfo::setAppNamespaces()
      * @see AppInfo::setAppConfigObjects()
@@ -38,14 +38,21 @@ class DisabledAppInfo extends AppInfo
         $excludedApps = array_merge($excludeApp, glob(str_replace('/AppManager/classes', '', __DIR__) . '/*[!.zip]'));
         foreach ($excludedApps as $index => $appPath) {
             $appName = pathinfo($appPath, PATHINFO_FILENAME);
-            $this->excludeApp($appName);
+            $this->addAppName($appName);
         }
         foreach ($this->getDisabledAppPaths() as $zipFilePath) {
             $extractionPath = str_replace('.zip', '', $zipFilePath);
             $this->zipCrud->extractFileFromZip($zipFilePath, $extractionPath, 'AppConfig.php');
             //var_dump((file_exists($extractionPath . '/AppConfig.php') === true ? 'Temp AppConfig exists' : 'Temp AppConfig does not exist'));
         }
-        parent::__construct();
+        /**
+         * @devNote This class was designed prior to the refactoring of the AppInfo class
+         * and the added $filterMode property, and was originally designed to use the
+         * old "excluded Apps" logic, therefore the BLACKLIST filter mode must be enforced since
+         * this class was originally designed to use what was essentially a blacklist to
+         * determine which app's information should be provided.
+         */
+        parent::__construct(AppInfo::BLACKLIST);
     }
 
     /**
