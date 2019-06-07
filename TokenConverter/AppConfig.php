@@ -33,7 +33,7 @@ class AppConfig implements IAppConfig
      */
     public function getThemeNames(): array
     {
-        return array();
+        return array('DCMSBase');
     }
 
     /**
@@ -42,6 +42,6 @@ class AppConfig implements IAppConfig
      */
     public function getJsLibraryNames(): array
     {
-        return array('AjaxRouter');
+        return array('makeDraggable', 'AjaxRouter', 'XDebugUI');
     }
 }

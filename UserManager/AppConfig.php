@@ -25,7 +25,7 @@ class AppConfig extends AAdminAppConfig implements IAppConfig
      */
     public function getThemeNames(): array
     {
-        return array('UserManager');
+        return array('UserManager', 'DCMSBase');
     }
 
     /**
@@ -34,7 +34,7 @@ class AppConfig extends AAdminAppConfig implements IAppConfig
      */
     public function getJsLibraryNames(): array
     {
-        return array('AjaxRouter','UserManager');
+        return array('makeDraggable', 'AjaxRouter', 'XDebugUI', 'UserManager');
     }
 
     /**

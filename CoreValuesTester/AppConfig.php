@@ -25,7 +25,7 @@ class AppConfig extends AAdminAppConfig implements IAppConfig
      */
     public function getThemeNames(): array
     {
-        return array();
+        return array('DCMSBase');
     }
 
     /**
@@ -34,7 +34,7 @@ class AppConfig extends AAdminAppConfig implements IAppConfig
      */
     public function getJsLibraryNames(): array
     {
-        return array();
+        return array('makeDraggable', 'AjaxRouter', 'XDebugUI');
     }
 
     /**

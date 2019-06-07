@@ -7,6 +7,7 @@ namespace Apps\appManager\classes;
 
 use DarlingCms\interfaces\accessControl\IAppConfig;
 
+// @todo Replace with core version of EmptyAppConfig
 class EmptyAppConfig implements IAppConfig
 {
     /**
