@@ -34,7 +34,7 @@ class AppConfig implements IAppConfig
      */
     public function getThemeNames(): array
     {
-        return array();
+        return array('DarlingCmsDocumentation');
     }
 
     /**
