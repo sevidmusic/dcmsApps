@@ -9,8 +9,20 @@ use DarlingCms\classes\staticClasses\utility\ArrayUtility;
 
 
 $interfaceDir = new DirectoryCrud(CoreValues::getSiteRootDirPath() . '/core');
-var_dump(convertPathsToNamespaces(getSubPhpFilePaths($interfaceDir)));
-//var_dump(getReflections(convertPathsToNamespaces(getSubPhpFilePaths($interfaceDir))));
+var_dump(getDocComments(getReflections(convertPathsToNamespaces(getSubPhpFilePaths($interfaceDir)))));
+
+function getDocComments(array $reflections): array
+{
+    $docComments = array();
+    /**
+     * @var ReflectionClass $reflection
+     */
+    foreach ($reflections as $reflection) {
+        array_push($docComments, $reflection->getDocComment());
+    }
+    return $docComments;
+}
+
 function getReflections(array $namespaces): array
 {
     $reflections = array();
