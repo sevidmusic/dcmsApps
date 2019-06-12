@@ -1,28 +1,69 @@
 <?php
-//// DEV //// DEV //// DEV //// DEV //// DEV //// DEV //// DEV //// DEV //// DEV //// DEV
-//$DocComments = new ReflectionClass('\DarlingCms\interfaces');
+
 use DarlingCms\classes\FileSystem\DirectoryCrud;
 use DarlingCms\classes\staticClasses\core\CoreValues;
+use DarlingCms\classes\staticClasses\utility\ArrayUtility;
+
+//$DocComments = new ReflectionClass('\DarlingCms\interfaces');
+//$IAccessControllerDocComments = new ReflectionClass('\DarlingCms\interfaces\accessControl\IAccessController');
+
 
 $interfaceDir = new DirectoryCrud(CoreValues::getSiteRootDirPath() . '/core');
+var_dump(convertPathsToNamespaces(getSubPhpFilePaths($interfaceDir)));
+//var_dump(getReflections(convertPathsToNamespaces(getSubPhpFilePaths($interfaceDir))));
+function getReflections(array $namespaces): array
+{
+    $reflections = array();
+    foreach ($namespaces as $namespace) {
+        try {
+            array_push($reflections, new ReflectionClass($namespace));
+        } catch (ReflectionException $e) {
+            error_log(sprintf('Darling Cms Documentation Error: Failed to generete Reflection for namespace %s', $namespace));
+        }
+    }
+    return $reflections;
+}
 
-$IAccessControllerDocComments = new ReflectionClass('\DarlingCms\interfaces\accessControl\IAccessController');
-
-// @todo move to class
-define('INTERFACES', 1);
-define('ABSTRACTIONS', 2);
-define('CLASSES', 4);
-
-var_dump(getSubDirPaths($interfaceDir));
-var_dump(getSubDirPaths($interfaceDir, ['interfaces']));
-var_dump(getSubDirPaths($interfaceDir, ['abstractions']));
-var_dump(getSubDirPaths($interfaceDir, ['classes']));
+function convertPathsToNamespaces(array $array): array
+{
+    $namespaces = array();
+    foreach ($array as $filePath) {
+        $namespace = str_replace(['/', '.php'], ['\\', ''], $filePath);
+        $ns = explode('\\', $namespace);
+        $namespace = ArrayUtility::splitArrayAtValue($ns, 'core')[1];
+        array_push($namespaces, '\\DarlingCms\\' . implode('\\', $namespace));
+    }
+    return $namespaces;
+}
 
 /**
  * @param DirectoryCrud $directoryCrud
- * @param array $whitelistedDirs
- * @param int $filter
  * @return array
+ */
+function getSubPhpFilePaths(DirectoryCrud $directoryCrud): array
+{
+    $subFilePaths = array();
+    foreach (getSubDirPaths($directoryCrud) as $corePath) {
+        $glob = glob($corePath . '/*.php');
+        $subFilePaths = array_merge($subFilePaths, $glob);
+    }
+    return array_unique($subFilePaths, SORT_STRING);
+}
+
+/**
+ * Returns an array of sub directory paths under the DirectoryCrud implementation instance's
+ * working directory.
+ *
+ * Note: This method only returns paths for sub directories, files and other non-directory types
+ *       will be excluded.
+ *
+ * @param DirectoryCrud $directoryCrud DirectoryCrud implementation instance for the working parent directory.
+ *
+ * @param array $whitelistedDirs Array of the names of specific directories whose paths should be returned,
+ *                                if set, any directories not specified in this array will be excluded.
+ *
+ * @return array An array of sub directory paths that exist under the specified DirectoryCrud implementation
+ *               instance's working directory.
  */
 function getSubDirPaths(DirectoryCrud $directoryCrud, $whitelistedDirs = array()): array
 {
@@ -30,11 +71,16 @@ function getSubDirPaths(DirectoryCrud $directoryCrud, $whitelistedDirs = array()
     $ignore = array('.', '..', '.DS_Store');
     $subDirs = array_diff(scandir($directoryCrud->getWorkingDirectoryPath()), $ignore);
     foreach ((empty($whitelistedDirs) === true ? $subDirs : $whitelistedDirs) as $dir) {
+        // ignore non-directories
+        if (is_dir($directoryCrud->getWorkingDirectoryPath() . $dir) === false) {
+            continue;
+        }
         /**
          * @var SplFileInfo $path
          */
         foreach ($directoryCrud->readDirectory($dir) as $path) {
-            if (in_array($path->getFilename(), $ignore, true) === true) {
+            // ignore specified directories and non-directories
+            if (in_array($path->getFilename(), $ignore, true) === true || $path->isDir() === false) {
                 continue;
             }
             array_push($subDirPaths, $path->getRealPath());
@@ -42,16 +88,3 @@ function getSubDirPaths(DirectoryCrud $directoryCrud, $whitelistedDirs = array()
     }
     return $subDirPaths;
 }
-
-
-/*
-if ($filter & INTERFACES && $dir === 'interfaces') {
-    array_push($namespaces, $path->getRealPath());
-}
-if ($filter & ABSTRACTIONS && $dir === 'abstractions') {
-    array_push($namespaces, $path->getRealPath());
-}
-if ($filter & CLASSES && $dir === 'classes') {
-    array_push($namespaces, $path->getRealPath());
-}
-*/
