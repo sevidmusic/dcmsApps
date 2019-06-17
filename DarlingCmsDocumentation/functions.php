@@ -15,17 +15,32 @@ function getDocComments(array $reflections): array
         /**
          * @var ReflectionMethod $reflectionMethod
          */
-        foreach ($reflection->getMethods() as $reflectionMethod) {
+        foreach (getMethodStrings($reflection) as $methodString) {
+            $docComments[$reflection->getName()] .= $methodString;
+        }
 
-            $docComments[$reflection->getName()] .= sprintf(
+    }
+    return $docComments;
+}
+
+function getMethodStrings(ReflectionClass $reflectionClass): array
+{
+    $methodStrings = array();
+    /**
+     * @var ReflectionMethod $reflectionMethod
+     */
+    foreach ($reflectionClass->getMethods() as $reflectionMethod) {
+        array_push(
+            $methodStrings,
+            sprintf(
                 "<h4>%s(%s)%s</h4>",
                 '<span style="color: #4da652;">' . $reflectionMethod->getName() . '</span>',
                 getParamString($reflectionMethod),
                 (empty($reflectionMethod->getReturnType()) === false ? ': ' . $reflectionMethod->getReturnType()->getName() : '')
-            );
-        }
+            )
+        );
     }
-    return $docComments;
+    return $methodStrings;
 }
 
 function getParamString(ReflectionMethod $reflectionMethod)
