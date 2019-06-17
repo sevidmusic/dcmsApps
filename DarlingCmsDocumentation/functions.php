@@ -10,7 +10,7 @@ function getDocComments(array $reflections): array
      * @var ReflectionClass $reflection
      */
     foreach ($reflections as $reflection) {
-        $docComments[$reflection->getName()] = formatForDisplay($reflection->getDocComment());
+        $docComments[$reflection->getName()] = formatDocCommentForDisplay($reflection->getDocComment());
         $docComments[$reflection->getName()] .= '<h1>Methods:</h1>';
         /**
          * @var ReflectionMethod $reflectionMethod
@@ -29,16 +29,21 @@ function getMethodStrings(ReflectionClass $reflectionClass): array
     /**
      * @var ReflectionMethod $reflectionMethod
      */
+    $methodDocCommentStyle = 'margin: 20px auto; padding:20px; border: 3px double #ffffff; border-radius: 20px;width: 100%; height: 172px; overflow: auto; background: #2a4663';
     foreach ($reflectionClass->getMethods() as $reflectionMethod) {
         array_push(
             $methodStrings,
             sprintf(
-                "<h4>%s(%s)%s</h4>",
+                "<h4>%s(%s)%s %s</h4>",
                 '<span style="color: #4da652;">' . $reflectionMethod->getName() . '</span>',
                 getParamString($reflectionMethod),
-                (empty($reflectionMethod->getReturnType()) === false ? ': ' . $reflectionMethod->getReturnType()->getName() : '')
+                (empty($reflectionMethod->getReturnType()) === false ? ': ' . $reflectionMethod->getReturnType()->getName() : ''),
+                (empty($reflectionMethod->getDocComment()) === true ? '<div style="' . $methodDocCommentStyle . '">There are not any doc comments defined for this method...</div>' : '<div style="' . $methodDocCommentStyle . '">' . formatDocCommentForDisplay($reflectionMethod->getDocComment()) . '</div>')
             )
         );
+        if (empty($reflectionMethod->getDocComment()) === true) {
+            error_log(sprintf('Darling Cms Documentation Error: There are no doc comments defined for the %s::%s method.', $reflectionClass->getName(), $reflectionMethod->getName()));
+        }
     }
     return $methodStrings;
 }
@@ -66,7 +71,7 @@ function getParamString(ReflectionMethod $reflectionMethod)
     return $paramStr;
 }
 
-function formatForDisplay(string $docComment): string
+function formatDocCommentForDisplay(string $docComment): string
 {
     return str_replace(
         ['Note:', 'IMPORTANT:', ': ', 'Warning:', 'WARNING:'],

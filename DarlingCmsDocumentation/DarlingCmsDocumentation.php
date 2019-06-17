@@ -7,6 +7,10 @@ require_once 'functions.php';
 ?>
 <div id="DarlingCmsDocumentation" class="dcms-admin-panel dcms-admin-panel-pos1 dcms-make-draggable todo-container">
     <div id="DarlingCmsDocumentationHandle" draggable="true" class="dcms-drag-handle">Click here to drag...</div>
+    <div class="dcms-button" onclick="document.getElementById('DarlingCmsDocumentation').scrollTop=0;"
+         style="z-index:9000;background:#16232a;position: sticky;top:70px;padding: 20px; margin: 10px auto; width: 100%; text-align: center; opacity: .72;">
+        Scroll To Top
+    </div>
     <div>
         <a href="https://github.com/sevidmusic/DarlingCms" target="_blank">
             View the Darling Cms on Github
