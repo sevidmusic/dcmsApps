@@ -11,8 +11,44 @@ function getDocComments(array $reflections): array
      */
     foreach ($reflections as $reflection) {
         $docComments[$reflection->getName()] = formatForDisplay($reflection->getDocComment());
+        $docComments[$reflection->getName()] .= '<h1>Methods:</h1>';
+        /**
+         * @var ReflectionMethod $reflectionMethod
+         */
+        foreach ($reflection->getMethods() as $reflectionMethod) {
+
+            $docComments[$reflection->getName()] .= sprintf(
+                "<h4>%s(%s)%s</h4>",
+                '<span style="color: #4da652;">' . $reflectionMethod->getName() . '</span>',
+                getParamString($reflectionMethod),
+                (empty($reflectionMethod->getReturnType()) === false ? ': ' . $reflectionMethod->getReturnType()->getName() : '')
+            );
+        }
     }
     return $docComments;
+}
+
+function getParamString(ReflectionMethod $reflectionMethod)
+{
+    $paramStr = '';
+    $reflectionParameters = $reflectionMethod->getParameters();
+    $count = count($reflectionParameters);
+    $iterator = 0;
+    /**
+     * @var ReflectionParameter $reflectionParameter
+     */
+    foreach ($reflectionParameters as $reflectionParameter) {
+        if (empty($reflectionParameter->getType()) === false) {
+            $paramStr .= '<span style="color: #358bd5;">' . $reflectionParameter->getType()->getName() . ' </span>';
+        }
+        $paramStr .= sprintf(
+            "<span style=\"color: #2a3070;\">\$%s</span>%s",
+            $reflectionParameter->getName(),
+            $iterator === ($count - 1) ? '' : ', '
+        );
+        $iterator++;
+    }
+    return $paramStr;
 }
 
 function formatForDisplay(string $docComment): string
@@ -24,7 +60,7 @@ function formatForDisplay(string $docComment): string
             ['- '],
             ['<br>-'],
             str_replace(
-                ['/*', '/**', '*', '*/', '**/'],
+                ['/*', '/**', '*/', '**/', '*'],
                 '',
                 $docComment
             )
