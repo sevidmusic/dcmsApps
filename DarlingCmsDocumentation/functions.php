@@ -148,8 +148,9 @@ function getSubDirPaths(DirectoryCrud $directoryCrud, $whitelistedDirs = array()
     $ignore = array('.', '..', '.DS_Store');
     $subDirs = array_diff(scandir($directoryCrud->getWorkingDirectoryPath()), $ignore);
     foreach ((empty($whitelistedDirs) === true ? $subDirs : $whitelistedDirs) as $dir) {
+        $dirPath = $directoryCrud->getWorkingDirectoryPath() . $dir;
         // ignore non-directories
-        if (is_dir($directoryCrud->getWorkingDirectoryPath() . $dir) === false) {
+        if (is_dir($dirPath) === false) {
             continue;
         }
         /**
@@ -161,7 +162,11 @@ function getSubDirPaths(DirectoryCrud $directoryCrud, $whitelistedDirs = array()
                 continue;
             }
             array_push($subDirPaths, $path->getRealPath());
+            //$subDirPaths = array_merge($subDirPaths, getSubDirPaths(new DirectoryCrud($path->getRealPath())));
         }
+        // also need to get the $dir's sub directories sub dir paths, i.e. need to recurse in case there are nested dirs
+        $subDirPaths = array_merge($subDirPaths, getSubDirPaths(new DirectoryCrud($dirPath)));
     }
+    sort($subDirPaths, SORT_ASC);
     return $subDirPaths;
 }
