@@ -41,9 +41,9 @@ function getMethodStrings(ReflectionClass $reflectionClass): array
                 (empty($reflectionMethod->getDocComment()) === true ? '<div style="' . $methodDocCommentStyle . '">There are not any doc comments defined for this method...</div>' : '<div style="' . $methodDocCommentStyle . '">' . formatDocCommentForDisplay($reflectionMethod->getDocComment()) . '</div>')
             )
         );
-        if (empty($reflectionMethod->getDocComment()) === true) {
-            error_log(sprintf('Darling Cms Documentation Error: There are no doc comments defined for the %s::%s method.', $reflectionClass->getName(), $reflectionMethod->getName()));
-        }
+        /*if (empty($reflectionMethod->getDocComment()) === true) { // enable for error logging...
+            //error_log(sprintf('Darling Cms Documentation Error: There are no doc comments defined for the %s::%s method.', $reflectionClass->getName(), $reflectionMethod->getName()));
+        }*/
     }
     return $methodStrings;
 }

@@ -28,7 +28,7 @@ require_once 'functions.php';
         // Use this if normal links are needed: $docCommentMenu .= '<a href="#' . $htmlId . '">' . $name . '</a><br/>';
         $docCommentMenu .= '<a onclick=\'document.getElementById("' . $htmlId . '").scrollIntoView({behavior: "smooth"})\'>' . $name . '</a><br/>';
         if (empty($docComment) === true) {
-            error_log('Darling Cms Documentation Notice: There are no doc comments defined for ' . $name);
+            //error_log('Darling Cms Documentation Notice: There are no doc comments defined for ' . $name);
             continue;
         }
         $link = sprintf("https://github.com/sevidmusic/DarlingCms/tree/darlingCms_0.1_dev/core/%s", str_replace(['\\', 'DarlingCms/'], ['/', ''], $name) . '.php');
