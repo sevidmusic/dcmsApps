@@ -29,7 +29,6 @@ function getMethodStrings(ReflectionClass $reflectionClass): array
     /**
      * @var ReflectionMethod $reflectionMethod
      */
-    $methodDocCommentStyle = 'margin: 20px auto; padding:20px; border: 3px double #ffffff; border-radius: 20px;width: 100%; height: 172px; overflow: auto; background: #2a4663';
     foreach ($reflectionClass->getMethods() as $reflectionMethod) {
         array_push(
             $methodStrings,
@@ -38,7 +37,7 @@ function getMethodStrings(ReflectionClass $reflectionClass): array
                 '<span style="color: #4da652;">' . $reflectionMethod->getName() . '</span>',
                 getParamString($reflectionMethod),
                 (empty($reflectionMethod->getReturnType()) === false ? ': ' . $reflectionMethod->getReturnType()->getName() : ''),
-                (empty($reflectionMethod->getDocComment()) === true ? '<div style="' . $methodDocCommentStyle . '">There are not any doc comments defined for this method...</div>' : '<div style="' . $methodDocCommentStyle . '">' . formatDocCommentForDisplay($reflectionMethod->getDocComment()) . '</div>')
+                (empty($reflectionMethod->getDocComment()) === true ? '<div class="dcms-method-doc-comment">There are not any doc comments defined for this method...</div>' : '<div class="dcms-method-doc-comment">' . formatDocCommentForDisplay($reflectionMethod->getDocComment()) . '</div>')
             )
         );
         /*if (empty($reflectionMethod->getDocComment()) === true) { // enable for error logging...
