@@ -55,7 +55,7 @@ $logoImgPath = $amInfo->getDemoImgPath('ARFrame');
 <!-- IARComponent, IARScene | {name, description, type}, arElements -->
 <a-scene embedded arjs="debugUIEnabled: false; sourceType: webcam;">
     <!-- IARComponent, IARSceneElement, IARImage  | {IARComponent: name, description, type, creator, dateCreated, dateModified}, src -->
-    <a-image position="0 0 0" rotation="0 0 0" src="<?php echo $logoImgPath; ?>"></a-image>
+    <a-image position="0 1 0" rotation="0 0 0" src="<?php echo $logoImgPath; ?>"></a-image>
     <!-- IARComponent, IARSceneElement, IARCamera | {IARComponent: name, description, type, creator, dateCreated, dateModified}, preset -->
     <a-marker-camera preset='hiro'></a-marker-camera>
     <!-- @devNote: A CAMERA IS REQUIRED BY ALL SCENES: Define a camera which will move according to the marker position -->
