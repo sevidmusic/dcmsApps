@@ -1,5 +1,6 @@
 <?php use DarlingCms\classes\staticClasses\core\CoreValues; ?>
-<div class="dcms-admin-panel">
+<div id="ARFrame" class="dcms-admin-panel dcms-admin-panel-pos3 dcms-make-draggable">
+    <div id="ARFrameHandle" class="dcms-drag-handle">Click Here To Drag</div>
     <?php
     /**
      * @devNote: An iframe is used because it makes it easier to contain the AR Scene.
