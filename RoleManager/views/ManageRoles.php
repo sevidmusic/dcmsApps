@@ -1,11 +1,15 @@
 <?php
 
-use \DarlingCms\classes\staticClasses\core\CoreValues;
+use DarlingCms\abstractions\userInterface\AjaxUI;
+use DarlingCms\classes\factory\CoreMySqlCrudFactory;
+use DarlingCms\classes\html\form\Checkbox;
+use DarlingCms\classes\html\form\Text;
+use DarlingCms\classes\html\HtmlTag;
 
 if (filter_input(INPUT_GET, 'ajaxRequest') === 'true') {
     require str_replace('/apps/RoleManager/views', '/vendor/autoload.php', __DIR__);
 }
-$crudFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+$crudFactory = new CoreMySqlCrudFactory();
 $actionCrud = $crudFactory->getActionCrud();
 $permissionCrud = $crudFactory->getPermissionCrud();
 $roleCrud = $crudFactory->getRoleCrud();
@@ -29,7 +33,7 @@ $roleCrud = $crudFactory->getRoleCrud();
                 class="role-manager-table-role-name">
                 <div class="role-manager-table-cell-content-container">
                     <?php
-                    $roleNameInput = new \DarlingCms\classes\html\form\Text('roleName', $role->getRoleName(), ['id' => $roleNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover role-manager-input-text']);
+                    $roleNameInput = new Text('roleName', $role->getRoleName(), ['id' => $roleNameElementId, 'class' => 'dcms-input-text dcms-focus dcms-hover role-manager-input-text']);
                     echo $roleNameInput->getHtml();
                     ?>
                 </div>
@@ -41,7 +45,7 @@ $roleCrud = $crudFactory->getRoleCrud();
                     $assignedPermissionIncrementer = 0;
                     foreach ($role->getPermissions() as $permission) {
                         array_push($assignedPermissionNames, $permission->getPermissionName());
-                        $permissionCheckbox = new \DarlingCms\classes\html\form\Checkbox($permission->getPermissionName() . '-checkbox', $permission->getPermissionName(), ['id' => $roleElementIdPrefix . 'AssignedPermissionCheckbox' . strval($assignedPermissionIncrementer), 'checked', 'class' => 'dcms-input-checkbox dcms-focus dcms-hover role-manager-input-checkbox']);
+                        $permissionCheckbox = new Checkbox($permission->getPermissionName() . '-checkbox', $permission->getPermissionName(), ['id' => $roleElementIdPrefix . 'AssignedPermissionCheckbox' . strval($assignedPermissionIncrementer), 'checked', 'class' => 'dcms-input-checkbox dcms-focus dcms-hover role-manager-input-checkbox']);
                         echo '<div title="Un-check to un-assign..." class="role-manager-assigned-permission-checkbox">' . $permissionCheckbox->getHtml() . $permission->getPermissionName() . '</div>';
                         $assignedPermissionIncrementer++;
                     }
@@ -58,7 +62,7 @@ $roleCrud = $crudFactory->getRoleCrud();
                             continue;
                         }
                         array_push($availablePermissionNames, $permission->getPermissionName());
-                        $permissionCheckbox = new \DarlingCms\classes\html\form\Checkbox($permission->getPermissionName() . '-checkbox', $permission->getPermissionName(), ['id' => $roleElementIdPrefix . 'AvailablePermissionCheckbox' . strval($availablePermissionIncrementer), 'class' => 'dcms-input-checkbox dcms-focus dcms-hover role-manager-input-checkbox']);
+                        $permissionCheckbox = new Checkbox($permission->getPermissionName() . '-checkbox', $permission->getPermissionName(), ['id' => $roleElementIdPrefix . 'AvailablePermissionCheckbox' . strval($availablePermissionIncrementer), 'class' => 'dcms-input-checkbox dcms-focus dcms-hover role-manager-input-checkbox']);
                         echo '<div title="Check to assign..." class="role-manager-available-permission-checkbox">' . $permissionCheckbox->getHtml() . $permission->getPermissionName() . '</div>';
                         $availablePermissionIncrementer++;
                     }
@@ -83,7 +87,7 @@ $roleCrud = $crudFactory->getRoleCrud();
                         $availablePermissionParamStr .= '&' . 'availablePermissionNames[]=\'+getElementValue(\'' . $availablePermissionTargetId . '\')+\'' . '&' . 'availablePermissionStates[]=\'+checkboxIsChecked(\'' . $availablePermissionTargetId . '\')+\'';
                     }
 
-                    $updateAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
+                    $updateAjaxReq = AjaxUI::generateAjaxRequest([
                         'issuingApp' => 'RoleManager',
                         'handlerName' => 'updateRoleHandler',
                         'outputElementId' => 'RoleManagerView',
@@ -95,7 +99,7 @@ $roleCrud = $crudFactory->getRoleCrud();
                         'callContext' => '',
                         'callArgs' => ''
                     ]);
-                    $updateButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $permission->getPermissionName() . ' role?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $permission->getPermissionName() . ' permission.\')', 'data-role-name' => $role->getRoleName(), 'class' => 'dcms-button permission-manager-update-permission-button'], 'Update Role');
+                    $updateButton = new HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to update the ' . $role->getRoleName() . ' role?\') === true ? ' . $updateAjaxReq . ' : console.log(\'Canceled request to update the ' . $role->getRoleName() . ' role.\')', 'data-role-name' => $role->getRoleName(), 'class' => 'dcms-button role-manager-update-role-button'], 'Update Role');
                     echo $updateButton->getHtml();
                     ?>
                 </div>
@@ -103,7 +107,7 @@ $roleCrud = $crudFactory->getRoleCrud();
             <td class="role-manager-table-delete-role">
                 <div class="role-manager-table-cell-content-container">
                     <?php
-                    $deleteAjaxReq = \DarlingCms\abstractions\userInterface\AjaxUI::generateAjaxRequest([
+                    $deleteAjaxReq = AjaxUI::generateAjaxRequest([
                         'issuingApp' => 'RoleManager',
                         'handlerName' => 'deleteRoleHandler',
                         'outputElementId' => 'RoleManagerView',
@@ -115,7 +119,7 @@ $roleCrud = $crudFactory->getRoleCrud();
                         'callContext' => '',
                         'callArgs' => ''
                     ]);
-                    $deleteButton = new \DarlingCms\classes\html\HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to delete the ' . $role->getRoleName() . ' role?\') === true ? ' . $deleteAjaxReq . ' : console.log(\'Canceled request to delete the ' . $role->getRoleName() . ' role.\')', 'data-role-name' => $role->getRoleName(), 'class' => 'dcms-button role-manager-delete-role-button'], 'Delete Role');
+                    $deleteButton = new HtmlTag('button', ['onclick' => 'confirm(\'Are you sure you want to delete the ' . $role->getRoleName() . ' role?\') === true ? ' . $deleteAjaxReq . ' : console.log(\'Canceled request to delete the ' . $role->getRoleName() . ' role.\')', 'data-role-name' => $role->getRoleName(), 'class' => 'dcms-button role-manager-delete-role-button'], 'Delete Role');
                     echo $deleteButton->getHtml();
                     ?>
                 </div>
