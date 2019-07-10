@@ -39,4 +39,7 @@
             ondblclick="hideAppPanel('DarlingCmsDocumentation')" class="dcms-button admin-panel-button">
         DarlingCmsDocumentation
     </button>
+    <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('ErrorViewer')"
+            ondblclick="hideAppPanel('ErrorViewer')" class="dcms-button admin-panel-button">Error Viewer
+    </button>
 </div>
