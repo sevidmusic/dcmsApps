@@ -43,6 +43,6 @@ class AppConfig implements IAppConfig
      */
     public function getJsLibraryNames(): array
     {
-        return array();
+        return array('UserManager');
     }
 }
