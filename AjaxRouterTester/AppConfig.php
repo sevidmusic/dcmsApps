@@ -49,7 +49,7 @@ class AppConfig extends AAdminAppConfig implements IAppConfig
      */
     protected function defineValidRoles(): array
     {
-        return array('Administrator');
+        return array('Administrator', 'Developer');
     }
 
 

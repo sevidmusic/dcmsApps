@@ -30,7 +30,7 @@ class AppConfig extends AAdminAppConfig implements IAppConfig
      */
     public function getThemeNames(): array
     {
-        return array('Todo','DCMSBase');
+        return array('Todo', 'DCMSBase');
     }
 
     /**
@@ -49,7 +49,7 @@ class AppConfig extends AAdminAppConfig implements IAppConfig
      */
     protected function defineValidRoles(): array
     {
-        return array('Administrator');
+        return array('Administrator', 'Developer');
     }
 
 }

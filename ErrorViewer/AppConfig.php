@@ -29,7 +29,7 @@ class AppConfig extends AAdminAppConfig implements IAppConfig
      */
     public function getThemeNames(): array
     {
-        return array('ErrorViewer','DCMSBase');
+        return array('ErrorViewer', 'DCMSBase');
     }
 
     /**
@@ -48,6 +48,6 @@ class AppConfig extends AAdminAppConfig implements IAppConfig
      */
     protected function defineValidRoles(): array
     {
-        return array('Administrator');
+        return array('Administrator', 'Developer');
     }
 }
