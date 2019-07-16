@@ -42,4 +42,7 @@
     <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('ErrorViewer')"
             ondblclick="hideAppPanel('ErrorViewer')" class="dcms-button admin-panel-button">Error Viewer
     </button>
+    <button title="Hint: Click to show | Double click to hide..." onclick="showAppPanel('ARFrame')"
+            ondblclick="hideAppPanel('ARFrame')" class="dcms-button admin-panel-button">AR Frame
+    </button>
 </div>

@@ -1,8 +1,9 @@
 <?php
 
+use DarlingCms\classes\factory\CoreMySqlCrudFactory;
 use DarlingCms\classes\staticClasses\core\CoreValues;
 
-$crudFactory = new \DarlingCms\classes\factory\CoreMySqlCrudFactory();
+$crudFactory = new CoreMySqlCrudFactory();
 $actionCrud = $crudFactory->getActionCrud();
 $permissionCrud = $crudFactory->getPermissionCrud();
 $roleCrud = $crudFactory->getRoleCrud();
